@@ -1,5 +1,68 @@
 .previewsDiv {
-    border: 2px solid white;
-    width: 90vw;
-    height: 60vh;
+    width: 95vw;
+    height: auto;
+}
+
+.moviePreviewContainer {
+    border-radius: 5px;
+    background-color: hsl(220, 13%, 14%);
+    margin: 8px;
+    padding-top: 8.5px;
+    width: 180px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display:inline-block;
+    height: 355px;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.moviePoster {
+    height: 242px;
+    width: 163px;
+    border-radius: 5px;
+}
+
+.ratingDiv {
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    align-content: center;
+}
+
+.tomatoRatingDiv{
+    
+}
+
+.tomatoRatingIcon {
+    height: 25px;
+    width: auto;
+}
+
+.tomatoRating{
+    display: inline;
+    font-size: 1rem;
+    margin-left: 6px
+}
+
+.userRatingDiv{
+
+}
+
+.userRatingIcon {
+    height: 25px;
+    width: auto;
+    margin-left: 25px;
+}
+
+.userRating{
+    display: inline;
+    font-size: 1rem;
+    margin-left: 6px
+}
+
+.movieTitleDiv {
+}
+
+.movieTitle{
+    margin: 0;
 }

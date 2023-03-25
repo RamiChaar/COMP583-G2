@@ -4,7 +4,7 @@ function MoviePreviewList ({moviePreviews}) {
     return (
       <div className='previewsDiv'>
         {moviePreviews.map(moviePreview => {
-            return <MoviePreview key={moviePreview.id} name={moviePreview.name}/>
+            return <MoviePreview key={moviePreview.id} moviePreview={moviePreview}/>
         })}
       </div>
     );
