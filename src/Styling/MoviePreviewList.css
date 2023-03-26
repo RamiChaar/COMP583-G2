@@ -1,68 +1,119 @@
+:root {
+    --scale: .75;
+
+    --preview-width:calc(11.25rem * var(--scale));
+    --preview-height:calc(21.25rem * var(--scale));
+
+    --poster-width:calc(10.1875rem * var(--scale));
+    --poster-height:calc(15.125rem * var(--scale));
+
+    --rating-height:calc(2.5rem * var(--scale));
+
+    --rating-icon-height:calc(1.5625rem * var(--scale));
+
+    --font-size:calc(1rem * var(--scale));
+
+    --title-width:calc(10.1875rem * var(--scale));
+    --title-height:calc(2.5rem * var(--scale));
+}
+
 .previewsDiv {
-    width: 95vw;
+    width: auto;
     height: auto;
+    text-align: left;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+::-webkit-scrollbar {
+    /* display: none; */
+}
+
+.moviePreviewContainer:first-child {
+    margin-left: 2vw;
+}
+.moviePreviewContainer:last-child {
+    margin-right: 2vw;
 }
 
 .moviePreviewContainer {
-    border-radius: 5px;
-    background-color: hsl(220, 13%, 14%);
+    width: var(--preview-width);
+    height: var(--preview-height);
     margin: 8px;
     padding-top: 8.5px;
-    width: 180px;
+    padding-bottom: 8.5px;
+    border-radius: .2rem;
+    background-color: hsl(223, 12%, 14%);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display:inline-block;
-    height: 355px;
     overflow:hidden;
     text-overflow: ellipsis;
+    text-align: center;
+    white-space: normal; 
 }
 
 .moviePoster {
-    height: 242px;
-    width: 163px;
-    border-radius: 5px;
+    width: var(--poster-width);
+    height: var(--poster-height);
+    border-radius: .2rem;
 }
 
 .ratingDiv {
-    height: 40px;
-    display: inline-flex;
+    height: var(--rating-height);
+    display: flex;
+    justify-content: center;
     align-items: center;
-    align-content: center;
 }
 
 .tomatoRatingDiv{
-    
+    height: var(--rating-height);
+    width: calc(var(--poster-width) / 2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .tomatoRatingIcon {
-    height: 25px;
+    height: var(--rating-icon-height);
     width: auto;
 }
 
 .tomatoRating{
     display: inline;
-    font-size: 1rem;
+    font-size: var(--font-size);
     margin-left: 6px
 }
 
 .userRatingDiv{
-
+    height: var(--rating-height);
+    width: calc(var(--poster-width) / 2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .userRatingIcon {
-    height: 25px;
+    height: var(--rating-icon-height);
     width: auto;
-    margin-left: 25px;
 }
 
 .userRating{
     display: inline;
-    font-size: 1rem;
+    font-size: var(--font-size);
     margin-left: 6px
 }
 
 .movieTitleDiv {
+    width: var(--title-width);
+    height: var(--title-height);
+    padding-left: 8.5px;
+    padding-right: 8.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .movieTitle{
+    font-size: calc(var(--font-size) * .85);
     margin: 0;
 }

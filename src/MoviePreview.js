@@ -25,17 +25,22 @@ function MoviePreview ({moviePreview}) {
         if(moviePreview?.tomatoRatingObj?.hasOwnProperty('iconImage')){
             tomatoRatingImgUrl = moviePreview.tomatoRatingObj.iconImage.url;
         }
+        if(tomatoRating === undefined || tomatoRating === "" ) {
+            tomatoRating = "";
+            tomatoRatingImgUrl = null;
+        }
     }
 
     if (moviePreview.hasOwnProperty('userRatingObj')) {
         if(moviePreview?.userRatingObj?.hasOwnProperty('dtlLikedScore')){
             userRating = moviePreview?.userRatingObj?.dtlLikedScore?.toString();
         }
-        if(userRating === undefined) {
-            userRating = "";
-        }
         if(moviePreview?.userRatingObj?.hasOwnProperty('iconImage')){
             userRatingImgUrl = moviePreview.userRatingObj.iconImage.url;
+        }
+        if(userRating === undefined || userRating === "") {
+            userRating = "";
+            userRatingImgUrl = null;
         }
     }
 

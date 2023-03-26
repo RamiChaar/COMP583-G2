@@ -1,0 +1,26 @@
+.header {
+    margin: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.searchInput {
+    width: 25rem;
+    font-size: 1rem;
+    padding: .5rem;
+    margin: auto;
+    border: none;
+    border-radius: .2rem;
+    background: hsl(0, 0%, 95%);
+}
+
+.accountIcon {
+    width: 2.1rem;
+    height: auto;
+    position:absolute;
+    background-color: hsl(223, 12%, 14%);
+    padding: 3px;
+    border: 1.5px solid hsl(0, 0%, 45%);
+    border-radius: 100%;
+}
