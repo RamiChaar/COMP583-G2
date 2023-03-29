@@ -18,9 +18,19 @@
 .accountIcon {
     width: 2.1rem;
     height: auto;
-    position:absolute;
-    background-color: hsl(223, 12%, 14%);
+    position: absolute;
     padding: 3px;
+    background-color: hsl(223, 12%, 14%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border: 1.5px solid hsl(0, 0%, 45%);
     border-radius: 100%;
+}
+
+.accountIcon:hover {
+    background-color: hsl(223, 12%, 16%);
+}
+
+.accountIcon:active {
+    width: 2rem;
+    height: auto;
 }

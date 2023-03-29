@@ -1,4 +1,4 @@
-function MoviePreview ({moviePreview}) {
+function MoviePreview ({moviePreview, handleMovieClicked}) {
     let movieTitle = "";
     let posterImgUrl = null;
     let tomatoRating = "";
@@ -44,9 +44,12 @@ function MoviePreview ({moviePreview}) {
         }
     }
 
+    function movieClicked() {
+        handleMovieClicked(moviePreview.id);
+    }
 
     return (
-        <div className='moviePreviewContainer'>
+        <div className='moviePreviewContainer' onClick={movieClicked}>
           <img className='moviePoster' src={posterImgUrl} alt="n/a"/>
           <div className='ratingDiv'>
             <div className='tomatoRatingDiv'>

@@ -19,7 +19,6 @@
 
 .previewsDiv {
     width: auto;
-    height: auto;
     text-align: left;
     overflow-x: auto;
     white-space: nowrap;
@@ -50,6 +49,32 @@
     text-overflow: ellipsis;
     text-align: center;
     white-space: normal; 
+}
+
+.moviePreviewContainer:hover {
+    width: calc(var(--preview-width) + 8px);
+    height: calc(var(--preview-height) + 8px); 
+    margin: 4px;
+    box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.2), 0 24px 80px 0 rgba(0, 0, 0, 0.19);
+}
+.moviePreviewContainer:first-child:hover {
+    margin-left: calc(2vw - 4px);
+}
+.moviePreviewContainer:last-child:hover {
+    margin-right: calc(2vw - 4px);
+}
+
+.moviePreviewContainer:active {
+    width: calc(var(--preview-width));
+    height: calc(var(--preview-height)); 
+    margin: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.moviePreviewContainer:first-child:active {
+    margin-left: calc(2vw);
+}
+.moviePreviewContainer:last-child:active {
+    margin-right: calc(2vw);
 }
 
 .moviePoster {
