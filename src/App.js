@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
-import './Styling/App.css';
+import './Styling/homePage.css';
 import './Styling/header.css';
 import './Styling/MoviePreviewList.css';
 

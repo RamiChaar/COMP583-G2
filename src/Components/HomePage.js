@@ -156,6 +156,28 @@ const HomePage = () => {
         navigate("/user");
     }
 
+    function scrollLeft() {
+      let scrollPane = document.querySelector(".previewsDiv");
+      let scrollNum = scrollPane.scrollLeft;
+
+      scrollPane.scroll({
+        top: 0,
+        left: scrollNum -= 800,
+        behavior: "smooth",
+      });
+    }
+
+    function scrollRight() {
+      let scrollPane = document.querySelector(".previewsDiv");
+      let scrollNum = scrollPane.scrollLeft;
+
+      scrollPane.scroll({
+        top: 0,
+        left: scrollNum += 800,
+        behavior: "smooth",
+      });
+    }
+
     return (
       <div className='App'>
         <div className='header'>
@@ -172,7 +194,11 @@ const HomePage = () => {
         <div className='body'>
           <div className='nearYouDiv'>
             <h4 className="nearYouHeader">Showing Near you:</h4>
-            <MoviePreviewList class='nearYouList' moviePreviews={moviePreviews} handleMovieClicked={handleMovieClicked}/>
+            <div className='nearYouSection'>
+              <i className="fa fa-angle-left fa-lg" onClick={scrollLeft}></i>
+              <i className="fa fa-angle-right fa-lg" onClick={scrollRight}></i>
+              <MoviePreviewList class='nearYouList' moviePreviews={moviePreviews} handleMovieClicked={handleMovieClicked}/>
+            </div>
           </div>
         </div>
       </div>

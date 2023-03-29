@@ -44,6 +44,10 @@ function MoviePreview ({moviePreview, handleMovieClicked}) {
         }
     }
 
+    if (tomatoRating === "" && userRating === "") {
+        return;
+    }
+
     function movieClicked() {
         handleMovieClicked(moviePreview.id);
     }

@@ -27,10 +27,11 @@
 }
 
 .accountIcon:hover {
-    background-color: hsl(223, 12%, 16%);
+    background-color: hsl(223, 12%, 10%);
 }
 
 .accountIcon:active {
     width: 2rem;
+    margin: .05rem;
     height: auto;
 }
