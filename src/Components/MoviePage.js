@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 import CastList from './MoviePageComponents/CastList.js';
 import CrewList from './MoviePageComponents/CrewList.js';  
 
+const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
+
 const fetchOptions = {
   method: 'GET',
   headers: {
@@ -34,10 +36,44 @@ const MoviePage = () => {
     setMovieData(newMovieData);
   }
 
-  useEffect(() => {
+  function getStoredMovie(storedMovies, movieId) {
+    if(storedMovies === null) {
+      return null;
+    }
+    let filteredMovies = storedMovies.filter(function(movie) {return movie.id === movieId});
+    if(filteredMovies.length === 0) {
+      return null;
+    }
 
+    return filteredMovies[0];
+  }
+
+  function isStored(storedMovies, movieId) {
+    if(storedMovies === null) {
+      return false;
+    }
+
+    let filteredMovies = storedMovies.filter(function(movie) {return movie.id === movieId});
+    if(filteredMovies.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  function storeMovie(newMovie) {
+    let storedMovies = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_MOVIES));
+    if(storedMovies === null) {
+      localStorage.setItem(LOCAL_STORAGE_KEY_MOVIES, JSON.stringify([newMovie]))
+      return;
+    }
+    console.log(newMovie)
+    localStorage.setItem(LOCAL_STORAGE_KEY_MOVIES, JSON.stringify([...storedMovies, newMovie]))
+  }
+
+  useEffect(() => {
     let newMovie = {
-      id: movieData.emsId,
+      id: movieState.id,
       trailer: movieData.trailer?.url,
       title: movieData.name,
       rating: movieData.motionPictureRating?.code,
@@ -77,13 +113,28 @@ const MoviePage = () => {
         };
       }),
     }
+    
+    if(newMovie.title === undefined) {
+      return;
+    }
 
-    console.log(newMovie)
+    let storedMovies = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_MOVIES));
+    if(!isStored(storedMovies, movieState.id)) {
+      storeMovie(newMovie);
+    }
+
     setMovie(newMovie);
   }, [movieData])
 
   useEffect(() => {
-    createMovieObject();
+    let storedMovies = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_MOVIES));
+    let storedMovie = getStoredMovie(storedMovies, movieState.id);
+
+    if(storedMovie !== null) {
+      setMovie(storedMovie);
+    } else {
+      createMovieObject();
+    }
   }, [])
 
 
@@ -104,7 +155,7 @@ const MoviePage = () => {
   return (
     <div className='moviePage'>
       <div className='movieHeader'>
-      <i className='backHome fa fa-angle-left fa-2x' onClick={handleBack}></i>
+      <i className='backHome fa fa-angle-left fa-1x' onClick={handleBack}></i>
       </div>
       <div className='movieInfo'>
         <video className='trailer' width='640' height='360' controls>
@@ -114,11 +165,11 @@ const MoviePage = () => {
         <h5 className='rating'>{movie.rating}</h5>
         <h5 className='length'>{`${Math.floor(movie.duration/60)}h ${movie.duration%60}min`}</h5>
         <div className='tomatoRatingDiv'>
-          <img className='tomatoRatingIcon' src={movie.tomatoRatingObj?.tomatoRatingImg} alt=""/>
+          <img className='tomatoRatingIcon' src={movie.tomatoRatingObj?.tomatoRating == null ? null : movie.tomatoRatingObj?.tomatoRatingImg} alt=""/>
           <p className="tomatoRating">{movie.tomatoRatingObj?.tomatoRating}</p>
         </div>
         <div className='userRatingDiv'>
-          <img className='userRatingIcon' src={movie.userRatingObj?.userRatingImg} alt=""/>
+          <img className='userRatingIcon' src={movie.userRatingObj?.userRating == null ? null : movie.userRatingObj?.userRatingImg} alt=""/>
           <p className="userRating">{movie.userRatingObj?.userRating}</p>
         </div>
         
