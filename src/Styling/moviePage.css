@@ -1,0 +1,33 @@
+.moviePage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+    color: hsl(0, 0%, 95%);
+}
+
+.backHome {
+    margin: 1vh;
+    margin-left: 2vw;
+}
+
+
+.movieInfo {
+    /* background-color: gray; */
+    width: 100vw;
+    height: 200rem;
+}
+
+.trailer {
+    width:640px;
+    height:360px;
+    background-color: black;
+    border: none;
+}
+
+
+.showTimes {
+    background-color: orange;
+    width: 100vw;
+    height: 20rem;
+}

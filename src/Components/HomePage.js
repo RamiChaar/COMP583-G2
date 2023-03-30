@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import SearchBar from './HomePageComponents/SearchBar';
 import MoviePreviewList from './HomePageComponents/MoviePreviewList';
 import useGeolocation from '../Hooks/useGeolocation.js';
@@ -153,7 +153,7 @@ const HomePage = () => {
     }
   
     function handleAccountClick() {
-        navigate("/user");
+      navigate("/user");
     }
 
     function scrollLeft() {
@@ -179,7 +179,7 @@ const HomePage = () => {
     }
 
     return (
-      <div className='App'>
+      <div className='homePage'>
         <div className='header'>
           <SearchBar class='searchBar' searchKeyword={searchKeyword} onChange={updateSearchKeyword}/>
           <svg className="accountIcon" viewBox="0 0 20 20"  onClick={handleAccountClick}>
@@ -195,8 +195,8 @@ const HomePage = () => {
           <div className='nearYouDiv'>
             <h4 className="nearYouHeader">Showing Near you:</h4>
             <div className='nearYouSection'>
-              <i className="fa fa-angle-left fa-lg" onClick={scrollLeft}></i>
-              <i className="fa fa-angle-right fa-lg" onClick={scrollRight}></i>
+              <i className="scrollBack fa fa-angle-left fa-lg" onClick={scrollLeft}></i>
+              <i className="scrollForward fa fa-angle-right fa-lg" onClick={scrollRight}></i>
               <MoviePreviewList class='nearYouList' moviePreviews={moviePreviews} handleMovieClicked={handleMovieClicked}/>
             </div>
           </div>

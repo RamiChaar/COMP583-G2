@@ -1,7 +1,7 @@
 :root {
   background-color: hsl(223, 12%, 22%);
 }
-.App {
+.homePage {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -14,21 +14,21 @@
   margin-left: 2vw;
 }
 
-.fa-angle-left {
+.scrollBack {
   display: inline;
   margin-left: 2vw;
   color: hsl(223, 12%, 12%);
 }
 
 
-.fa-angle-right {
+.scrollForward {
   display: inline;
   margin-right: 2vw;
   margin-left: calc(96vw - 25px);
   color: hsl(223, 12%, 12%);
 }
 
-.fa-angle-right:active, .fa-angle-left:active{
+.scrollForward:active, .scrollBack:active{
   color: hsl(223, 12%, 6%);
 }
 

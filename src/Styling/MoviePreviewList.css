@@ -57,6 +57,8 @@
 .moviePreviewContainer:hover {
     width: calc(var(--preview-width) + 8px);
     height: calc(var(--preview-height) + 8px); 
+    --poster-width:calc(calc(10.1875rem * var(--scale)) + 8px);
+    --poster-height:calc(calc(15.125rem * var(--scale)) + 8px);
     margin: 4px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
     --title-margin: 4px;
@@ -71,6 +73,8 @@
 .moviePreviewContainer:active {
     width: calc(var(--preview-width) - 4px);
     height: calc(var(--preview-height) - 4px); 
+    --poster-width:calc(calc(10.1875rem * var(--scale)) - 4px);
+    --poster-height:calc(calc(15.125rem * var(--scale)) - 4px);
     margin: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     --title-margin: -2px;
