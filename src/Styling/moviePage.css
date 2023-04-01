@@ -1,3 +1,7 @@
+:root {
+    --not-summary-height: 16vw;
+}
+
 .moviePage {
     min-height: 100vh;
     display: flex;
@@ -13,18 +17,109 @@
 
 
 .movieInfo {
-    /* background-color: gray; */
-    width: 100vw;
-    height: 200rem;
+    background-color: hsl(223, 12%, 12%);
+    width: 86vw;
+    height: auto;
+    margin: 5vw;
+    margin-top: 0;
+    padding: 2vw;
+    border: none;
+    border-radius: .2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.title{
+    margin: 0;
 }
 
 .trailer {
-    width:640px;
-    height:360px;
+    width: calc(30vw * 1.7777777);
+    height:30vw;
     background-color: black;
     border: none;
+    display:inline-block;
 }
 
+.movieDetails {
+    width: calc(83vw - calc(30vw * 1.7777777));
+    height: 30vw;
+    padding-left: 2vw;
+    display:inline-block;
+    overflow: hidden;
+}
+
+.rating{
+    display:inline-block;
+    margin: 0;
+    margin-top: 1rem;
+    margin-right: 2rem;
+}
+
+.spacer {
+    display: inline-block;
+    width: 1rem;
+}
+
+.newTomatoRating{
+    display: inline-block;
+    font-size: var(--font-size);
+    margin-left: 6px;
+    transform: translate(0, -.3rem);
+}
+
+.newUserRating{
+    display: inline-block;
+    font-size: var(--font-size);
+    margin-left: 6px;
+    transform: translate(0, -.3rem);
+}
+
+.genreTitle {
+    margin: 0;
+    margin-right: .75rem;
+    margin-top: 1.5rem;
+    display: inline-block;
+    font-size: 1rem;
+    font: bold;
+}
+
+.genre{
+    margin: 0;
+    display: inline-block;
+    font-size: .8rem;
+}
+
+.releaseDateTitle {
+    margin: 0;
+    margin-right: .75rem;
+    margin-top: .75rem;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.releaseDate{
+    margin: 0;
+    display: inline-block;
+    font-size: .8rem;
+}
+
+.summary{
+    font-size: .8rem;
+    height: var(--not-summary-height);
+    margin: 0;
+    margin-top: 1.5rem;
+    overflow: auto;
+}
+
+.summary::-webkit-scrollbar{
+    background-color: hsl(223, 12%, 12%);
+}
+
+.summary::-webkit-scrollbar-thumb{
+    background-color: hsl(223, 12%, 22%);
+    border-radius: 10rem;
+
+}
 
 .showTimes {
     background-color: orange;

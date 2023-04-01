@@ -113,7 +113,6 @@ const MoviePage = () => {
         };
       }),
     }
-    
     if(newMovie.title === undefined) {
       return;
     }
@@ -129,23 +128,32 @@ const MoviePage = () => {
   useEffect(() => {
     let storedMovies = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_MOVIES));
     let storedMovie = getStoredMovie(storedMovies, movieState.id);
-
+    
     if(storedMovie !== null) {
       setMovie(storedMovie);
     } else {
       createMovieObject();
     }
+
+    window.addEventListener("resize", () => handleResizeFunction());
   }, [])
 
 
   function getGenreString() {
-    let str = "Genre: ";
+    let str = " ";
 
     movie.genres?.forEach(genre => {
       str += genre + ", ";
     })
 
     return str.substring(0, str.length -2);
+  }
+
+  function handleResizeFunction() {
+    let notSummary = document.querySelector('.notSummary');
+    let summary = document.querySelector('.summary');
+    let height = notSummary.offsetHeight;
+    summary.style.height = `calc(calc(30vw - ${height}px) - 1.5rem)`;
   }
 
   function handleBack() {
@@ -158,27 +166,30 @@ const MoviePage = () => {
       <i className='backHome fa fa-angle-left fa-1x' onClick={handleBack}></i>
       </div>
       <div className='movieInfo'>
-        <video className='trailer' width='640' height='360' controls>
+        <video className='trailer' preload="auto" controls="controls" autoPlay="" loop="" muted="">
           <source src={movie.trailer} type='video/webm'/>
         </video>
-        <h2 className='title'>{movie.title}</h2>
-        <h5 className='rating'>{movie.rating}</h5>
-        <h5 className='length'>{`${Math.floor(movie.duration/60)}h ${movie.duration%60}min`}</h5>
-        <div className='tomatoRatingDiv'>
-          <img className='tomatoRatingIcon' src={movie.tomatoRatingObj?.tomatoRating == null ? null : movie.tomatoRatingObj?.tomatoRatingImg} alt=""/>
-          <p className="tomatoRating">{movie.tomatoRatingObj?.tomatoRating}</p>
+        <div className='movieDetails'>
+          <div className='notSummary'>
+            <h3 className='title'>{movie.title}</h3>
+            <h5 className='rating'>{`${movie.rating}, ${Math.floor(movie.duration/60)}h ${movie.duration%60}min`}</h5>
+            <img className='tomatoRatingIcon' src={movie.tomatoRatingObj?.tomatoRating == null ? null : movie.tomatoRatingObj?.tomatoRatingImg} alt=""/>
+            <p className="newTomatoRating">{movie.tomatoRatingObj?.tomatoRating}</p>
+            <div className='spacer'></div>
+            <img className='userRatingIcon' src={movie.userRatingObj?.userRating == null ? null : movie.userRatingObj?.userRatingImg} alt=""/>
+            <p className="newUserRating">{movie.userRatingObj?.userRating}</p>
+            <br/>
+            <p className='genreTitle'><b>Genre:</b></p>
+            <p className='genre'>{getGenreString()}</p>
+            <br/>
+            <p className='releaseDateTitle'><b>Release Date:</b></p>
+            <p className='releaseDate'>{` ${movie.releaseDate}`}</p>
+          </div>
+          <p className='summary'>{movie.summary}</p>  
         </div>
-        <div className='userRatingDiv'>
-          <img className='userRatingIcon' src={movie.userRatingObj?.userRating == null ? null : movie.userRatingObj?.userRatingImg} alt=""/>
-          <p className="userRating">{movie.userRatingObj?.userRating}</p>
-        </div>
-        
-        <h6 className='summary'>{movie.summary}</h6>
-        <h5 className='genre'>{getGenreString()}</h5>
-        <h5 className='releaseDate'>{movie.releaseDate}</h5>
-        <h4 className='castTitle'>Cast:</h4>
+        <p className='castTitle'>Cast:</p>
         <CastList className='castList' castList={movie.cast}></CastList>
-        <h4 className='crewTitle'>Crew:</h4>
+        <p className='crewTitle'>Crew:</p>
         <CrewList className='crewList' crewList={movie.crew}></CrewList>
       </div>
       <div className='showTimes'></div>

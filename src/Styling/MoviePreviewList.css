@@ -27,7 +27,7 @@
     white-space: nowrap;
 }
 
-::-webkit-scrollbar {
+.previewsDiv::-webkit-scrollbar {
     display: none;
 }
 
