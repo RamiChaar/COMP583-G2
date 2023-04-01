@@ -23,6 +23,7 @@
     margin: 5vw;
     margin-top: 0;
     padding: 2vw;
+    padding-bottom: 1vw;
     border: none;
     border-radius: .2rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -48,6 +49,33 @@
     overflow: hidden;
 }
 
+@media only screen and (max-width: 768px) {
+    .movieDetails {
+        width: auto;
+        height: auto;
+        display: block
+    }
+
+    .trailer {
+        width: 86vw;
+        height: auto;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .summary{
+        font-size: .8rem;
+        margin: 0;
+        margin-top: 1.5rem;
+        overflow: auto;
+    }
+
+    .genreTitle {
+        margin: 0;
+        margin-right: .75rem;
+    }
+
+}
 .rating{
     display:inline-block;
     margin: 0;
@@ -121,8 +149,19 @@
 
 }
 
+.castTitle {
+    margin: 0;
+    margin-top: 1rem;
+}
+
+.crewTitle {
+    margin: 0;
+}
+
 .showTimes {
     background-color: orange;
-    width: 100vw;
+    width: calc(100vw - 15px);
     height: 20rem;
+    margin: 0;
+    padding: 0;
 }

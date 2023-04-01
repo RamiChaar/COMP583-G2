@@ -67,14 +67,17 @@ const MoviePage = () => {
       localStorage.setItem(LOCAL_STORAGE_KEY_MOVIES, JSON.stringify([newMovie]))
       return;
     }
-    console.log(newMovie)
     localStorage.setItem(LOCAL_STORAGE_KEY_MOVIES, JSON.stringify([...storedMovies, newMovie]))
   }
+
+  useEffect(() => {
+  }, [movie])
 
   useEffect(() => {
     let newMovie = {
       id: movieState.id,
       trailer: movieData.trailer?.url,
+      poster: movieData.backgroundImage?.url,
       title: movieData.name,
       rating: movieData.motionPictureRating?.code,
       duration: movieData.durationMinutes,
@@ -101,7 +104,7 @@ const MoviePage = () => {
           id: uuidv4(),
           name: actor.name,
           characterName: actor.characterName,
-          headShot: actor.headShotImage?.url,
+          headShot: actor.headShotImage? actor.headShotImage.url : undefined,
         };
       }),
       crew: movieData.crew?.map(member => {
@@ -109,7 +112,7 @@ const MoviePage = () => {
           id: uuidv4(),
           name: member.name,
           role: member.role,
-          headShot: member.headShotImage?.url,
+          headShot: member.headShotImage? member.headShotImage.url : undefined,
         };
       }),
     }
@@ -150,29 +153,75 @@ const MoviePage = () => {
   }
 
   function handleResizeFunction() {
+    var windowWidth = window.innerWidth;
     let notSummary = document.querySelector('.notSummary');
     let summary = document.querySelector('.summary');
     let height = notSummary.offsetHeight;
-    summary.style.height = `calc(calc(30vw - ${height}px) - 1.5rem)`;
+    if(windowWidth > 768) {
+      summary.style.height = `calc(calc(30vw - ${height}px) - 1.5rem)`;
+    }
   }
 
   function handleBack() {
     navigate('/');
   }
 
+  function castScrollLeft() {
+    let scrollPane = document.querySelector(".castList");
+    let scrollNum = scrollPane.scrollLeft;
+
+    scrollPane.scroll({
+      top: 0,
+      left: scrollNum -= 400,
+      behavior: "smooth",
+    });
+  }
+
+  function castScrollRight() {
+    let scrollPane = document.querySelector(".castList");
+      let scrollNum = scrollPane.scrollLeft;
+
+      scrollPane.scroll({
+        top: 0,
+        left: scrollNum += 400,
+        behavior: "smooth",
+      });
+  }
+
+  function crewScrollLeft() {
+    let scrollPane = document.querySelector(".crewList");
+      let scrollNum = scrollPane.scrollLeft;
+
+      scrollPane.scroll({
+        top: 0,
+        left: scrollNum -= 400,
+        behavior: "smooth",
+      });
+  }
+
+  function crewScrollRight() {
+    let scrollPane = document.querySelector(".crewList");
+      let scrollNum = scrollPane.scrollLeft;
+
+      scrollPane.scroll({
+        top: 0,
+        left: scrollNum += 400,
+        behavior: "smooth",
+      });
+  }
   return (
     <div className='moviePage'>
       <div className='movieHeader'>
-      <i className='backHome fa fa-angle-left fa-1x' onClick={handleBack}></i>
+      <i className='backHome fa fa-angle-left fa-2x' onClick={handleBack}></i>
       </div>
       <div className='movieInfo'>
-        <video className='trailer' preload="auto" controls="controls" autoPlay="" loop="" muted="">
-          <source src={movie.trailer} type='video/webm'/>
+        <video className='trailer' poster={movie.poster} controls={movie.trailer === undefined ? '' : 'controls'}>
+          <source src={movie.trailer} type='video/mp4'/>
         </video>
         <div className='movieDetails'>
           <div className='notSummary'>
             <h3 className='title'>{movie.title}</h3>
-            <h5 className='rating'>{`${movie.rating}, ${Math.floor(movie.duration/60)}h ${movie.duration%60}min`}</h5>
+            <h5 className='rating'>{(movie.rating === undefined? "" : `${movie.rating},`) + `${Math.floor(movie.duration/60)}h ${movie.duration%60}min`}</h5>
             <img className='tomatoRatingIcon' src={movie.tomatoRatingObj?.tomatoRating == null ? null : movie.tomatoRatingObj?.tomatoRatingImg} alt=""/>
             <p className="newTomatoRating">{movie.tomatoRatingObj?.tomatoRating}</p>
             <div className='spacer'></div>
@@ -187,9 +236,11 @@ const MoviePage = () => {
           </div>
           <p className='summary'>{movie.summary}</p>  
         </div>
-        <p className='castTitle'>Cast:</p>
+        <i className="castScrollLeft fa fa-angle-left fa-lg" onClick={castScrollLeft}></i>
+        <i className="castScrollRight fa fa-angle-right fa-lg" onClick={castScrollRight}></i>
         <CastList className='castList' castList={movie.cast}></CastList>
-        <p className='crewTitle'>Crew:</p>
+        <i className="crewScrollLeft fa fa-angle-left fa-lg" onClick={crewScrollLeft}></i>
+        <i className="crewScrollRight fa fa-angle-right fa-lg" onClick={crewScrollRight}></i>
         <CrewList className='crewList' crewList={movie.crew}></CrewList>
       </div>
       <div className='showTimes'></div>

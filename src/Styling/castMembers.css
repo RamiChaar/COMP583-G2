@@ -1,0 +1,67 @@
+
+.castList {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: auto;
+    text-align: left;
+    overflow-x: auto;
+    white-space: nowrap;
+    vertical-align: middle;
+    margin: 0;
+}
+
+.castList::-webkit-scrollbar {
+    display: none;
+}
+
+.castScrollLeft {
+    display: inline;
+    color: hsl(223, 12%, 22%);
+  }
+  
+.castScrollRight {
+    display: inline;
+    margin-left: calc(86vw - 22px);
+    color: hsl(223, 12%, 22%);
+}
+
+.castScrollLeft:active, .castScrollRight:active{
+    color: hsl(223, 12%, 18%);
+}
+
+.castMember {
+    width: 6rem;
+    height: 10rem;
+    padding: .5rem;
+    display: inline-block;
+    text-align: center;
+}
+
+.headShot {
+    object-fit: cover;
+    height: 5.05rem;
+    width: 5.05rem;
+    border-radius: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    .headShot {
+        object-fit: cover;
+        height: 3rem;
+        width: 3rem;
+    }
+}
+
+.castName {
+    font-size: .8rem;
+    word-break:keep-all;
+    white-space: normal;
+}
+
+.castRole {
+    font-size: .8rem;
+    word-break:keep-all;
+    white-space: normal;
+    color: gray;
+}

@@ -1,0 +1,61 @@
+
+.crewList {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: auto;
+    text-align: left;
+    overflow-x: auto;
+    white-space: nowrap;
+    vertical-align: middle;
+    margin: 0;
+}
+
+.crewList::-webkit-scrollbar {
+    display: none;
+}
+
+.crewScrollLeft {
+    display: inline;
+    margin:0;
+    color: hsl(223, 12%, 22%);
+  }
+  
+.crewScrollRight {
+    display: inline;
+    margin:0;
+    margin-left: calc(86vw - 22px);
+    color: hsl(223, 12%, 22%);
+}
+
+.crewScrollLeft:active, .crewScrollRight:active{
+    color: hsl(223, 12%, 18%);
+}
+
+.crewMember {
+    width: 6rem;
+    height: 10rem;
+    padding: .5rem;
+    display: inline-block;
+    text-align: center;
+}
+
+.headShot {
+    object-fit: cover;
+    height: 5.05rem;
+    width: 5.05rem;
+    border-radius: 100%;
+}
+
+.crewName {
+    font-size: .8rem;
+    word-break:keep-all;
+    white-space: normal;
+}
+
+.crewRole {
+    font-size: .8rem;
+    word-break:keep-all;
+    white-space: normal;
+    color: gray;
+}

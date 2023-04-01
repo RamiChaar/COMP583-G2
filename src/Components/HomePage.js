@@ -142,7 +142,6 @@ const HomePage = () => {
       }
       
     }, []);
-  
 
     const updateSearchKeyword = (searchKeyword) => {
       setSearchKeyword(searchKeyword);
