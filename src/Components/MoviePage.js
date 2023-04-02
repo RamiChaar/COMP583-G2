@@ -73,7 +73,6 @@ const MoviePage = () => {
   }
 
   useEffect(() => {
-    console.log(movieState.showTimes)
   }, [movie])
 
   useEffect(() => {

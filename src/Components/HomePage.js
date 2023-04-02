@@ -5,6 +5,9 @@ import MoviePreviewList from './HomePageComponents/MoviePreviewList';
 import useGeolocation from '../Hooks/useGeolocation.js';
 
 const LOCAL_STORAGE_KEY_ADVTHEATERS = 'react-practice.advTheaters';
+const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
+const LOCAL_STORAGE_KEY_DATE_TIME = 'react-practice.dateTime';
+
 
 const fetchOptions = {
   method: 'GET',
@@ -90,8 +93,7 @@ const HomePage = () => {
       return newAdvTheaters;
     }
   
-    async function fetchTheaters() {
-      let fetchTheatersURL = `https://flixster.p.rapidapi.com/theaters/list?latitude=${location.coordinates.lat}&longitude=${location.coordinates.lng}&radius=10`;
+    async function fetchTheaters(fetchTheatersURL) {
       console.log("fetching theaters... " + fetchTheatersURL)
       const response = await fetch(fetchTheatersURL, fetchOptions).catch(err => console.error(err));
       const json = await response.json();
@@ -99,7 +101,19 @@ const HomePage = () => {
     }
   
     async function startFetching() {
-      let newTheaters = await fetchTheaters();
+      if(!location.loaded) {
+        return;
+      }
+      if (location.hasOwnProperty('error')) {
+        console.log(`error: ${location.error}`)
+        console.log('using approximate location to fetch theaters...')
+        let fetchTheatersURL = `https://flixster.p.rapidapi.com/theaters/list?radius=10`;
+        let newTheaters = await fetchTheaters(fetchTheatersURL);
+        setTheaters(newTheaters);
+        return;
+      } 
+      let fetchTheatersURL = `https://flixster.p.rapidapi.com/theaters/list?latitude=${location.coordinates.lat}&longitude=${location.coordinates.lng}&radius=10`;
+      let newTheaters = await fetchTheaters(fetchTheatersURL);
       setTheaters(newTheaters);
     }
   
@@ -118,6 +132,8 @@ const HomePage = () => {
     useEffect(() => {
       if(advTheaters.length !== 0){
         localStorage.setItem(LOCAL_STORAGE_KEY_ADVTHEATERS, JSON.stringify(advTheaters))
+        const timeNow = new Date();
+        localStorage.setItem(LOCAL_STORAGE_KEY_DATE_TIME, JSON.stringify(timeNow))
         addTheaterDetails();
         console.log("adv theater details: ");
         console.log(advTheaters);
@@ -143,24 +159,40 @@ const HomePage = () => {
     }, [moviePreviews])
   
     useEffect(() => {
-      if(!location.loaded) {
+      resetStates()
+
+      let storedAdvTheaters = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_ADVTHEATERS));
+      let pastDate = new Date(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_DATE_TIME)));
+      let currentDate = new Date()
+
+      
+      if(!pastDate) {
+        startFetching();
         return;
       }
 
+      let diffInMs = currentDate.getTime() - pastDate.getTime();
+      let diffInHours = diffInMs / (1000 * 60 * 60);
+
+      if (diffInHours < 0.5 && storedAdvTheaters) {
+        setAdvTheaters(storedAdvTheaters);
+      } else {
+        localStorage.removeItem(LOCAL_STORAGE_KEY_ADVTHEATERS)
+        localStorage.removeItem(LOCAL_STORAGE_KEY_MOVIES)
+        localStorage.removeItem(LOCAL_STORAGE_KEY_DATE_TIME)
+        
+        startFetching();
+      }
+
+    }, [location]);
+
+    function resetStates() {
       setTheaters([]);
       setAdvTheaters([]);
       setMovies([]);
       setMoviePreviews([]);
-  
-      let storedAdvTheaters = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_ADVTHEATERS));
-  
-      if(storedAdvTheaters){
-        setAdvTheaters(storedAdvTheaters);
-      } else {
-        startFetching();
-      }
-      
-    }, [location]);
+      setSearchKeyword('')
+    }
 
     function getShowTimes(movieId) {
       let showTimesList = [];
