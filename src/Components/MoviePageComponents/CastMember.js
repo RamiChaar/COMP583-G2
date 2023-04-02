@@ -6,9 +6,7 @@ function CastMember ({castMember}) {
     
     return (
         <div className="castMember">
-            {headShot === undefined ?  
-            <i className='fa fa-user-circle-o fa-3x'></i> : 
-            <img className='headShot' src={headShot} alt=""></img>}
+            <img className='headShot' src={headShot} alt=""></img>
             <p className ='castName'>{name}</p>
             <p className ='castRole'>{role}</p>
         </div>

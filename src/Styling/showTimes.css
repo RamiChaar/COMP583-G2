@@ -1,0 +1,127 @@
+.showTimesList {
+    background-color: hsl(223, 12%, 24%);
+    width: 86vw;
+    height: auto;
+    margin: 5vw;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 2vw;
+    padding-bottom: 1vw;
+    padding-top: 0;
+    border: none;
+    border-radius: .2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.showTimesListDate{
+    font-weight: bold;
+}
+
+.showTimesListTitle {
+
+}
+
+.theaterShowTimes{
+    display: inline-block;
+    width: calc(37vw - 4px);
+    height: 50vh;
+    margin: 1vw;
+    padding: 2vw;
+    padding-top: 1vw;
+    border-radius: .8rem;
+    border: 1px solid hsl(0, 0%, 75%);
+    overflow-y: scroll;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.theaterShowTimes::-webkit-scrollbar{
+    background-color: hsl(223, 12%, 24%);
+    border-radius: 100%;
+}
+
+.theaterShowTimes::-webkit-scrollbar-thumb{
+    background-color: hsl(223, 12%, 36%);
+    border-radius: 10rem;
+
+}
+
+
+.theaterShowTimesHeader {
+    width: 100%;
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.theaterShowTimesTitle {
+    margin: 0;
+    display: inline;
+    text-align: left;
+}
+
+.distanceTitle {
+    display: inline;
+    font-size: 1rem;
+    text-align: right;
+}
+
+.variantName {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+}
+
+.amenityGroup {
+    margin-left: 1vw;
+}
+
+.amenities {
+
+}
+
+.showTimes {
+    font-size: 1.5rem;
+
+}
+
+.amenityDiv {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.amenity {
+    display: inline-block;
+    font-size: .8rem;
+    cursor: pointer;
+    color: hsl(217, 71%, 53%);
+    text-decoration: none;
+}
+
+.amenity:hover {
+    text-decoration: underline;
+  }
+
+.amenityDot {
+    display: inline;
+    font-size: .8rem;
+
+    margin-left: .25rem;
+    margin-right: .25rem;
+}
+
+div .amenityDiv:last-child .amenityDot:last-child{
+    visibility: hidden;
+}
+
+.showTime {
+    display: inline-block;
+    font-size: .8rem;
+    padding: .5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-right: .5rem;
+    background-color: hsl(0, 0%, 40%);
+    border-radius: 10rem;
+}

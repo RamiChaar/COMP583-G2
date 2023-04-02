@@ -8,6 +8,7 @@ import './Styling/header.css';
 import './Styling/MoviePreviewList.css';
 import './Styling/crewMembers.css';
 import './Styling/castMembers.css';
+import './Styling/showTimes.css';
 
 
 

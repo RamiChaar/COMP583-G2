@@ -59,6 +59,22 @@ const HomePage = () => {
       });
       return newMovies;
     }
+
+    function addTheaterDetails() {
+      if(advTheaters.length > 0 && advTheaters[0].hasOwnProperty('theaterData')){
+        return;
+      }
+      let newAdvTheaters = [];
+      advTheaters.forEach((advTheater) => {
+        theaters.forEach((theater) => {
+          if(advTheater.theaterId === theater.id) {
+            let newAdvTheater = {...advTheater, theaterData: {name: theater.name, distance: theater.distance}}
+            newAdvTheaters.push(newAdvTheater);
+          }
+        });
+      });      
+      setAdvTheaters(newAdvTheaters);
+    }
   
     async function fetchAdvTheaters () {
   
@@ -75,8 +91,7 @@ const HomePage = () => {
     }
   
     async function fetchTheaters() {
-      
-      let fetchTheatersURL = `https://flixster.p.rapidapi.com/theaters/list?latitude=${location.lat}&longitude=${location.lng}&radius=10`;
+      let fetchTheatersURL = `https://flixster.p.rapidapi.com/theaters/list?latitude=${location.coordinates.lat}&longitude=${location.coordinates.lng}&radius=10`;
       console.log("fetching theaters... " + fetchTheatersURL)
       const response = await fetch(fetchTheatersURL, fetchOptions).catch(err => console.error(err));
       const json = await response.json();
@@ -102,9 +117,10 @@ const HomePage = () => {
   
     useEffect(() => {
       if(advTheaters.length !== 0){
+        localStorage.setItem(LOCAL_STORAGE_KEY_ADVTHEATERS, JSON.stringify(advTheaters))
+        addTheaterDetails();
         console.log("adv theater details: ");
         console.log(advTheaters);
-        localStorage.setItem(LOCAL_STORAGE_KEY_ADVTHEATERS, JSON.stringify(advTheaters))
         let newMovies = createMovieList();
         setMovies(newMovies);
       }
@@ -127,7 +143,10 @@ const HomePage = () => {
     }, [moviePreviews])
   
     useEffect(() => {
-  
+      if(!location.loaded) {
+        return;
+      }
+
       setTheaters([]);
       setAdvTheaters([]);
       setMovies([]);
@@ -141,14 +160,31 @@ const HomePage = () => {
         startFetching();
       }
       
-    }, []);
+    }, [location]);
 
-    const updateSearchKeyword = (searchKeyword) => {
-      setSearchKeyword(searchKeyword);
+    function getShowTimes(movieId) {
+      let showTimesList = [];
+      advTheaters.forEach(theater => {
+        theater.movies.forEach(movie => {
+          if(movie.emsVersionId === movieId) {
+            let showTimeObject = {
+              id: theater.theaterId,
+              name: theater.theaterData.name,
+              distance: theater.theaterData.distance,
+              movieVariants: movie.movieVariants,
+            }
+            showTimesList.push(showTimeObject);
+          }
+        });
+      });
+
+      return showTimesList;
     }
   
     function handleMovieClicked(movieId) {
-      navigate("/movie", {state: {id: movieId}});
+      let showTimesList = getShowTimes(movieId);
+      console.log()
+      navigate("/movie", {state: {id: movieId, showTimes: showTimesList, date: advTheaters.length > 0? advTheaters[0].displayDate : undefined}});
     }
   
     function handleAccountClick() {
@@ -175,6 +211,10 @@ const HomePage = () => {
         left: scrollNum += 800,
         behavior: "smooth",
       });
+    }
+
+    const updateSearchKeyword = (searchKeyword) => {
+      setSearchKeyword(searchKeyword);
     }
 
     return (

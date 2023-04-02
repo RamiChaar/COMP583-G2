@@ -18,23 +18,23 @@
 .crewScrollLeft {
     display: inline;
     margin:0;
-    color: hsl(223, 12%, 22%);
+    color: hsl(223, 12%, 6%);
   }
   
 .crewScrollRight {
     display: inline;
     margin:0;
     margin-left: calc(86vw - 22px);
-    color: hsl(223, 12%, 22%);
+    color: hsl(223, 12%, 6%);
 }
 
 .crewScrollLeft:active, .crewScrollRight:active{
-    color: hsl(223, 12%, 18%);
+    color: hsl(223, 12%, 2%);
 }
 
 .crewMember {
-    width: 6rem;
-    height: 10rem;
+    width: 5.6rem;
+    height: 11rem;
     padding: .5rem;
     display: inline-block;
     text-align: center;
@@ -42,9 +42,10 @@
 
 .headShot {
     object-fit: cover;
-    height: 5.05rem;
-    width: 5.05rem;
+    height: 5.6rem;
+    width: 5.6rem;
     border-radius: 100%;
+    background-color: white;
 }
 
 .crewName {

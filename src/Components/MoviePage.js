@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid'
 import CastList from './MoviePageComponents/CastList.js';
-import CrewList from './MoviePageComponents/CrewList.js';  
+import CrewList from './MoviePageComponents/CrewList.js'; 
+import ShowTimesList from './MoviePageComponents/ShowTimesList';
+
 
 const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
 
@@ -71,6 +73,7 @@ const MoviePage = () => {
   }
 
   useEffect(() => {
+    console.log(movieState.showTimes)
   }, [movie])
 
   useEffect(() => {
@@ -209,6 +212,7 @@ const MoviePage = () => {
         behavior: "smooth",
       });
   }
+
   return (
     <div className='moviePage'>
       <div className='movieHeader'>
@@ -238,12 +242,12 @@ const MoviePage = () => {
         </div>
         <i className="castScrollLeft fa fa-angle-left fa-lg" onClick={castScrollLeft}></i>
         <i className="castScrollRight fa fa-angle-right fa-lg" onClick={castScrollRight}></i>
-        <CastList className='castList' castList={movie.cast}></CastList>
+        <CastList castList={movie.cast}></CastList>
         <i className="crewScrollLeft fa fa-angle-left fa-lg" onClick={crewScrollLeft}></i>
         <i className="crewScrollRight fa fa-angle-right fa-lg" onClick={crewScrollRight}></i>
-        <CrewList className='crewList' crewList={movie.crew}></CrewList>
+        <CrewList crewList={movie.crew}></CrewList>
       </div>
-      <div className='showTimes'></div>
+      <ShowTimesList showTimesList={movieState.showTimes} date={movieState.date}></ShowTimesList>
     </div>
   );
 };
