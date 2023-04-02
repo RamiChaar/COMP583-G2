@@ -219,7 +219,7 @@ const MoviePage = () => {
       </div>
       <div className='movieInfo'>
         <video className='trailer' poster={movie.poster} controls={movie.trailer === undefined ? '' : 'controls'}>
-          <source src={movie.trailer} type='video/mp4'/>
+          <source src={movie.trailer !== undefined ? movie.trailer.replace(/^http:\/\//i, "https://") : undefined} type='video/mp4'/>
         </video>
         <div className='movieDetails'>
           <div className='notSummary'>
