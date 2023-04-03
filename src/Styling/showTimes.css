@@ -17,6 +17,10 @@
 
 .showTimesListDate{
     font-weight: bold;
+    border: 1px solid white;
+    padding: .7rem;
+    margin-bottom: 0;
+    border-radius: 10px;
 }
 
 .showTimesListTitle {

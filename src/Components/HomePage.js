@@ -64,7 +64,7 @@ const HomePage = () => {
     }
 
     function addTheaterDetails() {
-      if(advTheaters.length > 0 && advTheaters[0].hasOwnProperty('theaterData')){
+      if(advTheaters.length > 0 && advTheaters[advTheaters.length - 1].hasOwnProperty('theaterData')){
         return;
       }
       let newAdvTheaters = [];
@@ -80,21 +80,31 @@ const HomePage = () => {
     }
   
     async function fetchAdvTheaters () {
-  
-      let newAdvTheaters = [];
-      for(let i = 0; i < theaters.length; i++) {
-        let theater = theaters[i];
-        let fetchTheaterUrl = `https://flixster.p.rapidapi.com/theaters/detail?id=${theater.id}`;
-        console.log("fetching theater... " + fetchTheaterUrl)
-        const response = await fetch(fetchTheaterUrl, fetchOptions).catch(err => console.error(err));
-        const json = await response.json();
-        newAdvTheaters.push(json.data.theaterShowtimeGroupings);
+      const batchSize = 4;
+      const numBatches = Math.ceil(theaters.length / batchSize);
+      const newAdvTheaters = [];
+      for (let i = 0; i < numBatches; i++) {
+        const batchStart = i * batchSize;
+        const batchEnd = batchStart + batchSize;
+        const batchTheaters = theaters.slice(batchStart, batchEnd);
+        const promises = batchTheaters.map(async theater => {
+          const fetchTheaterUrl = `https://flixster.p.rapidapi.com/theaters/detail?id=${theater.id}`;
+          console.log("fetching theater... " + fetchTheaterUrl)
+          return fetch(fetchTheaterUrl, fetchOptions)
+            .then(response => response.json())
+            .then(data => data.data.theaterShowtimeGroupings);
+        });
+        const batchNewAdvTheaters = await Promise.all(promises);
+        newAdvTheaters.push(...batchNewAdvTheaters);
+        setAdvTheaters(newAdvTheaters)
+        if (i < numBatches - 1) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
       }
-      return newAdvTheaters;
     }
   
     async function fetchTheaters(fetchTheatersURL) {
-      console.log("fetching theaters... " + fetchTheatersURL)
+      console.log("fetching theater list... " + fetchTheatersURL)
       const response = await fetch(fetchTheatersURL, fetchOptions).catch(err => console.error(err));
       const json = await response.json();
       return json.data.theaters;
@@ -118,28 +128,25 @@ const HomePage = () => {
     }
   
     useEffect(() => {
-      async function fetch() {
-        let newAdvTheaters = await fetchAdvTheaters();
-        setAdvTheaters(newAdvTheaters);
-      }
-      if(theaters.length !== 0){
+      if(theaters.length > 0){
         console.log("theater list: ");
         console.log(theaters);
-        fetch();
+        fetchAdvTheaters();
       }
     }, [theaters]);
   
     useEffect(() => {
-      if(advTheaters.length !== 0){
-        localStorage.setItem(LOCAL_STORAGE_KEY_ADVTHEATERS, JSON.stringify(advTheaters))
-        const timeNow = new Date();
-        localStorage.setItem(LOCAL_STORAGE_KEY_DATE_TIME, JSON.stringify(timeNow))
-        addTheaterDetails();
-        console.log("adv theater details: ");
-        console.log(advTheaters);
-        let newMovies = createMovieList();
-        setMovies(newMovies);
+      if(advTheaters.length < 1){
+        return;
       }
+      localStorage.setItem(LOCAL_STORAGE_KEY_ADVTHEATERS, JSON.stringify(advTheaters))
+      const timeNow = new Date();
+      localStorage.setItem(LOCAL_STORAGE_KEY_DATE_TIME, JSON.stringify(timeNow))
+      addTheaterDetails();
+      console.log("adv theater details: ");
+      console.log(advTheaters);
+      let newMovies = createMovieList();
+      setMovies(newMovies);
     }, [advTheaters]);
   
     useEffect(() => {

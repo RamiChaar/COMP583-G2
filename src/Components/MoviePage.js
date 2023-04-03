@@ -224,7 +224,7 @@ const MoviePage = () => {
         <div className='movieDetails'>
           <div className='notSummary'>
             <h3 className='title'>{movie.title}</h3>
-            <h5 className='rating'>{(movie.rating === undefined? "" : `${movie.rating},`) + `${Math.floor(movie.duration/60)}h ${movie.duration%60}min`}</h5>
+            <h5 className='rating'>{(movie.rating === undefined? "" : `${movie.rating}, `) + `${Math.floor(movie.duration/60)}h ${movie.duration%60}min`}</h5>
             <img className='tomatoRatingIcon' src={movie.tomatoRatingObj?.tomatoRating == null ? null : movie.tomatoRatingObj?.tomatoRatingImg} alt=""/>
             <p className="newTomatoRating">{movie.tomatoRatingObj?.tomatoRating}</p>
             <div className='spacer'></div>
