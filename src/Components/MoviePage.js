@@ -158,7 +158,7 @@ const MoviePage = () => {
     var windowWidth = window.innerWidth;
     let notSummary = document.querySelector('.notSummary');
     let summary = document.querySelector('.summary');
-    let height = notSummary.offsetHeight;
+    let height = notSummary?.offsetHeight;
     if(windowWidth > 768) {
       summary.style.height = `calc(calc(30vw - ${height}px) - 1.5rem)`;
     }

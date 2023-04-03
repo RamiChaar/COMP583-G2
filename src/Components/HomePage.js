@@ -101,6 +101,7 @@ const HomePage = () => {
           await new Promise(resolve => setTimeout(resolve, 1000));
         }
       }
+      console.log('done')
     }
   
     async function fetchTheaters(fetchTheatersURL) {
@@ -115,6 +116,7 @@ const HomePage = () => {
         return;
       }
       if (location.hasOwnProperty('error')) {
+        
         console.log(`error: ${location.error}`)
         console.log('using approximate location to fetch theaters...')
         let fetchTheatersURL = `https://flixster.p.rapidapi.com/theaters/list?radius=10`;
@@ -143,30 +145,22 @@ const HomePage = () => {
       const timeNow = new Date();
       localStorage.setItem(LOCAL_STORAGE_KEY_DATE_TIME, JSON.stringify(timeNow))
       addTheaterDetails();
-      console.log("adv theater details: ");
-      console.log(advTheaters);
       let newMovies = createMovieList();
       setMovies(newMovies);
     }, [advTheaters]);
   
     useEffect(() => {
       if(movies.length !== 0){
-        console.log("movie list: ");
-        console.log(movies);
         let newMoviePreviews = createMoviePreviews();
         setMoviePreviews(newMoviePreviews);
       }
     }, [movies]);
   
     useEffect(() => {
-      if(moviePreviews.length !== 0){
-        console.log("movie previews: ");
-        console.log(moviePreviews);
-      }
     }, [moviePreviews])
   
     useEffect(() => {
-      resetStates()
+      resetStates();
 
       let storedAdvTheaters = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_ADVTHEATERS));
       let pastDate = new Date(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_DATE_TIME)));

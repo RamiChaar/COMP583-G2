@@ -1,5 +1,5 @@
 :root {
-    --scale: .75;
+    --scale: .65;
 
     --container-height: calc(26.25rem * var(--scale));
     --preview-width:calc(11.25rem * var(--scale));
@@ -17,6 +17,7 @@
     --title-width:calc(10.1875rem * var(--scale));
     --title-height:calc(2.5rem * var(--scale));
     --title-margin: 0px;
+    --title-padding:calc(8.5px * var(--scale));
 }
 
 .previewsDiv {
@@ -142,8 +143,8 @@
     height: var(--title-height);
     margin-left: var(--title-margin);
     margin-right: var(--title-margin);
-    padding-left: 8.5px;
-    padding-right: 8.5px;
+    padding-left: var(--title-padding);
+    padding-right: var(--title-padding);
     display: flex;
     justify-content: center;
     align-items: center;
