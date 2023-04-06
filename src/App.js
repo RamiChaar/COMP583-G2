@@ -6,18 +6,16 @@ import './Styling/MoviePage.css';
 import './Styling/UserPage.css';
 import './Styling/TheaterPage.css';
 import './Styling/Header.css';
+import './Styling/Footer.css';
 import './Styling/MoviePreviewList.css';
 import './Styling/TheaterPreviewList.css';
 import './Styling/CastCrewMembers.css';
 import './Styling/ShowTimes.css';
 
-
-
 import Home from "./Components/HomePage.js";
 import Movie from "./Components/MoviePage.js";
 import User from "./Components/UserPage.js";
 import Theater from "./Components/TheaterPage.js";
-
   
 function App() {
   return (
@@ -33,6 +31,5 @@ function App() {
     </>
   );
 }
-
 
 export default App;

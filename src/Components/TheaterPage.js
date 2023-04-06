@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
 import {useNavigate, useLocation} from 'react-router-dom';
 import ShowTimesList from './MoviePageComponents/ShowTimesList';
+import Footer from './FooterComponents/Footer';
 
 const TheaterPage = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const TheaterPage = () => {
 
       </div>
       <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate}></ShowTimesList>
-
+      <Footer/>
     </div>
   );
 };

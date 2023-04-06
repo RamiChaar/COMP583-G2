@@ -5,3 +5,7 @@
     font-size: calc(10px + 2vmin);
     color: hsl(0, 0%, 95%);
 }
+
+.userPageBody{ 
+    min-height: 100vh;
+}

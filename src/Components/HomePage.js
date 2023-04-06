@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import SearchBar from './HomePageComponents/SearchBar';
+import Footer from './FooterComponents/Footer';
 import MoviePreviewList from './HomePageComponents/MoviePreviewList';
 import useGeolocation from '../Hooks/useGeolocation.js';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
@@ -341,8 +342,7 @@ const HomePage = () => {
         </div>
 
         <div className='body'>
-
-        <div className='movieListDiv'>
+          <div className='movieListDiv'>
             <h4 className="listHeader">New This Week:</h4>
             <i className="scrollBack fa fa-angle-left" onClick={() => scrollLeft('.newlyReleasedPreview')}></i>
             <i className="scrollForward fa fa-angle-right" onClick={() => scrollRight('.newlyReleasedPreview')}></i>
@@ -386,8 +386,8 @@ const HomePage = () => {
               <TheaterPreviewList class='theatersNearYouList' advTheaters={advTheaters} handleTheaterClicked={handleTheaterClicked} />
             </div>
           </div>
-
         </div>
+        <Footer/>
       </div>
     );
 };

@@ -1,0 +1,53 @@
+.footer{
+    width:  100%;
+    height: 148px; 
+    background-color: hsl(223, 12%, 6%);
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footNotes {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    margin-top: 3rem;
+}
+
+.footNote {
+    display: inline-block;
+    font-size: .8rem;
+    cursor: pointer;
+    color: hsl(217, 71%, 53%);
+    text-decoration: none;
+}
+
+.footNoteName {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.footNoteSeparator {
+    color: grey;
+    display: inline;
+    font-size: .8rem;
+    margin-left: .25rem;
+    margin-right: .25rem;
+}
+
+.rights {
+    font-size: .8rem;
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.footNoteName:hover {
+    text-decoration: underline;
+}
+
+div .footNote:last-child .footNoteSeparator:last-child{
+    display: none;
+}

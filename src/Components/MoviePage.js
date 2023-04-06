@@ -5,6 +5,7 @@ import CastList from './MoviePageComponents/CastList.js';
 import CrewList from './MoviePageComponents/CrewList.js'; 
 import ShowTimesList from './MoviePageComponents/ShowTimesList';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
+import Footer from './FooterComponents/Footer'
 
 const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
 
@@ -260,6 +261,7 @@ const MoviePage = () => {
         <CrewList crewList={movie.crew}></CrewList>
       </div>
       <ShowTimesList showTimesList={movieState.showTimes} date={movieState.date}></ShowTimesList>
+      <Footer/>
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import React from "react";
-  
-import { ReactComponent as Logo } from '../Resources/logo.svg';
 import {useNavigate} from 'react-router-dom';
+import { ReactComponent as Logo } from '../Resources/logo.svg';
+import Footer from './FooterComponents/Footer';
+
 
 const UserPage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,10 @@ const UserPage = () => {
         <Logo className='logo'/>
         
       </div>
-      <h1>User Page</h1>
+      <div className='userPageBody'>
+        <h1>User Page</h1>
+      </div>
+      <Footer/>
     </div>
   );
 };

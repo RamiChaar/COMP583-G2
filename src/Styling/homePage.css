@@ -33,7 +33,7 @@ br {
 .scrollForward {
   display: inline;
   margin-right: 2vw;
-  margin-left: calc(96vw - 34px);
+  margin-left: calc(96% - 34px);
   color: hsl(223, 12%, 24%);
 }
 
