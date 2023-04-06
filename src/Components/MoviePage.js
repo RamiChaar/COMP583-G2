@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import CastList from './MoviePageComponents/CastList.js';
 import CrewList from './MoviePageComponents/CrewList.js'; 
 import ShowTimesList from './MoviePageComponents/ShowTimesList';
-
+import { ReactComponent as Logo } from '../Resources/logo.svg';
 
 const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
 
@@ -159,7 +159,7 @@ const MoviePage = () => {
     let notSummary = document.querySelector('.notSummary');
     let summary = document.querySelector('.summary');
     let height = notSummary?.offsetHeight;
-    if(windowWidth > 768) {
+    if(windowWidth > 768 && summary !== null) {
       summary.style.height = `calc(calc(30vw - ${height}px) - 1.5rem)`;
     }
   }
@@ -212,11 +212,25 @@ const MoviePage = () => {
       });
   }
 
+  function handleAccountClick() {
+    navigate("/user");
+  }
+
   return (
     <div className='moviePage'>
-      <div className='movieHeader'>
-      <i className='backHome fa fa-angle-left fa-2x' onClick={handleBack}></i>
+      <div className='header'>
+        <i className='backHome fa fa-angle-left fa-lg' onClick={handleBack}></i>
+        <Logo className='logo'/>
+        <svg className="accountIcon" viewBox="0 0 20 20"  onClick={handleAccountClick}>
+          <path fill="hsl(0, 0%, 45%)" d="M14.023,12.154c1.514-1.192,2.488-3.038,2.488-5.114c0-3.597-2.914-6.512-6.512-6.512
+              c-3.597,0-6.512,2.916-6.512,6.512c0,2.076,0.975,3.922,2.489,5.114c-2.714,1.385-4.625,4.117-4.836,7.318h1.186
+              c0.229-2.998,2.177-5.512,4.86-6.566c0.853,0.41,1.804,0.646,2.813,0.646c1.01,0,1.961-0.236,2.812-0.646
+              c2.684,1.055,4.633,3.568,4.859,6.566h1.188C18.648,16.271,16.736,13.539,14.023,12.154z M10,12.367
+              c-2.943,0-5.328-2.385-5.328-5.327c0-2.943,2.385-5.328,5.328-5.328c2.943,0,5.328,2.385,5.328,5.328
+              C15.328,9.982,12.943,12.367,10,12.367z"></path>
+        </svg>
       </div>
+      
       <div className='movieInfo'>
         <video className='trailer' poster={movie.poster} controls={movie.trailer === undefined ? '' : 'controls'}>
           <source src={movie.trailer !== undefined ? movie.trailer.replace(/^http:\/\//i, "https://") : undefined} type='video/mp4'/>
@@ -239,8 +253,8 @@ const MoviePage = () => {
           </div>
           <p className='summary'>{movie.summary}</p>  
         </div>
-        <i className="castScrollLeft fa fa-angle-left fa-lg" onClick={castScrollLeft}></i>
-        <i className="castScrollRight fa fa-angle-right fa-lg" onClick={castScrollRight}></i>
+        <i className="castScrollLeft fa fa-angle-left fa-lg" style={{ color: movie?.cast?.length > 0 ? 'hsl(223, 12%, 6%)' : 'hsl(223, 12%, 24%)' }} onClick={castScrollLeft}></i>
+        <i className="castScrollRight fa fa-angle-right fa-lg" style={{ color: movie?.cast?.length > 0 ? 'hsl(223, 12%, 6%)' : 'hsl(223, 12%, 24%)' }} onClick={castScrollRight}></i>
         <CastList castList={movie.cast}></CastList>
         <i className="crewScrollLeft fa fa-angle-left fa-lg" onClick={crewScrollLeft}></i>
         <i className="crewScrollRight fa fa-angle-right fa-lg" onClick={crewScrollRight}></i>

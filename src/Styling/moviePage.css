@@ -11,8 +11,9 @@
 }
 
 .backHome {
-    margin: 1vh;
     margin-left: 2vw;
+    margin-right: auto;
+    color: hsl(0, 0%, 95%)
 }
 
 

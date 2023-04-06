@@ -17,9 +17,11 @@ br {
   color: hsl(0, 0%, 95%);
 }
 
-.nearYouHeader {
-  margin: .8rem;
+.listHeader {
+  margin-bottom: .4rem;
+  margin-top: 0;
   margin-left: 2vw;
+  font-size: 1.4rem;
 }
 
 .scrollBack {
@@ -31,7 +33,7 @@ br {
 .scrollForward {
   display: inline;
   margin-right: 2vw;
-  margin-left: calc(96vw - 25px);
+  margin-left: calc(96vw - 34px);
   color: hsl(223, 12%, 24%);
 }
 
