@@ -4,6 +4,7 @@ import SearchBar from './HomePageComponents/SearchBar';
 import MoviePreviewList from './HomePageComponents/MoviePreviewList';
 import useGeolocation from '../Hooks/useGeolocation.js';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
+import TheaterPreviewList from './HomePageComponents/TheaterPreviewList';
 
 const LOCAL_STORAGE_KEY_ADVTHEATERS = 'react-practice.advTheaters';
 const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
@@ -287,6 +288,12 @@ const HomePage = () => {
       let showTimesList = getShowTimes(movieId);
       navigate("/movie", {state: {id: movieId, showTimes: showTimesList, date: advTheaters.length > 0? advTheaters[0].displayDate : undefined}});
     }
+
+    function handleTheaterClicked(theaterId) {
+      let advTheater = advTheaters.find(theater => theater.theaterId === theaterId)
+      navigate("/theater", {state: {advTheater: advTheater}});
+
+    }
   
     function handleAccountClick() {
       navigate("/user");
@@ -321,7 +328,7 @@ const HomePage = () => {
     return (
       <div className='homePage'>
         <div className='header'>
-          <Logo className='logo'/>
+          <Logo className='homeLogo logo'/>
           <SearchBar class='searchBar' searchKeyword={searchKeyword} onChange={updateSearchKeyword}/>
           <svg className="accountIcon" viewBox="0 0 20 20"  onClick={handleAccountClick}>
             <path fill="hsl(0, 0%, 45%)" d="M14.023,12.154c1.514-1.192,2.488-3.038,2.488-5.114c0-3.597-2.914-6.512-6.512-6.512
@@ -375,8 +382,8 @@ const HomePage = () => {
             <h4 className="listHeader">Theaters Near You:</h4>
             <i className="scrollBack fa fa-angle-left" onClick={() => scrollLeft('.theatersNearYouPreview')}></i>
             <i className="scrollForward fa fa-angle-right" onClick={() => scrollRight('.theatersNearYouPreview')}></i>
-            <div className='previewsDiv theatersNearYouPreview'>
-              
+            <div className='theatersNearYouPreview'>
+              <TheaterPreviewList class='theatersNearYouList' advTheaters={advTheaters} handleTheaterClicked={handleTheaterClicked} />
             </div>
           </div>
 

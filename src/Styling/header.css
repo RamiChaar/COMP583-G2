@@ -22,24 +22,11 @@
     width: 25rem;
     font-size: 1rem;
     padding: .5rem;
-    margin: auto;
+    margin-right: calc(50% - 15rem);
+
     border: none;
     border-radius: .8rem;
     background: hsl(0, 0%, 95%);
-}
-
-@media only screen and (max-width: 768px) {
-    .searchInput {
-        width: 13rem;
-        margin-left: 9rem;
-    }
-
-    .logo {
-        position: absolute;
-        margin-right: calc(100vw - 10rem);
-        width:9rem;
-        height: auto;
-    }
 }
 
 .accountIcon {
@@ -51,6 +38,20 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border: 1.5px solid hsl(0, 0%, 45%);
     border-radius: 100%;
+}
+
+
+@media only screen and (max-width: 920px) {
+    .homeLogo {
+        visibility: hidden;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .searchInput {
+         margin-right: calc(70% - 15rem);
+        width: 20rem;
+    }
 }
 
 .accountIcon:hover {

@@ -20,7 +20,6 @@ const MoviePage = () => {
   const navigate = useNavigate();
   const [movieData, setMovieData] = useState([]);
   const [movie, setMovie] = useState([]);
-  const [showtimeData, setShowtimeData] = useState([]);
 
   const location = useLocation();
   let movieState = location.state;
@@ -133,7 +132,7 @@ const MoviePage = () => {
   useEffect(() => {
     let storedMovies = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_MOVIES));
     let storedMovie = getStoredMovie(storedMovies, movieState.id);
-    
+    console.log(movieState.showTimes)
     if(storedMovie !== null) {
       setMovie(storedMovie);
     } else {

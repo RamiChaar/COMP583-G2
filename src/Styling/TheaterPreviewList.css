@@ -1,0 +1,119 @@
+:root {
+    --theater-scale: 1.3;
+
+    --theater-container-height: calc(8.5625rem * var(--theater-scale));
+    --theater-preview-width:calc(11.25rem * var(--theater-scale));
+    --theater-preview-height:calc(5.3125rem * var(--theater-scale));
+
+    --theater-rating-height:calc(2.5rem * var(--theater-scale));
+
+    --theater-rating-icon-height:calc(1.5625rem * var(--theater-scale));
+
+    --theater-font-size:calc(.8rem * var(--theater-scale));
+
+    --theater-title-width:calc(10.1875rem * var(--theater-scale));
+    --theater-title-height:calc(2.5rem * var(--theater-scale));
+    --theater-title-margin: 0px;
+    --theater-title-padding:calc(8.5px * var(--theater-scale));
+}
+
+.theatersNearYouPreview {
+    width: auto;
+    height: var(--theater-container-height);
+    text-align: left;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.theatersNearYouPreview::-webkit-scrollbar {
+    display: none;
+}
+
+.theaterPreviewContainer:first-child {
+    margin-left: 2vw;
+}
+.theaterPreviewContainer:last-child {
+    margin-right: 2vw;
+}
+
+
+.theaterPreviewContainer {
+    width: var(--theater-preview-width);
+    height: var(--theater-preview-height);
+    margin: 8px;
+    padding-top: 8.5px;
+    padding-bottom: 8.5px;
+    border-radius: .2rem;
+    background-color: hsl(223, 12%, 24%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: normal; 
+}
+
+.theaterPreviewContainer:hover {
+    width: calc(var(--theater-preview-width) + 8px);
+    height: calc(var(--theater-preview-height) + 8px); 
+    --theater-poster-width:calc(calc(10.1875rem * var(--theater-scale)) + 8px);
+    --theater-poster-height:calc(calc(15.125rem * var(--theater-scale)) + 8px);
+    margin: 4px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
+    --theater-title-margin: 4px;
+}
+.theaterPreviewContainer:first-child:hover {
+    margin-left: calc(2vw - 4px);
+}
+.theaterPreviewContainer:last-child:hover {
+    margin-right: calc(2vw - 4px);
+}
+
+.theaterPreviewContainer:active {
+    width: calc(var(--theater-preview-width) - 4px);
+    height: calc(var(--theater-preview-height) - 4px); 
+    --theater-poster-width:calc(calc(10.1875rem * var(--theater-scale)) - 4px);
+    --theater-poster-height:calc(calc(15.125rem * var(--theater-scale)) - 4px);
+    margin: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    --theater-title-margin: -2px;
+}
+.theaterPreviewContainer:first-child:active {
+    margin-left: calc(2vw + 2px);
+}
+.theaterPreviewContainer:last-child:active {
+    margin-right: calc(2vw + 2px);
+}
+
+.theaterPoster {
+    width: var(--theater-poster-width);
+    height: var(--theater-poster-height);
+    border-radius: .2rem;
+}
+
+.theaterTitleDiv {
+    width: var(--theater-title-width);
+    height: var(--theater-title-height);
+    margin-left: var(--theater-title-margin);
+    margin-right: var(--theater-title-margin);
+    padding-left: var(--theater-title-padding);
+    padding-right: var(--theater-title-padding);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.theaterTitle {
+    font-size: calc(var(--theater-font-size) * .85);
+    margin: 0;
+    margin-right: 1rem;
+}
+
+.distance {
+    font-size: calc(var(--theater-font-size) * .75);
+}
+
+.numOfMovies {
+    font-size: calc(var(--theater-font-size) * .85);
+
+}

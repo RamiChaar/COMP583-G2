@@ -1,19 +1,23 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
-import './Styling/homePage.css';
-import './Styling/moviePage.css';
-import './Styling/userPage.css';
-import './Styling/header.css';
+import './Styling/HomePage.css';
+import './Styling/MoviePage.css';
+import './Styling/UserPage.css';
+import './Styling/TheaterPage.css';
+import './Styling/Header.css';
 import './Styling/MoviePreviewList.css';
-import './Styling/castCrewMembers.css';
-import './Styling/showTimes.css';
+import './Styling/TheaterPreviewList.css';
+import './Styling/CastCrewMembers.css';
+import './Styling/ShowTimes.css';
 
 
 
 import Home from "./Components/HomePage.js";
 import Movie from "./Components/MoviePage.js";
 import User from "./Components/UserPage.js";
+import Theater from "./Components/TheaterPage.js";
+
   
 function App() {
   return (
@@ -22,6 +26,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home/>} />
           <Route path="/movie" element={<Movie/>} />
+          <Route path="/theater" element={<Theater/>} />
           <Route path="/user" element={<User/>} />
         </Routes>
       </BrowserRouter>

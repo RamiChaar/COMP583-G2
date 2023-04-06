@@ -8,7 +8,7 @@ function TheaterShowTimes ({theaterShowTimes}) {
         <div className='theaterShowTimes'>
             <div className="theaterShowTimesHeader">
                 <p className='theaterShowTimesTitle'>{name}</p>
-                <p className='distanceTitle'>{`${distance}mi`}</p>
+                <p className='distanceTitle'>{theaterShowTimes.distance === undefined ? '' : (`${distance}mi`)}</p>
             </div>
             {theaterShowTimes.movieVariants.map(variant => {
                 return <ShowTimeVariant key={variant.formatId} variant={variant}/>

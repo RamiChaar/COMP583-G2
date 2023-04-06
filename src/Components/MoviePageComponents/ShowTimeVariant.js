@@ -1,8 +1,6 @@
 import AmenityGroup from './AmenityGroup'
 import { v4 as uuidv4 } from 'uuid'
 
-import {useEffect} from 'react'
-
 function ShowTimeVariant ({variant}) {
     let name = variant.formatName;
         

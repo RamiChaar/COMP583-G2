@@ -1,13 +1,12 @@
-import ShowTime from './TheaterShowTimes';
+import TheaterShowTimes from './TheaterShowTimes';
 
 function ShowTimesList ({showTimesList, date}) {
     return (
       <div className='showTimesList'>
         <p className='showTimesListDate'>{date}</p>
-        <p className='showTimesListTitle'>ShowTimes Near You: ({showTimesList.length} Locations)</p>
-    
+        {showTimesList[0].id ?  <p className='showTimesListTitle'>ShowTimes Near You: ({showTimesList.length} Locations)</p> : <p className='showTimesListTitle'></p>}
         {showTimesList.map( theaterShowTimes => {
-            return <ShowTime key={theaterShowTimes.id} theaterShowTimes={theaterShowTimes} />
+            return <TheaterShowTimes key={theaterShowTimes.id === undefined ? theaterShowTimes.emsVersionId : theaterShowTimes.id} theaterShowTimes={theaterShowTimes} />
         })}
       </div>
     );
