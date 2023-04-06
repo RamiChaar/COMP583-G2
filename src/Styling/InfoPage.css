@@ -1,0 +1,53 @@
+.infoPage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+    color: hsl(0, 0%, 95%);
+}
+
+.infoPageBody{ 
+    min-height: 80vh;
+    height: auto
+}
+
+.infoContent {
+    background-color: hsl(223, 12%, 24%);
+    width: 56vw;
+    height: auto;
+    margin: 20vw;
+    margin-top: 0;
+    margin-bottom: 2vw;
+    padding: 1vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    border: none;
+    border-radius: .2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.infoName {
+    margin: 0;
+    flex-basis: 100%;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.infoName::after {
+    content: "";
+    display: block;
+    margin-top: 1rem; 
+    margin-bottom: 2rem; 
+    border-top: 1px solid hsl(0, 0%, 95%); 
+  }
+
+.infoDescription {
+    margin: 0;
+    margin-bottom: 2rem;
+    flex-basis: 100%;
+    font-size: 1.2rem;
+    white-space: pre-line;
+}

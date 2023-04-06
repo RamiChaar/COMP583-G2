@@ -1,12 +1,17 @@
-import React from "react";
-import {useNavigate} from 'react-router-dom';
+import React, {useEffect} from "react";
+import {useNavigate, useLocation} from 'react-router-dom';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
 import Footer from './FooterComponents/Footer';
 
 
 const UserPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  let userState = location.state;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   function handleBack() {
     navigate('/');

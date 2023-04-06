@@ -45,7 +45,7 @@ const HomePage = () => {
         setTheaters(newTheaters);
         return;
       } 
-      let fetchTheatersURL = `https://flixster.p.rapidapi.com/theaters/list?latitude=${location.coordinates.lat}&longitude=${location.coordinates.lng}&radius=10`;
+      let fetchTheatersURL = `https://flixster.p.rapidapi.com/theaters/list?latitude=${location.coordinates.lat}&longitude=${location.coordinates.lng}&radius=15`;
       let newTheaters = await fetchTheaters(fetchTheatersURL);
       setTheaters(newTheaters);
     }
@@ -241,6 +241,10 @@ const HomePage = () => {
       }
 
     }, [location]);
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [])
 
     function resetStates() {
       setTheaters([]);

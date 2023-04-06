@@ -1,7 +1,17 @@
+import {useNavigate, useLocation} from 'react-router-dom';
+
 function FootNote({name, description}) {
+    const navigate = useNavigate();
+    const location = useLocation();
+    let {pathname} = location;
+    let state = location.state;
 
     function handleFootNoteClick() {
-        alert(description)
+        if(pathname !== "/info"){
+            navigate("/info", {state: {name: name, description: description, previousPath: pathname, previousState: state}});
+        } else {
+            navigate("/info", {state: {name: name, description: description, previousPath: state.previousPath, previousState: state.previousState}});
+        }
     }
 
     return(

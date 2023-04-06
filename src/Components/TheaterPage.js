@@ -11,7 +11,7 @@ const TheaterPage = () => {
 
 
   useEffect(()=>{
-    console.log(advTheater)
+    window.scrollTo(0, 0);
   }, [])
 
   function handleBack() {
@@ -39,7 +39,6 @@ const TheaterPage = () => {
       <div className='theaterInfo'>
         <h2 className='theaterName'>{advTheater?.theaterData?.name}</h2>
         <p className='theaterDistance'>{Math.floor((advTheater?.theaterData?.distance)*100)/100} mi</p>
-
       </div>
       <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate}></ShowTimesList>
       <Footer/>

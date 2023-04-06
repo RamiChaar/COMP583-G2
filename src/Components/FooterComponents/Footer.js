@@ -1,20 +1,15 @@
 import FootNote from './FootNote'
+import footNotes from '../../Resources/footNotes.json'
 import { v4 as uuidv4 } from 'uuid'
 
 function Footer() {
-
-    let footNotes = []
-
-    footNotes.push({name: 'About Cinema Scouter', description: 'some description'})
-    footNotes.push({name: 'Accessibility', description: 'some description'})
-    
-    // footNotes.push({name: '', description: ''})
-
-
     return(
         <div className='footer'>
             <div className='footNotes'>
                 {footNotes.map(footNote => {
+                    if( footNote.name === "" || footNote.description === "") {
+                        return;
+                    }
                     return <FootNote key={uuidv4()} name={footNote.name} description={footNote.description}/>
                 })}
             </div>

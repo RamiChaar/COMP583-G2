@@ -131,9 +131,9 @@ const MoviePage = () => {
   }, [movieData])
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     let storedMovies = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_MOVIES));
     let storedMovie = getStoredMovie(storedMovies, movieState.id);
-    console.log(movieState.showTimes)
     if(storedMovie !== null) {
       setMovie(storedMovie);
     } else {
