@@ -22,6 +22,11 @@ const TheaterPage = () => {
     navigate("/user");
   }
 
+  function handleMovieClicked(movieId) {
+    let movie = advTheater.movies.find(movie => movie.emsVersionId === movieId);
+    navigate("/movie", {state: {id: movieId, showTimes: movie.showTimesList, date: advTheater.displayDate}});
+  }
+
   return (
     <div className='theaterPage'>
       <div className='header'>
@@ -40,7 +45,7 @@ const TheaterPage = () => {
         <h2 className='theaterName'>{advTheater?.theaterData?.name}</h2>
         <p className='theaterDistance'>{Math.floor((advTheater?.theaterData?.distance)*100)/100} mi</p>
       </div>
-      <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate}></ShowTimesList>
+      <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate} handleMovieClicked={handleMovieClicked}></ShowTimesList>
       <Footer/>
     </div>
   );

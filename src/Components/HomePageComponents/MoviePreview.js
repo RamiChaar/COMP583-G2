@@ -58,11 +58,11 @@ function MoviePreview ({moviePreview, handleMovieClicked}) {
           <div className='ratingDiv'>
             <div className='tomatoRatingDiv'>
               <img className='tomatoRatingIcon' src={tomatoRatingImgUrl} alt=""/>
-              <p className="tomatoRating">{tomatoRating}</p>
+              <p className="tomatoRating">{tomatoRating}{tomatoRating === "" ? "" : "%"}</p>
             </div>
             <div className='userRatingDiv'>
               <img className='userRatingIcon' src={userRatingImgUrl} alt=""/>
-              <p className="userRating">{userRating}</p>
+              <p className="userRating">{userRating}{userRating === "" ? "" : "%"}</p>
             </div>
           </div>
           <div className='movieTitleDiv'>

@@ -240,10 +240,10 @@ const MoviePage = () => {
             <h3 className='title'>{movie.title}</h3>
             <h5 className='rating'>{(movie.rating === undefined? "" : `${movie.rating}, `) + `${Math.floor(movie.duration/60)}h ${movie.duration%60}min`}</h5>
             <img className='tomatoRatingIcon' src={movie.tomatoRatingObj?.tomatoRating == null ? null : movie.tomatoRatingObj?.tomatoRatingImg} alt=""/>
-            <p className="newTomatoRating">{movie.tomatoRatingObj?.tomatoRating}</p>
+            <p className="newTomatoRating">{movie.tomatoRatingObj?.tomatoRating}{movie.tomatoRatingObj?.tomatoRating == null ? "" : "%"}</p>
             <div className='spacer'></div>
             <img className='userRatingIcon' src={movie.userRatingObj?.userRating == null ? null : movie.userRatingObj?.userRatingImg} alt=""/>
-            <p className="newUserRating">{movie.userRatingObj?.userRating}</p>
+            <p className="newUserRating">{movie.userRatingObj?.userRating}{movie.userRatingObj?.userRating == null ? "" : "%"}</p>
             <br/>
             <p className='genreTitle'><b>Genre:</b></p>
             <p className='genre'>{getGenreString()}</p>

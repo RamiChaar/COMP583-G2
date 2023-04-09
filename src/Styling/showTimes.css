@@ -136,3 +136,7 @@ div .amenityDiv:last-child .amenityDot:last-child{
     background-color: hsl(0, 0%, 40%);
     border-radius: .5rem;
 }
+
+.toMovie:active {
+    color: grey;
+}

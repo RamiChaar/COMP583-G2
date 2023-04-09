@@ -296,8 +296,11 @@ const HomePage = () => {
 
     function handleTheaterClicked(theaterId) {
       let advTheater = advTheaters.find(theater => theater.theaterId === theaterId)
+      advTheater.movies.forEach(movie=> {
+        let showTimesList = getShowTimes(movie.emsVersionId);
+        movie['showTimesList'] = showTimesList
+      });
       navigate("/theater", {state: {advTheater: advTheater}});
-
     }
   
     function handleAccountClick() {
