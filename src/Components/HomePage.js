@@ -58,7 +58,7 @@ const HomePage = () => {
     }
 
     async function fetchAdvTheaters () {
-      const batchSize = 5;
+      const batchSize = 4;
       const numBatches = Math.ceil(theaters.length / batchSize);
       const newAdvTheaters = [];
       for (let i = 0; i < numBatches; i++) {
@@ -72,19 +72,11 @@ const HomePage = () => {
             .then(response => response.json())
             .then(data => data.data.theaterShowtimeGroupings);
         });
-        const startTime = performance.now();
         const batchNewAdvTheaters = await Promise.all(promises);
-        const endTime = performance.now();
-        const elapsedTime = endTime - startTime;
-        console.log(`Batch of ${batchNewAdvTheaters.length} took ${Math.round(elapsedTime)}ms`);
         newAdvTheaters.push(...batchNewAdvTheaters);
         setAdvTheaters(newAdvTheaters)
         if (i < numBatches - 1) {
-          if(elapsedTime > 1100) {
-            await new Promise(resolve => setTimeout(resolve, 200));
-          } else {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-          }
+          await new Promise(resolve => setTimeout(resolve, 1000));
         }
       }
       console.log('done')
