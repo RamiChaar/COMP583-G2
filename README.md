@@ -13,7 +13,9 @@ Feature List
 
 ### Browsing showtimes
 
-![Java](https://github.com/RamiChaar/public/blob/main/CinemaScouter/BrowsingShowtimesDemo.mov)
+[![Embedded Video](https://drive.google.com/file/d/1l-U0n9rhIDDEk2iKDdiY--O_LWGsfEUd/preview?usp=sharing)](https://drive.google.com/file/d/1l-U0n9rhIDDEk2iKDdiY--O_LWGsfEUd/view?usp=sharing)
+
+https://drive.google.com/file/d/1l-U0n9rhIDDEk2iKDdiY--O_LWGsfEUd/view?usp=sharing
 
 ## Tools and framework used
 
