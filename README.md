@@ -6,8 +6,20 @@ Cinema Scouter is a web app built on react.js that helps users browse movies sho
 
 Feature List 
 
+###### General Features
+
+- View all movies playing in theaters within a radius of you
+- View suggested movies based on the following categories: 'new this week', 'highly rated' and 'you might not have heard about'
+- View all theaters within a radius of you
+- View movie trailer, details, and all showtimes at theaters within a radius of you when you select a movie
+- View all movies and showtimes playing at a theater when you select a theater
+
 ###### Account Features
 
+- Add a movie theater to a list of your favorite theaters
+- View a list of your favorite theaters on the homepage
+- (demo) Selecting a movie time and purchasing the tickets
+- (demo) View your purchased tickets under your account
 
 ## Captures
 
