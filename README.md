@@ -13,7 +13,7 @@ Feature List
 
 ### Browsing showtimes
 
-![](https://github.com/RamiChaar/public/blob/main/CinemaScouter/BrowsingShowtimesDemo.mov)
+https://github.com/RamiChaar/public/blob/main/CinemaScouter/BrowsingShowtimesDemo.mov
 
 ## Tools and framework used
 
