@@ -11,8 +11,6 @@ const LOCAL_STORAGE_KEY_ADVTHEATERS = 'react-practice.advTheaters';
 const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
 const LOCAL_STORAGE_KEY_DATE_TIME = 'react-practice.dateTime';
 
-const googleApiKey = process.env.REACT_APP_GOOGLE_API_KEY
-
 const fetchOptions = {
   method: 'GET',
   headers: {

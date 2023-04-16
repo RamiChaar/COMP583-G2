@@ -57,7 +57,7 @@ const useGeolocation = () => {
         let diffInMs = currentDate.getTime() - pastDate.getTime();
         let diffInHours = diffInMs / (1000 * 60 * 60);
 
-        if (diffInHours < 0.5 && storedLocation) {
+        if (diffInHours < 10.5 && storedLocation) {
             setLocation(storedLocation);
             return;
         } else {

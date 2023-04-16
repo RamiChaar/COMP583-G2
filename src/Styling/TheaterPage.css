@@ -43,5 +43,22 @@
 .addFavoritesDiv {
     width:  auto;
     margin-left: auto;
-    border: 1px solid white;
+}
+
+.addFavorite {
+    display: inline;
+    cursor: default;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: hsl(217, 71%, 53%);
+}
+
+.addFavoriteText {
+    display: inline;
+    cursor: default;
+    user-select: none;
+    margin-right: 2rem;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: hsl(217, 71%, 53%);
 }

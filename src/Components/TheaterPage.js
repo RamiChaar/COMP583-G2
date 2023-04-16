@@ -13,6 +13,7 @@ const TheaterPage = () => {
   const location = useLocation();
   let advTheater = location.state.advTheater;
   let [address, setAddress] = useState('')
+  let [isFavorite, setIsFavorite] = useState(false)
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: googleApiKey,
@@ -21,7 +22,22 @@ const TheaterPage = () => {
 
   useEffect(()=>{
     window.scrollTo(0, 0);
-    let div = document.querySelector('.theaterInfo')
+    const addFavoriteElements = document.querySelectorAll('.addFavorite, .addFavoriteText');
+
+    addFavoriteElements.forEach(element => {
+      element.addEventListener('mouseover', () => {
+        addFavoriteElements.forEach(el => {
+          el.style.color = 'hsl(217, 71%, 43%)';
+        });
+      });
+
+      element.addEventListener('mouseout', () => {
+        addFavoriteElements.forEach(el => {
+          el.style.color = 'hsl(217, 71%, 53%)';
+        });
+      });
+    });
+
   }, [])
 
   useEffect(()=>{
@@ -40,12 +56,23 @@ const TheaterPage = () => {
     });
   }, [isLoaded])
 
+  function handleRemoveFavorite() {
+
+    // TODO update favorites list
+    setIsFavorite(false)
+  }
+
+  function handleAddFavorite() {
+
+    // TODO update favorites list
+    setIsFavorite(true)
+  }
+
   function handleBack() {
     navigate(location.state.prevRouter, location.state.prevState);
   }
 
   function handleAccountClick() {
-    let div = document.querySelector('.theaterInfo')
     navigate("/user", {state: {prevRouter: "/theater", prevState: location}});
   }
 
@@ -71,7 +98,11 @@ const TheaterPage = () => {
       <div className='theaterInfo'>
         <div className='theaterInfoTitle'>
           <h2 className='theaterName'>{advTheater?.theaterData?.name}</h2>
-          <div className='addFavoritesDiv'></div>
+          <div className='addFavoritesDiv'>{isFavorite ?
+            <><i className='addFavorite fa fa-star' onClick={handleRemoveFavorite}> </i><p className="addFavoriteText" onClick={handleRemoveFavorite}>Remove from Favorites</p></>:
+            <><i className='addFavorite fa fa-star-o' onClick={handleAddFavorite}> </i><p className="addFavoriteText" onClick={handleAddFavorite}>Add to Favorites</p></>}
+
+          </div>
         </div>
         <p className='theaterAddress'>{address}</p>
       </div>
