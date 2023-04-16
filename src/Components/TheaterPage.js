@@ -1,18 +1,43 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
 import {useNavigate, useLocation} from 'react-router-dom';
 import ShowTimesList from './MoviePageComponents/ShowTimesList';
 import Footer from './FooterComponents/Footer';
+import {useJsApiLoader} from '@react-google-maps/api';
+
+const googleApiKey = process.env.REACT_APP_GOOGLE_API_KEY
+const libraries = ['places']
 
 const TheaterPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   let advTheater = location.state.advTheater;
+  let [address, setAddress] = useState('')
 
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: googleApiKey,
+    libraries: libraries
+  });
 
   useEffect(()=>{
     window.scrollTo(0, 0);
   }, [])
+
+  useEffect(()=>{
+    if(!isLoaded){
+      return
+    }
+    const request = {
+      query: advTheater?.theaterData?.name,
+      fields: ['name', 'formatted_address']
+    };
+    const service = new window.google.maps.places.PlacesService(document.createElement('div'));
+    service.findPlaceFromQuery(request, (results, status) => {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        setAddress(results[0].formatted_address.replace(", United States", ""))
+      }
+    });
+  }, [isLoaded])
 
   function handleBack() {
     navigate('/');
@@ -43,7 +68,7 @@ const TheaterPage = () => {
       </div>
       <div className='theaterInfo'>
         <h2 className='theaterName'>{advTheater?.theaterData?.name}</h2>
-        <p className='theaterDistance'>{Math.floor((advTheater?.theaterData?.distance)*100)/100} mi</p>
+        <p className='theaterAddress'>{address}</p>
       </div>
       <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate} handleMovieClicked={handleMovieClicked}></ShowTimesList>
       <Footer/>
