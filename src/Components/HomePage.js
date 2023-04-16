@@ -292,7 +292,8 @@ const HomePage = () => {
     function handleMovieClicked(movieId) {
       logAllStates()
       let showTimesList = getShowTimes(movieId);
-      navigate("/movie", {state: {id: movieId, showTimes: showTimesList, date: advTheaters.length > 0? advTheaters[0].displayDate : undefined}});
+      let date = advTheaters.length > 0? advTheaters[0].displayDate : undefined
+      navigate("/movie", {state: {id: movieId, showTimes: showTimesList, advTheaters: advTheaters, date: date, isNested: false, prevRouter: "/", prevState: {}}});
     }
 
     function handleTheaterClicked(theaterId) {
@@ -301,11 +302,11 @@ const HomePage = () => {
         let showTimesList = getShowTimes(movie.emsVersionId);
         movie['showTimesList'] = showTimesList
       });
-      navigate("/theater", {state: {advTheater: advTheater}});
+      navigate("/theater", {state: {advTheater: advTheater, isNested: false, prevRouter: "/", prevState: {}}});
     }
   
     function handleAccountClick() {
-      navigate("/user");
+      navigate("/user", {state: {prevRouter: "/", prevState: {}}});
     }
 
     function scrollLeft(divClass) {

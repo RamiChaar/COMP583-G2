@@ -14,7 +14,7 @@ const UserPage = () => {
   }, []);
 
   function handleBack() {
-    navigate('/');
+    navigate(location.state.prevRouter, location.state.prevState);
   }
 
   return (

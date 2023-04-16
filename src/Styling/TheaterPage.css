@@ -19,16 +19,29 @@
     border: none;
     border-radius: .2rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    align-items: center;
+}
+
+.theaterInfoTitle {
+    height: 12vh;
     display: flex;
     align-items: center;
 }
 
 .theaterName {
     display: inline-block;
+    width: auto;
     margin: 0;
 }
 
 .theaterAddress {
     display: inline-block;
-    margin-left: auto
+    margin-left: auto;
+    font-size: 1.2rem;
+}
+
+.addFavoritesDiv {
+    width:  auto;
+    margin-left: auto;
+    border: 1px solid white;
 }

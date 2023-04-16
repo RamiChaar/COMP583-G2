@@ -24,6 +24,7 @@ const MoviePage = () => {
 
   const location = useLocation();
   let movieState = location.state;
+  let advTheaters = movieState.advTheaters
 
   async function fetchMovie(movieId) {
     let fetchMovieURL = `https://flixster.p.rapidapi.com/movies/detail?emsVersionId=${movieId}`;
@@ -164,10 +165,6 @@ const MoviePage = () => {
     }
   }
 
-  function handleBack() {
-    navigate('/');
-  }
-
   function castScrollLeft() {
     let scrollPane = document.querySelector(".castList");
     let scrollNum = scrollPane.scrollLeft;
@@ -212,8 +209,42 @@ const MoviePage = () => {
       });
   }
 
+  function handleBack() {
+    navigate(location.state.prevRouter, location.state.prevState);
+  }
+
+
   function handleAccountClick() {
-    navigate("/user");
+    navigate("/user", {state: {prevRouter: '/movie', prevState: location}});
+  }
+
+  function getShowTimes(movieId) {
+    let showTimesList = [];
+    advTheaters.forEach(theater => {
+      theater.movies.forEach(movie => {
+        if(movie.emsVersionId === movieId) {
+          let showTimeObject = {
+            id: theater.theaterId,
+            name: theater.theaterData.name,
+            distance: theater.theaterData.distance,
+            movieVariants: movie.movieVariants,
+          }
+          showTimesList.push(showTimeObject);
+        }
+      });
+    });
+
+    return showTimesList;
+  }
+
+  function handleTheaterClicked(theaterId) {
+    let advTheater = advTheaters.find(theater => theater.theaterId === theaterId)
+    advTheater.movies.forEach(movie=> {
+      let showTimesList = getShowTimes(movie.emsVersionId);
+      
+      movie['showTimesList'] = showTimesList
+    });
+    navigate("/theater", {state: {advTheater: advTheater, isNested: true, prevRouter: '/movie', prevState: location}});
   }
 
   return (
@@ -260,7 +291,7 @@ const MoviePage = () => {
         <i className="crewScrollRight fa fa-angle-right fa-lg" onClick={crewScrollRight}></i>
         <CrewList crewList={movie.crew}></CrewList>
       </div>
-      <ShowTimesList showTimesList={movieState.showTimes} date={movieState.date}></ShowTimesList>
+      <ShowTimesList showTimesList={movieState.showTimes} date={movieState.date} handleMovieClicked={handleTheaterClicked} isNested={location.state.isNested}></ShowTimesList>
       <Footer/>
     </div>
   );

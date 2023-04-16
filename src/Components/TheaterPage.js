@@ -21,6 +21,7 @@ const TheaterPage = () => {
 
   useEffect(()=>{
     window.scrollTo(0, 0);
+    let div = document.querySelector('.theaterInfo')
   }, [])
 
   useEffect(()=>{
@@ -40,16 +41,17 @@ const TheaterPage = () => {
   }, [isLoaded])
 
   function handleBack() {
-    navigate('/');
+    navigate(location.state.prevRouter, location.state.prevState);
   }
 
   function handleAccountClick() {
-    navigate("/user");
+    let div = document.querySelector('.theaterInfo')
+    navigate("/user", {state: {prevRouter: "/theater", prevState: location}});
   }
 
   function handleMovieClicked(movieId) {
     let movie = advTheater.movies.find(movie => movie.emsVersionId === movieId);
-    navigate("/movie", {state: {id: movieId, showTimes: movie.showTimesList, date: advTheater.displayDate}});
+    navigate("/movie", {state: {id: movieId, showTimes: movie.showTimesList, date: advTheater.displayDate, isNested: true, prevRouter: "/theater", prevState: location}});
   }
 
   return (
@@ -67,10 +69,13 @@ const TheaterPage = () => {
         </svg>
       </div>
       <div className='theaterInfo'>
-        <h2 className='theaterName'>{advTheater?.theaterData?.name}</h2>
+        <div className='theaterInfoTitle'>
+          <h2 className='theaterName'>{advTheater?.theaterData?.name}</h2>
+          <div className='addFavoritesDiv'></div>
+        </div>
         <p className='theaterAddress'>{address}</p>
       </div>
-      <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate} handleMovieClicked={handleMovieClicked}></ShowTimesList>
+      <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate} handleMovieClicked={handleMovieClicked} isNested={location.state.isNested}></ShowTimesList>
       <Footer/>
     </div>
   );
