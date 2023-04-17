@@ -10,6 +10,7 @@ import TheaterPreviewList from './HomePageComponents/TheaterPreviewList';
 const LOCAL_STORAGE_KEY_ADVTHEATERS = 'cinema-scouter.advTheaters';
 const LOCAL_STORAGE_KEY_MOVIES = 'cinema-scouter.movies';
 const LOCAL_STORAGE_KEY_DATE_TIME = 'cinema-scouter.dateTime';
+const LOCAL_STORAGE_KEY_USER_CREDENTIALS = 'cinema-scouter.userCredentials';
 
 const fetchOptions = {
   method: 'GET',
@@ -30,7 +31,9 @@ const HomePage = () => {
     const [newlyReleasedMoviePreviews, setNewlyReleasedMoviePreviews] = useState([]);
     const [highlyRatedMoviePreviews, setHighlyRatedMoviePreviews] = useState([]);
     const [lessKnownMoviePreviews, setLessKnownMoviePreviews] = useState([]);
-  
+    const [loggedIn, setLoggedIn] = useState(false)
+    const [favoriteTheaters, setFavoriteTheaters] = useState([])
+
     async function startFetching() {
       if(!location.loaded) {
         return;
@@ -243,7 +246,31 @@ const HomePage = () => {
 
     useEffect(() => {
       window.scrollTo(0, 0);
+
+      let storedUserCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
+      if(storedUserCredentials && isAccountValid(storedUserCredentials)) {
+        setLoggedIn(true)
+        getFavoriteTheaters()
+      }
+
     }, [])
+
+    function getFavoriteTheaters() {
+      let favoriteTheatersList = []
+      //get theaters
+      
+      setFavoriteTheaters(favoriteTheatersList)
+    }
+
+    function isAccountValid(userCredentials) {
+      let username = userCredentials.username
+      let password = userCredentials.password
+  
+      let isValid = true
+      //validate account
+  
+      return isValid
+    }
 
     function resetStates() {
       setTheaters([]);
@@ -393,6 +420,17 @@ const HomePage = () => {
               <TheaterPreviewList class='theatersNearYouList' advTheaters={advTheaters} handleTheaterClicked={handleTheaterClicked} />
             </div>
           </div>
+          
+          {!loggedIn || favoriteTheaters.length === 0? "" :
+            <div className='ListDiv'>
+              <h4 className="listHeader">Your Favorite Theaters:</h4>
+              <i className="scrollBack fa fa-angle-left" onClick={() => scrollLeft('.yourFavoriteTheatersPreview')}></i>
+              <i className="scrollForward fa fa-angle-right" onClick={() => scrollRight('.yourFavoriteTheatersPreview')}></i>
+              <div className='yourFavoriteTheatersPreview'>
+                <TheaterPreviewList class='yourFavoriteTheatersList' advTheaters={favoriteTheaters} handleTheaterClicked={handleTheaterClicked} />
+              </div>
+            </div>
+          }
         </div>
         <Footer/>
       </div>

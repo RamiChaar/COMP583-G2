@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SHA256 } from 'crypto-js';
 
 function SignUp ({handleToLogin}) {
     const [email, setEmail] = useState('');
@@ -29,7 +30,7 @@ function SignUp ({handleToLogin}) {
             return
         }
 
-        if(password != confirmPassword) {
+        if(password !== confirmPassword) {
             setErrorMessage('Passwords Do Not Match')
             passwordField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
             passwordField.style.color = 'hsl(352, 48%, 42%)'
@@ -55,9 +56,38 @@ function SignUp ({handleToLogin}) {
             return
         }
 
+        let accountExists = false
+        //check if account exists with email
+
+        if(accountExists) {
+            setErrorMessage('This email is registered with another account')
+            emailField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
+            emailField.style.color = 'hsl(352, 48%, 42%)'
+            setTimeout(() => {
+                emailField.style.color = 'hsl(0, 0%, 95%)'
+            }, 500)
+            return
+        }
+
+        const salt = generateSalt(32)
+        const hashedPassword = SHA256(salt.concat(password)).toString();
+        
+        console.log('Salt:', salt.toString());
+        console.log('Password:', password);
+        console.log('Hashed Password:', hashedPassword);
+
         //create new account
 
         handleToLogin();
+    }
+
+    function generateSalt(length) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+        let salt = '';
+        for (let i = 0; i < length; i++) {
+            salt += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return salt
     }
 
     return (
