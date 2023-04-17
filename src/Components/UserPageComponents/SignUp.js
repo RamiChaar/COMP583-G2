@@ -44,14 +44,13 @@ function SignUp ({handleToLogin}) {
 
         if(password.length < 8) {
             setErrorMessage('Password must be at least 8 characters')
-            const originalColor = passwordField.style.color;
             passwordField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
             passwordField.style.color = 'hsl(352, 48%, 42%)'
             confirmPasswordField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
             confirmPasswordField.style.color = 'hsl(352, 48%, 42%)'
             setTimeout(() => {
-                passwordField.style.color = originalColor;
-                confirmPasswordField.style.color = originalColor;
+                passwordField.style.color = 'hsl(0, 0%, 95%)'
+                confirmPasswordField.style.color = 'hsl(0, 0%, 95%)'
             }, 500)
             return
         }

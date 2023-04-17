@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react';
 
-const LOCAL_STORAGE_KEY_LOCATION = 'react-practice.location'
-const LOCAL_STORAGE_KEY_DATE_TIME = 'react-practice.dateTime';
-const LOCAL_STORAGE_KEY_ADVTHEATERS = 'react-practice.advTheaters';
-const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
+const LOCAL_STORAGE_KEY_LOCATION = 'cinema-scouter.location'
+const LOCAL_STORAGE_KEY_DATE_TIME = 'cinema-scouter.dateTime';
+const LOCAL_STORAGE_KEY_ADVTHEATERS = 'cinema-scouter.advTheaters';
+const LOCAL_STORAGE_KEY_MOVIES = 'cinema-scouter.movies';
 
 const useGeolocation = () => {
     const [location, setLocation] = useState({

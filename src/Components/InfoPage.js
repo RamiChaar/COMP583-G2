@@ -3,8 +3,6 @@ import {useNavigate, useLocation} from 'react-router-dom';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
 import Footer from './FooterComponents/Footer';
 
-
-
 const InfoPage = () => {
     const navigate = useNavigate();
     const location = useLocation();

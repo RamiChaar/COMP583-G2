@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-function Login ({handleToSignUp}) {
+const LOCAL_STORAGE_KEY_USER_CREDENTIALS = 'cinema-scouter.userCredentials';
+
+function Login ({handleToSignUp, handleLogin}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
 
-    function handleLogin () {
+    function handleRequestLogin () {
         let emailField = document.querySelector('.loginEmailField')
         let passwordField = document.querySelector('.loginPasswordField')
 
@@ -15,6 +17,8 @@ function Login ({handleToSignUp}) {
         passwordField.style.color = 'hsl(0, 0%, 95%)'
         
         let accountExists = true
+        //validate account
+
         if(!accountExists) {
             setErrorMessage('Invalid Email and/or Password')
             emailField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
@@ -23,10 +27,20 @@ function Login ({handleToSignUp}) {
             emailField.value = ""
             setPassword('')
             setEmail('')
+            setTimeout(() => {
+                emailField.style.borderBottom = '1.5px solid hsl(0, 0%, 70%)'
+                passwordField.style.borderBottom = '1.5px solid hsl(0, 0%, 70%)'
+            }, 500)
             return
         }
 
-        //sign in
+        let userCredentials =  {
+            username: email, 
+            password: password
+        }
+        localStorage.setItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS, JSON.stringify(userCredentials))
+
+        handleLogin()
     }
 
     return (
@@ -46,7 +60,7 @@ function Login ({handleToSignUp}) {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <p className="errorMessage">{errorMessage}</p>
-            <button className="loginButton" onClick={handleLogin}>Login</button>
+            <button className="loginButton" onClick={handleRequestLogin}>Login</button>
             <div className="switchDiv">
                 <p className="noAccountText">Don't have an account?</p>
                 <button className="goToSignUpButton" onClick={handleToSignUp}>Sign Up</button>

@@ -7,7 +7,7 @@ import ShowTimesList from './MoviePageComponents/ShowTimesList';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
 import Footer from './FooterComponents/Footer'
 
-const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
+const LOCAL_STORAGE_KEY_MOVIES = 'cinema-scouter.movies';
 
 const fetchOptions = {
   method: 'GET',

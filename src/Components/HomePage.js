@@ -7,9 +7,9 @@ import useGeolocation from '../Hooks/useGeolocation.js';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
 import TheaterPreviewList from './HomePageComponents/TheaterPreviewList';
 
-const LOCAL_STORAGE_KEY_ADVTHEATERS = 'react-practice.advTheaters';
-const LOCAL_STORAGE_KEY_MOVIES = 'react-practice.movies';
-const LOCAL_STORAGE_KEY_DATE_TIME = 'react-practice.dateTime';
+const LOCAL_STORAGE_KEY_ADVTHEATERS = 'cinema-scouter.advTheaters';
+const LOCAL_STORAGE_KEY_MOVIES = 'cinema-scouter.movies';
+const LOCAL_STORAGE_KEY_DATE_TIME = 'cinema-scouter.dateTime';
 
 const fetchOptions = {
   method: 'GET',
