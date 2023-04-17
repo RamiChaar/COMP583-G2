@@ -1,15 +1,65 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
 
 function SignUp ({handleToLogin}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('')
 
-    const handleSignup = () => {
-        // Handle signup logic here
-        console.log('Signing up with email: ', email, 'and password: ', password, 'and confirm password: ', confirmPassword);
-    };
+    function handleSignup() {
+        let emailField = document.querySelector('.signUpEmailField')
+        let passwordField = document.querySelector('.signUpPasswordField')
+        let confirmPasswordField = document.querySelector('.signUpConfirmPasswordField')
+
+        emailField.style.borderBottom = '1.5px solid hsl(0, 0%, 95%)'
+        emailField.style.color = 'hsl(0, 0%, 95%)'
+        passwordField.style.borderBottom = '1.5px solid hsl(0, 0%, 95%)'
+        passwordField.style.color = 'hsl(0, 0%, 95%)'
+        confirmPasswordField.style.borderBottom = '1.5px solid hsl(0, 0%, 95%)'
+        confirmPasswordField.style.color = 'hsl(0, 0%, 95%)'
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if(!emailPattern.test(email)) {
+            setErrorMessage('Invalid Email')
+            emailField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
+            emailField.style.color = 'hsl(352, 48%, 42%)'
+            setTimeout(() => {
+                emailField.style.color = 'hsl(0, 0%, 95%)'
+            }, 500)
+            return
+        }
+
+        if(password != confirmPassword) {
+            setErrorMessage('Passwords Do Not Match')
+            passwordField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
+            passwordField.style.color = 'hsl(352, 48%, 42%)'
+            confirmPasswordField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
+            confirmPasswordField.style.color = 'hsl(352, 48%, 42%)'
+            setTimeout(() => {
+                passwordField.style.color = 'hsl(0, 0%, 95%)'
+                confirmPasswordField.style.color = 'hsl(0, 0%, 95%)'
+            }, 500)
+            return
+        }
+
+        if(password.length < 8) {
+            setErrorMessage('Password must be at least 8 characters')
+            const originalColor = passwordField.style.color;
+            passwordField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
+            passwordField.style.color = 'hsl(352, 48%, 42%)'
+            confirmPasswordField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
+            confirmPasswordField.style.color = 'hsl(352, 48%, 42%)'
+            setTimeout(() => {
+                passwordField.style.color = originalColor;
+                confirmPasswordField.style.color = originalColor;
+            }, 500)
+            return
+        }
+
+        //create new account
+
+        handleToLogin();
+    }
 
     return (
         <div className='signUpDiv'>
@@ -34,6 +84,7 @@ function SignUp ({handleToLogin}) {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
+            <p className="errorMessage">{errorMessage}</p>
             <button className="signUpButton" onClick={handleSignup}>Create account</button>
             <div className="switchDiv">
                 <p className="haveAccountText">Already have an account?</p>
