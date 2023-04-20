@@ -10,8 +10,16 @@ const userSchema = new Schema ({
         type: String,
         required: true
     },
-    salt:  {
-        type: String, 
+    isAdmin: {
+        type: Boolean,
+        required: true
+    },
+    favoriteTheaters: {
+        type: Array,
+        required: true
+    },
+    tickets: {
+        type: Array,
         required: true
     }
 })
