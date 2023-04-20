@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SHA256 } from 'crypto-js';
+import axios from 'axios';
 
 function SignUp ({handleToLogin}) {
     const [email, setEmail] = useState('');
@@ -7,7 +8,7 @@ function SignUp ({handleToLogin}) {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
 
-    function handleSignup() {
+    async function handleSignup() {
         let emailField = document.querySelector('.signUpEmailField')
         let passwordField = document.querySelector('.signUpPasswordField')
         let confirmPasswordField = document.querySelector('.signUpConfirmPasswordField')
@@ -57,7 +58,9 @@ function SignUp ({handleToLogin}) {
         }
 
         let accountExists = false
-        //check if account exists with email
+        await axios.get(`http://localhost:5050/users/${email}`)
+        .then(res => {if(res.data.length > 0) {accountExists = true}})
+        .catch(err => console.log(err))
 
         if(accountExists) {
             setErrorMessage('This email is registered with another account')
@@ -72,11 +75,15 @@ function SignUp ({handleToLogin}) {
         const salt = generateSalt(32)
         const hashedPassword = SHA256(salt.concat(password)).toString();
         
-        console.log('Salt:', salt.toString());
-        console.log('Password:', password);
-        console.log('Hashed Password:', hashedPassword);
+        const user = {
+            email: email,
+            hashedPassword: hashedPassword,
+            salt: salt
+        }
 
-        //create new account
+        await axios.post(`http://localhost:5050/users/add`, user)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
 
         handleToLogin();
     }
