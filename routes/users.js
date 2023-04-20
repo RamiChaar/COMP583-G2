@@ -20,12 +20,33 @@ router.route('/add').post( async (req, res) => {
     const password = req.body.password
 
     try {
-        const salt = await bcrypt.genSalt()
-        const hashedPassword = await bcrypt.hash(password, salt)
+        const hashedPassword = await bcrypt.hash(password, 10)
         const newUser = new User({email, hashedPassword, salt})
         newUser.save()
         .then(() => res.json('user added'))
         .catch(err => res.status(400).json('Error: ' + err))
+    } catch {
+        res.status(500).send()
+    }
+})
+
+router.route('/login').post( async (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    const user = User.find( user => user.email === email)
+
+    if(user == null) {
+        return res.status(400).send('cannot find user')
+    }
+
+
+    try {
+        if(await bcrypt.compare(password, user.salt + user.hashedPassword)) {
+            res.send('Success')
+        } else {
+            res.send('Not Allowed')
+        }
     } catch {
         res.status(500).send()
     }
