@@ -4,6 +4,9 @@ import {useNavigate, useLocation} from 'react-router-dom';
 import ShowTimesList from './MoviePageComponents/ShowTimesList';
 import Footer from './FooterComponents/Footer';
 import {useJsApiLoader} from '@react-google-maps/api';
+import axios from 'axios';
+
+const LOCAL_STORAGE_KEY_USER_CREDENTIALS = 'cinema-scouter.userCredentials';
 
 const googleApiKey = process.env.REACT_APP_GOOGLE_API_KEY
 const libraries = ['places']
@@ -38,6 +41,8 @@ const TheaterPage = () => {
       });
     });
 
+    checkInFavorites()
+
   }, [])
 
   useEffect(()=>{
@@ -56,16 +61,68 @@ const TheaterPage = () => {
     });
   }, [isLoaded])
 
-  function handleRemoveFavorite() {
+  async function checkInFavorites() {
+    let storedUserCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
+    if(!storedUserCredentials) {
+      return
+    }
 
-    // TODO update favorites list
-    setIsFavorite(false)
+    let favoriteTheaterPostData = {
+      email: storedUserCredentials.email,
+      password: storedUserCredentials.password,
+      theaterId: advTheater.theaterId,
+    }
+
+    await axios.post(`${process.env.REACT_APP_HOST}/users/isFavorite`, favoriteTheaterPostData)
+        .then(res => {
+          if(res.data.isFavorite === true){
+            setIsFavorite(true)
+          }
+        })
+        .catch(err => console.log(err))
   }
 
-  function handleAddFavorite() {
+  async function handleRemoveFavorite() {
+    let storedUserCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
+    if(!storedUserCredentials) {
+      return
+    }
 
-    // TODO update favorites list
-    setIsFavorite(true)
+    let favoriteTheaterPostData = {
+      email: storedUserCredentials.email,
+      password: storedUserCredentials.password,
+      theaterId: advTheater.theaterId,
+    }
+
+    await axios.post(`${process.env.REACT_APP_HOST}/users/removeFavorite`, favoriteTheaterPostData)
+    .then(res => {
+      if(res.status === 200){
+        setIsFavorite(false)
+      }
+    })
+    .catch(err => console.log(err))
+  }
+
+  async function handleAddFavorite() {
+    let storedUserCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
+    if(!storedUserCredentials) {
+      return
+    }
+
+    let favoriteTheaterPostData = {
+      email: storedUserCredentials.email,
+      password: storedUserCredentials.password,
+      theaterId: advTheater.theaterId,
+      theaterName: advTheater.theaterData.name
+    }
+
+    await axios.post(`${process.env.REACT_APP_HOST}/users/addFavorite`, favoriteTheaterPostData)
+    .then(res => {
+      if(res.status === 200){
+        setIsFavorite(true)
+      }
+    })
+    .catch(err => console.log(err))
   }
 
   function handleBack() {

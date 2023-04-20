@@ -6,6 +6,7 @@ import MoviePreviewList from './HomePageComponents/MoviePreviewList';
 import useGeolocation from '../Hooks/useGeolocation.js';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
 import TheaterPreviewList from './HomePageComponents/TheaterPreviewList';
+import axios from 'axios';
 
 const LOCAL_STORAGE_KEY_ADVTHEATERS = 'cinema-scouter.advTheaters';
 const LOCAL_STORAGE_KEY_MOVIES = 'cinema-scouter.movies';
@@ -248,28 +249,59 @@ const HomePage = () => {
       window.scrollTo(0, 0);
 
       let storedUserCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
-      if(storedUserCredentials && isAccountValid(storedUserCredentials)) {
-        setLoggedIn(true)
-        getFavoriteTheaters()
+      if(storedUserCredentials) {
+        checkAccountValid(storedUserCredentials)
       }
 
     }, [])
 
-    function getFavoriteTheaters() {
+    async function getFavoriteTheaters(storedUserCredentials) {
       let favoriteTheatersList = []
-      //get theaters
+      let favoriteTheaterPostData = {
+        email: storedUserCredentials.email,
+        password: storedUserCredentials.password,
+      }
+
+      await axios.post(`${process.env.REACT_APP_HOST}/users/favoriteTheaters`, favoriteTheaterPostData)
+      .then(res => {
+        console.log(res)
+        res.data.forEach(theater => favoriteTheatersList.push({theaterId: theater.theaterId, theaterData:{name: theater.theaterName}}))
+        setFavoriteTheaters(favoriteTheatersList)
+      })
+      .catch(err => {
+        console.log(err)
+        setFavoriteTheaters([])
+      })
       
-      setFavoriteTheaters(favoriteTheatersList)
     }
 
-    function isAccountValid(userCredentials) {
-      let username = userCredentials.username
-      let password = userCredentials.password
+    async function checkAccountValid(storedUserCredentials) {
+      let email = storedUserCredentials.email
+      let password = storedUserCredentials.password
   
-      let isValid = true
-      //validate account
+      let isValid = false
+     
+      let user = {
+        email: email,
+        password: password
+      }
+      await axios.post(`${process.env.REACT_APP_HOST}/users/login`, user)
+      .then(res => {
+          if(res.data === "Success"){
+            isValid = true
+          }
+      })
+
+      if(isValid) {
+        setLoggedIn(true)
+      } else {
+        localStorage.removeItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS)
+      }
   
-      return isValid
+      if(isValid) {
+        setLoggedIn(true)
+        getFavoriteTheaters(storedUserCredentials)
+      }
     }
 
     function resetStates() {

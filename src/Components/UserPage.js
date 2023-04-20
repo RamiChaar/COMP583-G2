@@ -4,6 +4,7 @@ import { ReactComponent as Logo } from '../Resources/logo.svg';
 import Footer from './FooterComponents/Footer';
 import Login from './UserPageComponents/Login';
 import SignUp from './UserPageComponents/SignUp';
+import axios from 'axios';
 
 const LOCAL_STORAGE_KEY_USER_CREDENTIALS = 'cinema-scouter.userCredentials';
 
@@ -18,20 +19,33 @@ const UserPage = () => {
 
     let storedUserCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
 
-    if(storedUserCredentials && isAccountValid(storedUserCredentials)) {
-      setLoggedIn(true)
+    if(storedUserCredentials) {
+      validateStoredUserCredentials(storedUserCredentials)
     }
 
   }, []);
 
-  function isAccountValid(userCredentials) {
-    let username = userCredentials.username
+  async function validateStoredUserCredentials(userCredentials) {
+    let email = userCredentials.email
     let password = userCredentials.password
 
-    let isValid = true
-    //validate account
+    let isValid = false
+    let user = {
+      email: email,
+      password: password
+    }
+    await axios.post(`${process.env.REACT_APP_HOST}/users/login`, user)
+    .then(res => {
+        if(res.data === "Success"){
+          isValid = true
+        }
+    })
 
-    return isValid
+    if(isValid) {
+      setLoggedIn(true)
+    } else {
+      localStorage.removeItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS)
+    }
   }
 
 

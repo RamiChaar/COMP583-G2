@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { SHA256 } from 'crypto-js';
 import axios from 'axios';
 
 function SignUp ({handleToLogin}) {
@@ -58,8 +57,8 @@ function SignUp ({handleToLogin}) {
         }
 
         let accountExists = false
-        await axios.get(`http://localhost:5050/users/${email}`)
-        .then(res => {if(res.data.length > 0) {accountExists = true}})
+        await axios.get(`${process.env.REACT_APP_HOST}/users/${email}`)
+        .then(res => {if(res.data != null) {accountExists = true}})
         .catch(err => console.log(err))
 
         if(accountExists) {
@@ -72,29 +71,16 @@ function SignUp ({handleToLogin}) {
             return
         }
 
-        const salt = generateSalt(32)
-        const hashedPassword = SHA256(salt.concat(password)).toString();
-        
         const user = {
             email: email,
-            hashedPassword: hashedPassword,
-            salt: salt
+            password: password
         }
 
-        await axios.post(`http://localhost:5050/users/add`, user)
+        await axios.post(`${process.env.REACT_APP_HOST}/users/add`, user)
         .then(res => console.log(res))
         .catch(err => console.log(err))
 
         handleToLogin();
-    }
-
-    function generateSalt(length) {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-        let salt = '';
-        for (let i = 0; i < length; i++) {
-            salt += characters.charAt(Math.floor(Math.random() * characters.length));
-        }
-        return salt
     }
 
     return (

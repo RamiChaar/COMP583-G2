@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from 'axios';
 
 const LOCAL_STORAGE_KEY_USER_CREDENTIALS = 'cinema-scouter.userCredentials';
 
@@ -7,7 +8,7 @@ function Login ({handleToSignUp, handleLogin}) {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
 
-    function handleRequestLogin () {
+    async function handleRequestLogin () {
         let emailField = document.querySelector('.loginEmailField')
         let passwordField = document.querySelector('.loginPasswordField')
 
@@ -16,10 +17,21 @@ function Login ({handleToSignUp, handleLogin}) {
         passwordField.style.borderBottom = '1.5px solid hsl(0, 0%, 95%)'
         passwordField.style.color = 'hsl(0, 0%, 95%)'
         
-        let accountExists = true
-        //validate account
+        let validCredentials = false
 
-        if(!accountExists) {
+        let user = {
+            email: email,
+            password: password
+        }
+        await axios.post(`${process.env.REACT_APP_HOST}/users/login`, user)
+        .then(res => {
+            if(res.data === "Success"){
+                validCredentials = true
+            }
+        })
+        .catch(err => console.log(err))
+
+        if(!validCredentials) {
             setErrorMessage('Invalid Email and/or Password')
             emailField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
             passwordField.style.borderBottom = '1.5px solid hsl(352, 48%, 42%)'
@@ -35,7 +47,7 @@ function Login ({handleToSignUp, handleLogin}) {
         }
 
         let userCredentials =  {
-            username: email, 
+            email: email, 
             password: password
         }
         localStorage.setItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS, JSON.stringify(userCredentials))
