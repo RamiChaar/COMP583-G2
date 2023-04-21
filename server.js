@@ -20,9 +20,11 @@ connection.once('open', () => {
 })
 
 const usersRouter = require('./routes/users')
-
+const showTimeAvailabilityRouter = require('./routes/showTimeAvailability')
 
 app.use('/users', usersRouter)
+app.use('/showTimeAvailability', showTimeAvailabilityRouter)
+
 
 app.listen(port, () => {
     console.log(`server is running on port ${port}`)

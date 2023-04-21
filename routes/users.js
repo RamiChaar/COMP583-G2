@@ -89,14 +89,62 @@ router.route('/favoriteTheaters').post( async (req, res) => {
     const email = req.body.email
     const password = req.body.password
 
-    console.log('here')
     User.findOne({ 'email': email })
     .then(async user => {
         if(user == null || !await bcrypt.compare(password, user.hashedPassword)) {
             return res.status(404).send('invalid credentials')
         } 
-        console.log()
         res.json(user.favoriteTheaters)
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+})
+
+router.route('/addTickets').post( async (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    User.findOne({ 'email': email })
+    .then(async user => {
+        if(user == null || !await bcrypt.compare(password, user.hashedPassword)) {
+            return res.status(404).send('invalid credentials')
+        } 
+        let allTickets = user.tickets
+        
+        let newTicket = {
+            movieId: req.body.movieId,
+            theaterId: req.body.theaterId,
+            movieName: req.body.movieName,
+            theaterName: req.body.theaterName,
+            address: req.body.address,
+            duration: req.body.duration,
+            showingDate: req.body.showingDate,
+            showingTime: req.body.showingTime,
+            formatName: req.body.formatName,
+            seats: req.body.seats,
+            adultCount: req.body.adultCount,
+            childCount: req.body.childCount,
+            seniorCount: req.body.seniorCount,
+            amenities: req.body.amenities
+        }
+        
+        allTickets.push(newTicket)
+
+        User.updateOne({ 'email': email }, { $set: { tickets: allTickets }})
+        .then(res.json('tickets added to user'))
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+})
+
+router.route('/tickets').post( async (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    User.findOne({ 'email': email })
+    .then(async user => {
+        if(user == null || !await bcrypt.compare(password, user.hashedPassword)) {
+            return res.status(404).send('invalid credentials')
+        } 
+        res.json(user.tickets)
     })
     .catch(err => res.status(400).json('Error: ' + err))
 })
