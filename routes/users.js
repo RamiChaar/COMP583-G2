@@ -3,21 +3,39 @@ const bcrypt = require('bcrypt')
 
 let User = require('../models/user.model')
 
-router.route('/:email').get((req, res) =>  {
-    User.findOne({ 'email': req.params.email })
-    .then(user => res.json(user))
+router.route('/').post((req, res) =>  {
+    const email = req.body.email
+    const password = req.body.password
+
+    User.findOne({ 'email': email })
+    .then(async user => {
+        if(user == null) {
+            return res.status(404).send('cannot find user')
+        } else {
+            try {
+                if(await bcrypt.compare(password, user.hashedPassword)) {
+                    res.status(200).json(user)
+                } else {
+                    res.send('Not Allowed')
+                }
+            } catch {
+                res.status(500).send()
+            }
+        }
+    })
     .catch(err => res.status(400).json('Error: ' + err))
 })
 
 router.route('/add').post( async (req, res) => {
     const email = req.body.email
     const password = req.body.password
+    const dateCreated = req.body.dateCreated
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
         const favoriteTheaters = []
         const tickets = []
         const isAdmin = false
-        const newUser = new User({email, hashedPassword, isAdmin, favoriteTheaters, tickets})
+        const newUser = new User({email, hashedPassword, isAdmin, favoriteTheaters, tickets, dateCreated})
         newUser.save()
         .then(() => res.json('user added'))
         .catch(err => res.status(400).json('Error: ' + err))
