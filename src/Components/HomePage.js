@@ -34,6 +34,7 @@ const HomePage = () => {
     const [lessKnownMoviePreviews, setLessKnownMoviePreviews] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false)
     const [favoriteTheaters, setFavoriteTheaters] = useState([])
+    const [isDisabled, setIsDisabled] = useState(false);
 
     async function startFetching() {
       if(!location.loaded) {
@@ -352,13 +353,27 @@ const HomePage = () => {
       navigate("/movie", {state: {id: movieId, showTimes: showTimesList, advTheaters: advTheaters, date: date, isNested: false, prevRouter: "/", prevState: {}}});
     }
 
-    function handleTheaterClicked(theaterId) {
+    async function getAdvTheater(theaterId) {
+      const fetchTheaterUrl = `https://flixster.p.rapidapi.com/theaters/detail?id=${theaterId}`;
+          console.log("fetching theater... " + fetchTheaterUrl)
+          return fetch(fetchTheaterUrl, fetchOptions)
+            .then(response => response.json())
+            .then(data => data.data.theaterShowtimeGroupings);
+    }
+
+    async function handleTheaterClicked(theaterId, theaterName) {
       let advTheater = advTheaters.find(theater => theater.theaterId === theaterId)
-      advTheater.movies.forEach(movie=> {
-        let showTimesList = getShowTimes(movie.emsVersionId);
-        movie['showTimesList'] = showTimesList
-      });
-      navigate("/theater", {state: {advTheater: advTheater, isNested: false, prevRouter: "/", prevState: {}}});
+
+      if(advTheater === undefined) {
+        setIsDisabled(true)
+        let advTheater = await getAdvTheater(theaterId)
+        setIsDisabled(false)
+        let newAdvTheater = {...advTheater, theaterData: {name: theaterName}}
+        navigate("/theater", {state: {advTheater: newAdvTheater, isNested: false, prevRouter: "/", prevState: {}}});
+      } else {
+        navigate("/theater", {state: {advTheater: advTheater, isNested: false, prevRouter: "/", prevState: {}}});
+      }
+        
     }
   
     function handleAccountClick() {
@@ -393,6 +408,7 @@ const HomePage = () => {
 
     return (
       <div className='homePage'>
+        {!isDisabled ? "" : <div className="overlay"/>}
         <div className='header'>
           <Logo className='homeLogo logo'/>
           <SearchBar class='searchBar' searchKeyword={searchKeyword} onChange={updateSearchKeyword}/>

@@ -256,6 +256,7 @@ const MoviePage = () => {
       
       movie['showTimesList'] = showTimesList
     });
+    console.log(advTheater)
     navigate("/theater", {state: {advTheater: advTheater, isNested: true, prevRouter: '/movie', prevState: location}});
   }
 

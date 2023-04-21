@@ -41,6 +41,8 @@
     padding-right: 1rem;
     font-weight: bold;
     background-color: hsl(223, 12%, 20%);
+    border-radius: .2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .closePopup {

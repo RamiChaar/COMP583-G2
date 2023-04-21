@@ -3,7 +3,7 @@ import { useEffect } from "react";
 function TheaterPreview ({advTheater, handleTheaterClicked}) {
 
   function theaterClicked() {
-      handleTheaterClicked(advTheater?.theaterId)
+      handleTheaterClicked(advTheater?.theaterId, advTheater?.theaterData?.name)
   }
 
   return (

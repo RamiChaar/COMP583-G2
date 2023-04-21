@@ -71,9 +71,17 @@ function SignUp ({handleToLogin}) {
             return
         }
 
+        const currentDate = new Date();
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const month = months[currentDate.getMonth()];
+        const day = currentDate.getDate();
+        const year = currentDate.getFullYear();
+        const formattedDate = `${month} ${day}, ${year}`;
+
         const user = {
             email: email,
-            password: password
+            password: password,
+            dateCreated: formattedDate
         }
 
         await axios.post(`${process.env.REACT_APP_HOST}/users/add`, user)

@@ -133,7 +133,11 @@ const TheaterPage = () => {
   }
 
   function handleAccountClick() {
-    navigate("/user", {state: {prevRouter: "/theater", prevState: location}});
+    if(location.state.prevRouter === "/user") {
+      navigate("/user", {state: {prevRouter: '/', prevState: location.state.prevState.state}});
+    } else {
+      navigate("/user", {state: {prevRouter: "/theater", prevState: location}});
+    }
   }
 
   function handleMovieClicked(movieId) {
