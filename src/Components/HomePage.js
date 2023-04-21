@@ -264,7 +264,6 @@ const HomePage = () => {
 
       await axios.post(`${process.env.REACT_APP_HOST}/users/favoriteTheaters`, favoriteTheaterPostData)
       .then(res => {
-        console.log(res)
         res.data.forEach(theater => favoriteTheatersList.push({theaterId: theater.theaterId, theaterData:{name: theater.theaterName}}))
         setFavoriteTheaters(favoriteTheatersList)
       })

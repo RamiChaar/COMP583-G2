@@ -1,0 +1,293 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.purchaseTickets{
+    position:fixed;
+    width: 60vw;
+    height: 80vh;
+    margin-top: 10vh;
+    margin-left: 20vw;
+    margin-right: 20vw;
+
+    background-color: hsl(223, 12%, 24%);
+
+    border: none;
+    border-radius: .4rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.purchaseTickets::-webkit-scrollbar{
+    background-color: hsla(223, 12%, 24%, 0);;
+}
+
+.purchaseTickets::-webkit-scrollbar-thumb{
+    background-color: hsl(223, 12%, 32%);
+    border-radius: 10rem;
+}
+
+
+.purchaseTicketsHeader {
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: bold;
+    background-color: hsl(223, 12%, 20%);
+}
+
+.closePopup {
+    position: absolute
+}
+
+.purchaseTicketsTitle {
+    width: 100%;
+    margin: 1rem;
+    text-align: center;
+}
+
+.seatPicker {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+}
+
+.selectSeatsTitle {
+    width: 100%;
+    text-align: center;
+    font-size: small;
+    margin: 0;
+    margin-top: .5rem;
+}
+
+.screen {
+    background-color: hsl(0, 0%, 3%);
+    text-align: center;
+    font-size: small;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+
+    padding: .1rem;
+    width: 12rem;
+    border-radius: .2rem;
+    
+}
+
+.seatMap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.seatRowDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.seatRow {
+    text-align: center;
+    text-align: center;
+}  
+
+.seat {
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: .2rem;
+    cursor: pointer;
+    background-color: hsl(208, 75%, 41%);
+}
+
+.selected {
+    background-color: white;
+    color: white;
+}
+
+.confirmSeatsDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    align-items: center;
+}
+
+.selectedSeats {
+    display: block;
+    font-size: small;
+}
+
+.confirmSeats {
+    display: block;
+    font-size: 1rem;
+    width: 5rem;
+    margin-bottom: 1rem;
+
+    padding: .5rem;
+    color: white;
+    background-color: hsl(120, 90%, 20%);
+    border: none;
+    border-radius: 2rem;
+}
+
+.confirmSeats:hover {
+    background-color:  hsl(120, 90%, 15%)
+}
+
+
+.ticketPicker{
+    padding: 2rem;
+    padding-top: 0;
+}
+
+.ticketPickerHeader{
+    margin-bottom: 2rem;
+}
+
+.selectTitle{
+    font-weight: bold;
+    font-size:x-large;
+    margin-bottom: .8rem;
+}
+
+.seatsTitle{
+    margin-top: 0;
+    font-size:medium;
+}
+
+.picker{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid hsl(0, 0%, 10%);
+    margin: 1rem;
+}
+
+.typeTitle{
+    font-weight: bold;
+    font-size:large;
+    margin: 0;
+    margin-bottom: .25rem;
+}
+
+.typePrice{
+    font-size:small;
+    margin-top: 0;
+
+}
+
+.ticketCount{
+    font-size: 1.6rem;
+    width: 3rem;
+    text-align: center;
+    margin: 0;
+}
+
+.decrementTicket{
+    margin-left: auto;
+    height: 1.3rem;
+    width: 1.3rem;
+    border: 1px solid black;
+    color: black;
+    border-radius: 100%;
+    background-color: hsl(120, 90%, 20%);
+}
+
+.incrementTicket{
+    height: 1.3rem;
+    width: 1.3rem;
+    border: 1px solid black;
+    color: black;
+    border-radius: 100%;
+    background-color: hsl(120, 90%, 20%);
+
+}
+
+.incrementTicket:hover, .decrementTicket:hover {
+    background-color: hsl(120, 90%, 15%);
+}
+
+.purchaseDiv {
+    margin-top: 2rem;
+}
+
+.priceArea {
+    display: flex;
+    align-items: center;
+    padding-bottom: .75rem;
+    margin-top: .5rem;
+}
+
+.taxesArea {
+    border-bottom: 1px solid hsl(0, 0%, 10%);
+}
+
+.subtotalLabel, .taxesLabel, .totalLabel {
+    margin: 0;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.subtotal, .totalTaxes, .totalPrice {
+    margin: 0;
+    margin-left: auto;
+    font-size: large;
+
+}
+
+.purchaseTicketsButton {
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    display: block;
+    font-size: 1rem;
+    width: 10rem;
+    padding: .5rem;
+    color: white;
+    background-color: hsl(120, 90%, 20%);
+    border: none;
+    border-radius: 2rem;
+}
+
+.purchaseTicketsButton:hover {
+    background-color:  hsl(120, 90%, 15%)
+}
+
+
+.confirmedPurchaseDiv {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirmedPurchaseLabel {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 8vh;
+
+}
+
+.returnButton {
+    display: block;
+    font-size: 1rem;
+    width: 10rem;
+    padding: .5rem;
+    color: white;
+    background-color: hsl(120, 90%, 20%);
+    border: none;
+    border-radius: 2rem;
+    margin-top: 8vh;
+}
+
+.returnButton:hover {
+    background-color:  hsl(120, 90%, 15%)
+}

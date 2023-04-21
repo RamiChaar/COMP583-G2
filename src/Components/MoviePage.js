@@ -4,10 +4,14 @@ import { v4 as uuidv4 } from 'uuid'
 import CastList from './MoviePageComponents/CastList.js';
 import CrewList from './MoviePageComponents/CrewList.js'; 
 import ShowTimesList from './MoviePageComponents/ShowTimesList';
-import { ReactComponent as Logo } from '../Resources/logo.svg';
+import PurchaseTickets from './MoviePageComponents/PurchaseTickets';
 import Footer from './FooterComponents/Footer'
+import { ReactComponent as Logo } from '../Resources/logo.svg';
+import {useJsApiLoader} from '@react-google-maps/api';
 
 const LOCAL_STORAGE_KEY_MOVIES = 'cinema-scouter.movies';
+const googleApiKey = process.env.REACT_APP_GOOGLE_API_KEY
+const libraries = ['places']
 
 const fetchOptions = {
   method: 'GET',
@@ -21,10 +25,18 @@ const MoviePage = () => {
   const navigate = useNavigate();
   const [movieData, setMovieData] = useState([]);
   const [movie, setMovie] = useState([]);
+  const [popUp, setPopUp] = useState(false)
+  const [purchaseTicketInfo, setPurchaseTicketInfo] = useState({})
+  const [address, setAddress] = useState('')
 
   const location = useLocation();
   let movieState = location.state;
   let advTheaters = movieState.advTheaters
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: googleApiKey,
+    libraries: libraries
+  });
 
   async function fetchMovie(movieId) {
     let fetchMovieURL = `https://flixster.p.rapidapi.com/movies/detail?emsVersionId=${movieId}`;
@@ -142,6 +154,7 @@ const MoviePage = () => {
     }
 
     window.addEventListener("resize", () => handleResizeFunction());
+    document.body.style.overflow = "auto";
   }, [])
 
 
@@ -213,7 +226,6 @@ const MoviePage = () => {
     navigate(location.state.prevRouter, location.state.prevState);
   }
 
-
   function handleAccountClick() {
     navigate("/user", {state: {prevRouter: '/movie', prevState: location}});
   }
@@ -247,6 +259,57 @@ const MoviePage = () => {
     navigate("/theater", {state: {advTheater: advTheater, isNested: true, prevRouter: '/movie', prevState: location}});
   }
 
+  async function getAddress(theaterName) {
+    if(!isLoaded){
+      return 'not loaded'
+    }
+    const request = {
+      query: theaterName,
+      fields: ['name', 'formatted_address']
+    };
+    const service = new window.google.maps.places.PlacesService(document.createElement('div'));
+    service.findPlaceFromQuery(request, (results, status) => {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        setAddress(results[0].formatted_address.replace(", United States", ""))
+      }
+    });
+
+
+  }
+
+  async function handleShowtimeClicked(showTime, movieVariant, theater) {
+
+    let amenities = movieVariant.amenityGroups.find(group =>{ 
+      return group.showtimes.some(showtime => {return showtime.id === showTime.id})
+    }).amenities
+
+    getAddress(theater.name)
+
+    let newPurchaseTicketInfo = {
+      showTimeId: showTime.id,
+      movieId: movie.id,
+      theaterId: theater.id,
+      movieName: movie.title,
+      duration: movie.duration,
+      theaterName: theater.name,
+      formatName: movieVariant.formatName,
+      showingTime: showTime.providerTime,
+      showingDate: showTime.providerDate,
+      amenities: amenities
+    }
+
+    setPurchaseTicketInfo(newPurchaseTicketInfo)
+    document.body.style.overflow = "hidden";
+    setPopUp(true)
+  }
+
+  function handleClosePopup() {
+    setPurchaseTicketInfo({})
+    document.body.style.overflow = "auto";
+    setPopUp(false)
+    setAddress('')
+  }
+
   return (
     <div className='moviePage'>
       <div className='header'>
@@ -262,6 +325,8 @@ const MoviePage = () => {
         </svg>
       </div>
       
+      {popUp ? <PurchaseTickets purchaseTicketInfo={purchaseTicketInfo} address={address}handleClosePopup={handleClosePopup}/> : ""}
+     
       <div className='movieInfo'>
         <video className='trailer' poster={movie.poster} controls={movie.trailer === undefined ? '' : 'controls'}>
           <source src={movie.trailer !== undefined ? movie.trailer.replace(/^http:\/\//i, "https://") : undefined} type='video/mp4'/>
@@ -291,8 +356,9 @@ const MoviePage = () => {
         <i className="crewScrollRight fa fa-angle-right fa-lg" onClick={crewScrollRight}></i>
         <CrewList crewList={movie.crew}></CrewList>
       </div>
-      <ShowTimesList showTimesList={movieState.showTimes} date={movieState.date} handleMovieClicked={handleTheaterClicked} isNested={location.state.isNested}></ShowTimesList>
+      <ShowTimesList showTimesList={movieState.showTimes} date={movieState.date} handleMovieClicked={handleTheaterClicked} handleShowtimeClickedInMovie={handleShowtimeClicked} isNested={location.state.isNested}></ShowTimesList>
       <Footer/>
+
     </div>
   );
 };

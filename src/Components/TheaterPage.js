@@ -3,6 +3,7 @@ import { ReactComponent as Logo } from '../Resources/logo.svg';
 import {useNavigate, useLocation} from 'react-router-dom';
 import ShowTimesList from './MoviePageComponents/ShowTimesList';
 import Footer from './FooterComponents/Footer';
+import PurchaseTickets from './MoviePageComponents/PurchaseTickets';
 import {useJsApiLoader} from '@react-google-maps/api';
 import axios from 'axios';
 
@@ -17,6 +18,8 @@ const TheaterPage = () => {
   let advTheater = location.state.advTheater;
   let [address, setAddress] = useState('')
   let [isFavorite, setIsFavorite] = useState(false)
+  const [purchaseTicketInfo, setPurchaseTicketInfo] = useState({})
+  const [popUp, setPopUp] = useState(false)
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: googleApiKey,
@@ -74,12 +77,12 @@ const TheaterPage = () => {
     }
 
     await axios.post(`${process.env.REACT_APP_HOST}/users/isFavorite`, favoriteTheaterPostData)
-        .then(res => {
-          if(res.data.isFavorite === true){
-            setIsFavorite(true)
-          }
-        })
-        .catch(err => console.log(err))
+    .then(res => {
+      if(res.data.isFavorite === true){
+        setIsFavorite(true)
+      }
+    })
+    .catch(err => console.log(err))
   }
 
   async function handleRemoveFavorite() {
@@ -138,6 +141,36 @@ const TheaterPage = () => {
     navigate("/movie", {state: {id: movieId, showTimes: movie.showTimesList, date: advTheater.displayDate, isNested: true, prevRouter: "/theater", prevState: location}});
   }
 
+  async function handleShowtimeClicked(showTime, movieVariant, movie) {
+    
+    let amenities = movieVariant.amenityGroups.find(group =>{ 
+      return group.showtimes.some(showtime => {return showtime.id === showTime.id})
+    }).amenities
+
+    let newPurchaseTicketInfo = {
+      showTimeId: showTime.id,
+      movieId: movie.emsVersionId,
+      theaterId: advTheater.theaterId,
+      movieName: movie.name,
+      duration: movie.durationMinutes,
+      theaterName: advTheater.theaterData.name,
+      formatName: movieVariant.formatName,
+      showingTime: showTime.providerTime,
+      showingDate: showTime.providerDate,
+      amenities: amenities
+    }
+
+    setPurchaseTicketInfo(newPurchaseTicketInfo)
+    document.body.style.overflow = "hidden";
+    setPopUp(true)
+  }
+
+  function handleClosePopup() {
+    setPurchaseTicketInfo({})
+    document.body.style.overflow = "auto";
+    setPopUp(false)
+  }
+
   return (
     <div className='theaterPage'>
       <div className='header'>
@@ -152,6 +185,9 @@ const TheaterPage = () => {
               C15.328,9.982,12.943,12.367,10,12.367z"></path>
         </svg>
       </div>
+
+      {popUp ? <PurchaseTickets purchaseTicketInfo={purchaseTicketInfo} address={address}handleClosePopup={handleClosePopup}/> : ""}
+
       <div className='theaterInfo'>
         <div className='theaterInfoTitle'>
           <h2 className='theaterName'>{advTheater?.theaterData?.name}</h2>
@@ -163,7 +199,7 @@ const TheaterPage = () => {
         </div>
         <p className='theaterAddress'>{address}</p>
       </div>
-      <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate} handleMovieClicked={handleMovieClicked} isNested={location.state.isNested}></ShowTimesList>
+      <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate} handleMovieClicked={handleMovieClicked} handleShowtimeClickedInTheater={handleShowtimeClicked} isNested={location.state.isNested}></ShowTimesList>
       <Footer/>
     </div>
   );

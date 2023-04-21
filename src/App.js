@@ -12,6 +12,7 @@ import './Styling/MoviePreviewList.css';
 import './Styling/TheaterPreviewList.css';
 import './Styling/CastCrewMembers.css';
 import './Styling/ShowTimes.css';
+import './Styling/PurchaseTickets.css';
 
 import Home from "./Components/HomePage.js";
 import Movie from "./Components/MoviePage.js";
