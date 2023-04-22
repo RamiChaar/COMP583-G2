@@ -142,7 +142,8 @@ router.route('/addTickets').post( async (req, res) => {
             adultCount: req.body.adultCount,
             childCount: req.body.childCount,
             seniorCount: req.body.seniorCount,
-            amenities: req.body.amenities
+            amenities: req.body.amenities,
+            totalPrice: req.body.totalPrice
         }
         
         allTickets.push(newTicket)
