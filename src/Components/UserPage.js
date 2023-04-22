@@ -32,6 +32,7 @@ const UserPage = () => {
   const [pageLoaded, setPageLoaded] = useState(false)
   const [ticket, setTicket] = useState({})
   const [displayTicket, setDisplayTicket] = useState(false)
+  const [deleteWindow, setDeleteWindow] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -132,10 +133,31 @@ const UserPage = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS)
   }
 
-  async function handleDeleteAccount() {
-    console.log(userData)
-    //delete account
-    
+  function handleDeleteAccountClicked() {
+    setDeleteWindow(true)    
+  }
+
+  function handleDoNotDelete() {
+    setDeleteWindow(false)
+  }
+
+  async function handleDeleteAccount() { 
+    let userCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
+    let email = userCredentials.email
+    let password = userCredentials.password
+
+    let user = {
+      email: email,
+      password: password
+    }
+
+    await axios.post(`${process.env.REACT_APP_HOST}/users/delete`, user)
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err))
+
+    localStorage.removeItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS)
+    setDeleteWindow(false)
+    setLoggedIn(false)
   }
 
   async function getAdvTheater(theaterId) {
@@ -214,6 +236,16 @@ const UserPage = () => {
 
       {displayTicket && ticket ? <TicketDisplay ticket={ticket} handleCloseTicket={handleCloseTicket}/> : ""}
 
+      {!deleteWindow ? "" : 
+        <div className="overlay">
+          <div className="deleteWindow">
+            <p className='deleteLabel'>Are you sure you want to delete your account?</p>
+            <button className='doNotDelete' onClick={handleDoNotDelete}>No, go back</button>
+            <button className='confirmDelete' onClick={handleDeleteAccount}>Yes, delete</button>
+          </div>
+        </div>
+      }
+
       {pageLoaded? "" : <div className='loadingSpacer'></div>}
       {!loggedIn && pageLoaded? 
         <div className="userSetup">
@@ -278,7 +310,7 @@ const UserPage = () => {
 
           </div>
           <div className="userPageFooter">
-            <button className='deleteAccount' onClick={handleDeleteAccount}>Delete Account</button>
+            <button className='deleteAccount' onClick={handleDeleteAccountClicked}>Delete Account</button>
           </div>
         </div>
       }

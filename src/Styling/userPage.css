@@ -473,6 +473,7 @@
     cursor: pointer;
 }
 
+
 .userPageFooter {
     display: flex;
 }
@@ -487,11 +488,70 @@
     background-color: hsl(120, 90%, 20%);
     border: none;
     border-radius: .8rem;
+    margin-top: 1rem
 }
 
 .deleteAccount:hover {
-    background-color: hsl(0, 56%, 45%);
+    background-color: hsl(0, 62%, 40%);
+}
+
+.deleteWindow {
+    position:fixed;
+    width: calc(40vw - 4rem);
+    height: auto;
+    max-height: 80vh;
+    margin-top: 30vh;
+    margin-left: 30vw;
+    margin-right: 30vw;
+    padding: 2rem;
+    background-color: hsl(223, 12%, 24%);
+    border: none;
+    border-radius: .4rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow-y: hidden;
+}
+
+.deleteLabel {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 500;
     
+}
+
+.doNotDelete {
+    width: 8rem;
+    padding: .5rem;
+    margin-left: calc(25% - 4rem);
+    margin-right: calc(25% - 4rem);
+    font-size: .9rem;
+    border: none;
+    border-radius: .8rem;
+    margin-top: 1rem;
+    background-color: hsl(120, 90%, 20%);
+    color: white
+}
+
+.doNotDelete:hover {
+    background-color:  hsl(120, 90%, 15%)
+}
+
+.confirmDelete {
+    width: 8rem;
+    padding: .5rem;
+    margin-left: calc(25% - 4rem);
+    margin-right: calc(25% - 4rem);
+    font-size: .9rem;
+    border: none;
+    border-radius: .8rem;
+    margin-top: 1rem;
+    background-color: hsl(0, 62%, 40%);
+    color: white
+
+}
+
+.confirmDelete:hover {
+    background-color: hsl(0, 77%, 32%);
 }
 
 
@@ -507,21 +567,13 @@
     border: none;
     border-radius: .4rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
-}
-
-.ticketDisplay::-webkit-scrollbar{
-    background-color: hsla(223, 12%, 24%, 0);;
-}
-
-.ticketDisplay::-webkit-scrollbar-thumb{
-    background-color: hsl(223, 12%, 32%);
-    border-radius: 10rem;
+    overflow-y: hidden;
 }
 
 .ticketDisplayHeader {
     display: flex;
     align-items: center;
+    height: 5rem;
     padding-left: 1rem;
     padding-right: 1rem;
     font-weight: bold;
@@ -540,9 +592,20 @@
 .ticketDisplayBody {
     display: flex;
     flex-wrap: wrap;
+    height: calc(80vh - 5rem);
     align-items: center;
     padding-left: 2rem;
     padding-right: 2rem;
+    overflow: auto;
+}
+
+.ticketDisplayBody::-webkit-scrollbar{
+    background-color: hsla(223, 12%, 24%, 0);;
+}
+
+.ticketDisplayBody::-webkit-scrollbar-thumb{
+    background-color: hsl(223, 12%, 32%);
+    border-radius: 10rem;
 }
 
 .ticketDisplayMovieDate {
