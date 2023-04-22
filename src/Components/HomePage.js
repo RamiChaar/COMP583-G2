@@ -74,10 +74,10 @@ const HomePage = () => {
           console.log("fetching theater... " + fetchTheaterUrl)
           return fetch(fetchTheaterUrl, fetchOptions)
             .then(response => response.json())
-            .then(data => data.data.theaterShowtimeGroupings);
+            .then(data => data?.data?.theaterShowtimeGroupings)
         });
         const batchNewAdvTheaters = await Promise.all(promises);
-        newAdvTheaters.push(...batchNewAdvTheaters);
+        newAdvTheaters.push(...batchNewAdvTheaters.filter(theater => theater != undefined));
         setAdvTheaters(newAdvTheaters)
         if (i < numBatches - 1) {
           await new Promise(resolve => setTimeout(resolve, 1000));

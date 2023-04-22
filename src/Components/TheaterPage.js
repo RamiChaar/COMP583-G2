@@ -203,7 +203,9 @@ const TheaterPage = () => {
         </div>
         <p className='theaterAddress'>{address}</p>
       </div>
+      {advTheater?.movies === undefined || advTheater?.movies?.length === 0 ? "" :
       <ShowTimesList showTimesList={advTheater.movies} date={advTheater.displayDate} handleMovieClicked={handleMovieClicked} handleShowtimeClickedInTheater={handleShowtimeClicked} isNested={location.state.isNested}></ShowTimesList>
+      }
       <Footer/>
     </div>
   );

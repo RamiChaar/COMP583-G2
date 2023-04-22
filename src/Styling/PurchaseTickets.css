@@ -5,7 +5,7 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    z-index: 9999;
 }
 
 .purchaseTickets{
@@ -33,7 +33,6 @@
     border-radius: 10rem;
 }
 
-
 .purchaseTicketsHeader {
     display: flex;
     align-items: center;
@@ -50,6 +49,7 @@
 }
 
 .purchaseTicketsTitle {
+    font-weight: normal;
     width: 100%;
     margin: 1rem;
     text-align: center;
@@ -268,13 +268,14 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    margin: 2rem;
 }
 
 .confirmedPurchaseLabel {
     width: 100%;
     text-align: center;
     font-weight: bold;
-    margin-top: 8vh;
+    margin-top: 2vh;
 
 }
 
@@ -287,7 +288,7 @@
     background-color: hsl(120, 90%, 20%);
     border: none;
     border-radius: 2rem;
-    margin-top: 8vh;
+    margin-top: 4vh;
 }
 
 .returnButton:hover {

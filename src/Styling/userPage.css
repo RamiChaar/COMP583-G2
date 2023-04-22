@@ -6,8 +6,13 @@
     z-index: 9999;
 }
 
+.loadingSpacer {
+    height: 100vh
+}
+
 .userPage {
     min-height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     font-size: calc(10px + 2vmin);
@@ -177,21 +182,55 @@
     background-color:  hsl(120, 90%, 15%)
 }
 
+
+.userDataDiv{
+    display: flex;
+    margin-bottom: 2rem
+}
+
+.favoriteTheatersArea {
+    width: calc(40vw + 2rem);
+    height: 70vh;
+    background-color: hsl(223, 12%, 20%);
+    border-top: 1px solid hsl(223, 12%, 12%);
+    border-radius: .2rem;
+    margin-right: 2rem;
+}
+
+.favoriteTheatersHeader {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+}
+
 .favoriteTheatersLabel {
     font-size: larger;
     font-weight: bold;
-    padding-top: 1.25rem;
     width: 100%;
     text-align: center;
+    margin: 0;
 }
 
 .favoriteTheatersDiv {
-    width: 35vw;
+    width: 40vw;
+    height: 60vh;
     padding: 1rem;
     padding-top: 0;
     background-color: hsl(223, 12%, 20%);
-    border-radius: .2rem;
+    border-bottom-right-radius: .2rem;
+    border-bottom-left-radius: .2rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    border-top: 1px solid hsl(223, 12%, 12%);
+}
+
+.favoriteTheatersDiv::-webkit-scrollbar{
+    background-color: hsla(223, 12%, 24%, 0);;
+}
+
+.favoriteTheatersDiv::-webkit-scrollbar-thumb{
+    background-color: hsl(223, 12%, 32%);
+    border-radius: 10rem;
 }
 
 .favoriteTheater:last-child {
@@ -199,7 +238,7 @@
 }
 
 .favoriteTheater {
-    width: calc(35vw - 6rem);
+    width: calc(40vw - 6rem);
     height: 1rem;
     display: flex;
     justify-content: left;
@@ -216,7 +255,7 @@
 }
 
 .favoriteTheater:hover {
-    width: calc(35vw - 5.5rem);
+    width: calc(40vw - 5.5rem);
     height: 1.5rem;
     transform: translateX(-.5rem);
     padding-left: 2.25rem;
@@ -227,10 +266,6 @@
 
 .favoriteTheater:hover + div {
     margin-top: .75rem;
-}
-
-.favoriteTheater:nth-child(2):hover {
-    margin-top:-.25rem;
 }
 
 .theaterName {
@@ -257,7 +292,193 @@
     font-size: larger;
 }
 
+
+.ticketsDiv {
+    width: calc(60vw - 6rem);
+    height: 70vh;
+    background-color: hsl(223, 12%, 20%);
+    border-top: 1px solid hsl(223, 12%, 12%);
+    border-radius: .2rem;
+}
+
+.ticketsDivHeader {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.ticketsTitle {
+    font-size: larger;
+    font-weight: bold;
+    width: 100%;
+    transform: translateX(-4rem);
+    text-align: center;
+    margin: 0;
+}
+
+.ticketsDivBody {
+    width: calc(60vw - 8rem);
+    height: (60vh + 1rem);
+    padding-top: 0;
+    margin:0;
+    background-color: hsl(223, 12%, 20%);
+    border-bottom-right-radius: .2rem;
+    border-bottom-left-radius: .2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    border-top: 1px solid hsl(223, 12%, 12%);
+}
+
+.toggleDiv {
+    height: 6vh;
+    width: (100% - 0rem);
+    display: flex;
+    margin-left: auto;
+    justify-content: right;
+    align-items: center;
+    padding: .5rem;
+    justify-self: flex-end;
+    z-index: 9998;
+
+}
+
+.switch {
+    margin-right: .5rem;
+    margin-left: 1rem;
+    width: 8rem;
+    background-color: hsl(223, 12%, 12%);
+    border-radius: 3rem;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 9998;
+
+}
+
+.switchLeft {
+    font-size: small;
+    width: 3rem;
+    padding: .65rem;
+    cursor: pointer;
+    border-radius: 3rem;
+    background-color: hsl(223, 12%, 28%);
+    text-align: center;
+    z-index: 9998;
+
+}
+
+.switchRight {
+    font-size: small;
+    width: 5rem;
+    padding: .65rem;
+    cursor: pointer;
+    border-radius: 3rem;
+    text-align: center;
+    z-index: 9998;
+}
+
+.ticketPreviewsList {
+    width: (60vw + 2rem);
+    height: calc(60vh - 0rem);
+    padding: 1rem;
+    padding-top: 0;
+    background-color: hsl(223, 12%, 20%);
+    border-bottom-right-radius: .2rem;
+    border-bottom-left-radius: .2rem;
+    overflow: auto;
+    z-index: 9998;
+    overflow-y: auto;
+
+}
+
+.ticketPreviewsList::-webkit-scrollbar{
+    background-color: hsla(223, 12%, 24%, 0);;
+}
+
+.ticketPreviewsList::-webkit-scrollbar-thumb{
+    background-color: hsl(223, 12%, 32%);
+    border-radius: 10rem;
+}
+
+.dateLabel {
+    margin: 1.25rem;
+    margin-bottom: 0;
+}
+.ticketPreview {
+    width: calc(60vw - 16rem);
+    height: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    padding: 1.25rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 1rem;
+    margin-bottom: 0;
+
+    border-radius: .2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: hsl(223, 12%, 28%);
+
+    cursor: pointer;
+}
+
+.ticketPreview:hover {
+    padding: 1.5rem;
+    padding-top: 1.15rem;
+    padding-bottom: 1.35rem;
+    margin: .75rem;
+}
+
+.ticketPreview:hover + div {
+    margin-top: .75rem;
+}
+
+.ticketPreview:hover + p {
+    margin-top: 1rem;
+}
+
+.ticketPreviewMovieName {
+    margin: 0;
+    width: 75%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.ticketPreviewShowingTime {
+    margin: 0;
+    width: 25%;
+    font-size: 1.3rem;
+    text-align: right;
+    cursor: pointer;
+}
+
+.ticketPreviewTheaterName {
+    margin: 0;
+    margin-top: .5rem;
+    width: 100%;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.ticketPreviewSeats {
+    margin: 0;
+    font-weight: 300;
+    margin-top: .75rem;
+    width: 100%;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.userPageFooter {
+    display: flex;
+}
+
 .deleteAccount {
+    margin-left: auto;
     display: block;
     font-size: 1rem;
     width: 8rem;
@@ -271,4 +492,166 @@
 .deleteAccount:hover {
     background-color: hsl(0, 56%, 45%);
     
+}
+
+
+.ticketDisplay{
+    position:fixed;
+    width: 60vw;
+    height: auto;
+    max-height: 80vh;
+    margin-top: 10vh;
+    margin-left: 20vw;
+    margin-right: 20vw;
+    background-color: hsl(223, 12%, 24%);
+    border: none;
+    border-radius: .4rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.ticketDisplay::-webkit-scrollbar{
+    background-color: hsla(223, 12%, 24%, 0);;
+}
+
+.ticketDisplay::-webkit-scrollbar-thumb{
+    background-color: hsl(223, 12%, 32%);
+    border-radius: 10rem;
+}
+
+.ticketDisplayHeader {
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: bold;
+    background-color: hsl(223, 12%, 20%);
+    border-radius: .2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.ticketDisplayTitle {
+    font-weight: normal;
+    width: 100%;
+    margin: 1rem;
+    text-align: center;
+}
+
+.ticketDisplayBody {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.ticketDisplayMovieDate {
+    width: 100%;
+    margin: 0;
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.ticketDisplayTheaterName {
+    width: 100%;
+    margin: 0;
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.ticketDisplayAddress {
+    width: 100%;
+    margin: 0;
+    margin-top: .5rem;
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+.ticketDisplayFormat {
+    margin: 0;
+    margin-top: 2rem;
+    width: 100%;
+    font-weight: 450;
+}
+
+.ticketDisplayTime {
+    margin: 0;
+    margin-left: .5rem;
+    width: 100%;
+    font-weight: 350;
+    font-size: 1.2rem;
+}
+
+.ticketDisplayAmenities {
+    width: 100%;
+    margin: 0;
+}
+
+.ticketDisplaySeats {
+    width: 100%;
+    margin: 0;
+    font-size: 1.2rem;
+    align-self: flex-start;
+}
+
+.ticketDisplayTotalPrice {
+    width: 100%;
+    margin: 1.5rem;
+    margin-right: 0;
+    font-size: 1.6rem;
+    font-weight: 500;
+    text-align: right;
+    align-self: flex-end;
+}
+
+.seatDisplay {
+    width: 100%;
+    height: 15rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid hsl(223, 12%, 12%);
+}
+
+.screenSmall {
+    background-color: hsl(0, 0%, 3%);
+    text-align: center;
+    font-size: .7rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding: .1rem;
+    width: 8rem;
+    border-radius: .2rem;
+}
+
+.seatMapSmall {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.seatRowDivSmall {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.seatRowSmall {
+    text-align: center;
+    text-align: center;
+}  
+
+.seatSmall {
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: .1rem;
+    cursor: pointer;
+    background-color: hsl(0, 0%, 40%);
 }

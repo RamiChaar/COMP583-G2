@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from 'react-router-dom';
 import { ReactComponent as Logo } from '../Resources/logo.svg';
+import {v4 as uuidv4} from 'uuid';
 import Footer from './FooterComponents/Footer';
 import Login from './UserPageComponents/Login';
 import SignUp from './UserPageComponents/SignUp';
+import TicketPreview from './UserPageComponents/TicketPreview'
+import TicketDisplay from './UserPageComponents/TicketDisplay'
 import axios from 'axios';
 
 const LOCAL_STORAGE_KEY_USER_CREDENTIALS = 'cinema-scouter.userCredentials';
@@ -23,17 +26,47 @@ const UserPage = () => {
   const [haveAccount, setHaveAccount] = useState(true)
   const [loggedIn, setLoggedIn] = useState(false)
   const [userData, setUserData] = useState({})
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [filteredTickets, setFilteredTickets] = useState([])
+  const [isDisabled, setIsDisabled] = useState(false)
+  const [toggledLeft, setToggledLeft] = useState(true)
+  const [pageLoaded, setPageLoaded] = useState(false)
+  const [ticket, setTicket] = useState({})
+  const [displayTicket, setDisplayTicket] = useState(false)
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.body.style.overflow = "auto";
 
+    checkCredentials()
+  }, []);
+  
+  useEffect(() => {
+    userData?.tickets?.sort((a, b) => {
+      const aDateTime = new Date(`${a.showingDate}T${a.showingTime}`);
+      const bDateTime = new Date(`${b.showingDate}T${b.showingTime}`);
+      return aDateTime - bDateTime;
+    });
+    userData?.tickets?.reverse()
+    const now = new Date();
+    const newFilteredTickets = userData?.tickets?.filter((item) => {
+      const showingDateTime = new Date(`${item.showingDate}T${item.showingTime}`);
+      const timeDiff = showingDateTime.getTime() - now.getTime();
+      const hoursDiff = timeDiff / (1000 * 60 * 60);
+      return hoursDiff >= -(item?.duration / 60);
+    });
+
+    setFilteredTickets(newFilteredTickets)
+
+  }, [userData])
+
+  async function checkCredentials() {
     let storedUserCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
 
     if(storedUserCredentials) {
-      validateStoredUserCredentials(storedUserCredentials)
+      await validateStoredUserCredentials(storedUserCredentials)
     }
-
-  }, []);
+    setPageLoaded(true)
+  }
 
   async function validateStoredUserCredentials(userCredentials) {
     let email = userCredentials.email
@@ -107,10 +140,10 @@ const UserPage = () => {
 
   async function getAdvTheater(theaterId) {
     const fetchTheaterUrl = `https://flixster.p.rapidapi.com/theaters/detail?id=${theaterId}`;
-        console.log("fetching theater... " + fetchTheaterUrl)
-        return fetch(fetchTheaterUrl, fetchOptions)
-          .then(response => response.json())
-          .then(data => data.data.theaterShowtimeGroupings);
+      console.log("fetching theater... " + fetchTheaterUrl)
+      return fetch(fetchTheaterUrl, fetchOptions)
+      .then(response => response.json())
+      .then(data => data.data.theaterShowtimeGroupings);
   }
 
   async function handleTheaterClicked(theaterId, theaterName) {
@@ -118,7 +151,7 @@ const UserPage = () => {
     let advTheater = await getAdvTheater(theaterId)
     setIsDisabled(false)
     let newAdvTheater = {...advTheater, theaterData: {name: theaterName}}
-    navigate("/theater", {state: {advTheater: newAdvTheater, isNested: true, prevRouter: '/user', prevState: location}});
+    navigate("/theater", {state: {advTheater: newAdvTheater, isNested: false, prevRouter: '/user', prevState: location}});
   }
 
   async function handleDeleteTheater(theaterId) {
@@ -142,6 +175,34 @@ const UserPage = () => {
     .catch(err => console.log(err))
   }
 
+  function handleToggleLeft() {
+    if(!toggledLeft) {
+      document.querySelector('.switchLeft').style.backgroundColor = 'hsl(223, 12%, 28%)'
+      document.querySelector('.switchRight').style.backgroundColor = 'hsl(223, 12%, 12%)'
+      setToggledLeft(true)
+    }
+  }
+
+  function handleToggleRight() {
+    if(toggledLeft) {
+      document.querySelector('.switchRight').style.backgroundColor = 'hsl(223, 12%, 28%)'
+      document.querySelector('.switchLeft').style.backgroundColor = 'hsl(223, 12%, 12%)'
+      setToggledLeft(false)
+    }
+  }
+
+  function handleClickTicket (ticket) {
+    document.body.style.overflow = "hidden";
+    setTicket(ticket)
+    setDisplayTicket(true)
+  }
+
+  function handleCloseTicket () {
+    document.body.style.overflow = "auto";
+
+    setTicket({})
+    setDisplayTicket(false)
+  }
   return (
     <div className='userPage'>
       {!isDisabled ? "" : <div className="overlay"/>}
@@ -151,13 +212,16 @@ const UserPage = () => {
         <Logo className='logo'/>
       </div>
 
-      {loggedIn? "" :
+      {displayTicket && ticket ? <TicketDisplay ticket={ticket} handleCloseTicket={handleCloseTicket}/> : ""}
+
+      {pageLoaded? "" : <div className='loadingSpacer'></div>}
+      {!loggedIn && pageLoaded? 
         <div className="userSetup">
           {haveAccount ? <Login handleToSignUp={handleToSignUp} handleLogin={handleLogin}/> : <SignUp handleToLogin={handleToLogin}/>}
-        </div>
+        </div> : ""
       }
 
-      {!loggedIn? "" :
+      {!loggedIn? "":
         <div className='userPageBody'>
 
           <div className="userPageHeader">
@@ -169,25 +233,53 @@ const UserPage = () => {
           </div>
 
           <div className="userDataDiv">
-            <div className="favoriteTheatersDiv">
-            <p className="favoriteTheatersLabel">Your Favorite Theaters</p>
-              {userData?.favoriteTheaters?.map(theater => {
-                return <div className="favoriteTheater" key={theater.theaterId}>
-                        <p className="theaterName" onClick={() => handleTheaterClicked(theater.theaterId, theater.theaterName)}>{theater.theaterName}</p>
-                        <i className="trashButton fa fa-trash" aria-hidden="true" onClick={() => handleDeleteTheater(theater.theaterId)}></i>
-                      </div>
-              })}
-            </div>
-
-            <div className="ticketsDiv">
-              <div className="ticketsDivHeader">
-
+            <div className="favoriteTheatersArea">
+              <div className="favoriteTheatersHeader">
+                <p className="favoriteTheatersLabel">Your Favorite Theaters</p>
+              </div>
+              <div className="favoriteTheatersDiv">
+                {userData?.favoriteTheaters?.map(theater => {
+                  return <div className="favoriteTheater" key={theater.theaterId}>
+                          <p className="theaterName" onClick={() => handleTheaterClicked(theater.theaterId, theater.theaterName)}>{theater.theaterName}</p>
+                          <i className="trashButton fa fa-trash" aria-hidden="true" onClick={() => handleDeleteTheater(theater.theaterId)}></i>
+                        </div>
+                })}
               </div>
             </div>
 
-          </div>
 
-          <button className='deleteAccount' onClick={handleDeleteAccount}>Delete Account</button>
+            <div className="ticketsDiv">
+
+              <div className="ticketsDivHeader">
+              <div className="toggleDiv">
+                  <div className="switch">
+                    <div className="switchLeft" onClick={handleToggleLeft}>All</div>
+                    <div className="switchRight" onClick={handleToggleRight}>Future</div>
+                  </div>
+                </div>
+                <p className="ticketsTitle">Your Tickets</p>
+              </div>
+
+              <div className="ticketsDivBody">
+                <div className="ticketPreviewsList">
+                  {toggledLeft ? 
+                    userData?.tickets?.map((ticket, i) => {
+                      return <TicketPreview key={uuidv4()} ticket={ticket} prevDate={i === 0 ? 'noDate' : userData?.tickets[i-1].showingDate} handleClickTicket={handleClickTicket}/>
+                    }) : 
+                    filteredTickets?.map((ticket, i) => {
+                      return <TicketPreview key={uuidv4()} ticket={ticket} prevDate={i === 0 ? 'noDate' : userData?.tickets[i-1].showingDate} handleClickTicket={handleClickTicket}/>
+                    })
+                  }
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+          <div className="userPageFooter">
+            <button className='deleteAccount' onClick={handleDeleteAccount}>Delete Account</button>
+          </div>
         </div>
       }
 

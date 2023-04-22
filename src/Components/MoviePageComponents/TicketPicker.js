@@ -119,7 +119,7 @@ function TicketPicker ({ticketCount, selectedSeats, handlePurchaseTickets}) {
                     <p className="totalLabel">Total: </p>
                     <p className="totalPrice">${((adultCount*adultPrice + childCount*childPrice + seniorCount*seniorPrice)*(1+taxRate)).toFixed(2)} </p>
                 </div>
-                <button className="purchaseTicketsButton" onClick={() => handlePurchaseTickets(adultCount, childCount, seniorCount)}>Purchase Tickets</button>
+                <button className="purchaseTicketsButton" onClick={() => handlePurchaseTickets(adultCount, childCount, seniorCount, ((adultCount*adultPrice + childCount*childPrice + seniorCount*seniorPrice)*(1+taxRate)).toFixed(2))}>Purchase Tickets</button>
             </div>
         </div>
     );

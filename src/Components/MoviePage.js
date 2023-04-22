@@ -10,6 +10,8 @@ import { ReactComponent as Logo } from '../Resources/logo.svg';
 import {useJsApiLoader} from '@react-google-maps/api';
 
 const LOCAL_STORAGE_KEY_MOVIES = 'cinema-scouter.movies';
+const LOCAL_STORAGE_KEY_ADVTHEATERS = 'cinema-scouter.advTheaters';
+
 const googleApiKey = process.env.REACT_APP_GOOGLE_API_KEY
 const libraries = ['places']
 
@@ -86,9 +88,6 @@ const MoviePage = () => {
   }
 
   useEffect(() => {
-  }, [movie])
-
-  useEffect(() => {
     let newMovie = {
       id: movieState.id,
       trailer: movieData.trailer?.url,
@@ -152,11 +151,33 @@ const MoviePage = () => {
     } else {
       createMovieObject();
     }
+    if(movieState.showTimes === undefined || movieState.showTimes.length === 0) {
+      setShowTimes()
+    }
 
     window.addEventListener("resize", () => handleResizeFunction());
     document.body.style.overflow = "auto";
   }, [])
 
+  function setShowTimes() {
+    let storedAdvTheaters = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_ADVTHEATERS));
+    let showTimesList = [];
+    storedAdvTheaters.forEach(theater => {
+      theater.movies.forEach(movie => {
+        if(movie.emsVersionId === movieState.id) {
+          let showTimeObject = {
+            id: theater.theaterId,
+            name: theater.theaterData.name,
+            distance: theater.theaterData.distance,
+            movieVariants: movie.movieVariants,
+          }
+          showTimesList.push(showTimeObject);
+        }
+      });
+    });
+
+    movieState.showTimes = showTimesList;
+  }
 
   function getGenreString() {
     let str = " ";
@@ -357,7 +378,10 @@ const MoviePage = () => {
         <i className="crewScrollRight fa fa-angle-right fa-lg" onClick={crewScrollRight}></i>
         <CrewList crewList={movie.crew}></CrewList>
       </div>
-      <ShowTimesList showTimesList={movieState.showTimes} date={movieState.date} handleMovieClicked={handleTheaterClicked} handleShowtimeClickedInMovie={handleShowtimeClicked} isNested={location.state.isNested}></ShowTimesList>
+      {movieState?.showTimes === undefined || movieState?.showTimes?.length === 0 ? "" :
+        <ShowTimesList showTimesList={movieState.showTimes} date={movieState.date} handleMovieClicked={handleTheaterClicked} handleShowtimeClickedInMovie={handleShowtimeClicked} isNested={location.state.isNested}></ShowTimesList>
+      }
+      
       <Footer/>
 
     </div>

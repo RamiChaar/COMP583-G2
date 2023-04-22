@@ -122,13 +122,16 @@ div .amenityDiv:last-child .amenityDot:last-child{
 
 .showTime {
     display: inline-block;
+    width: 3.5rem;
     font-size: .8rem;
     padding: .5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
     margin-right: .5rem;
     background-color: hsl(0, 0%, 40%);
     border-radius: .5rem;
+    cursor: pointer;
+    text-align: center;
 }
 
 .toMovie:active {

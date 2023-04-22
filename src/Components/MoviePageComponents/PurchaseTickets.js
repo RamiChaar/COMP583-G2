@@ -10,6 +10,13 @@ function PurchaseTickets ({purchaseTicketInfo, address, handleClosePopup}) {
     const [purchasedTickets, setPurchasedTickets] = useState(false)
     const [selectedSeats, setSelectedSeats] = useState([]);
 
+    const givenTime = new Date(`2023-04-21T${purchaseTicketInfo.showingTime}`);
+    const hours = givenTime.getHours();
+    const minutes = givenTime.getMinutes();
+    const hours12 = (hours % 12) || 12;
+    const amOrPm = hours < 12 ? 'am' : 'pm';
+    const time12 = `${hours12}:${minutes.toString().padStart(2, '0')}${amOrPm}`;
+
     useEffect(() => {
         if(purchasedTickets) {
             let windowDiv = document.querySelector('.purchaseTickets')
@@ -28,12 +35,12 @@ function PurchaseTickets ({purchaseTicketInfo, address, handleClosePopup}) {
         setSelectedSeats(confirmedSeats)
     }
 
-    function handlePurchaseTickets(adultCount, childCount, seniorCount) {
-        addTicketsToDatabase(adultCount, childCount, seniorCount)
+    function handlePurchaseTickets(adultCount, childCount, seniorCount, totalPrice) {
+        addTicketsToDatabase(adultCount, childCount, seniorCount, totalPrice)
         setPurchasedTickets(true)
     }
 
-    async function addTicketsToDatabase(adultCount, childCount, seniorCount) {
+    async function addTicketsToDatabase(adultCount, childCount, seniorCount, totalPrice) {
         let showTimeObject = {
             showTimeId: purchaseTicketInfo.showTimeId,
             seats: selectedSeats
@@ -65,7 +72,8 @@ function PurchaseTickets ({purchaseTicketInfo, address, handleClosePopup}) {
             adultCount: adultCount,
             childCount: childCount,
             seniorCount: seniorCount,
-            amenities: purchaseTicketInfo.amenities
+            amenities: purchaseTicketInfo.amenities,
+            totalPrice: totalPrice
         }
 
         await axios.post(`${process.env.REACT_APP_HOST}/users/addTickets`, userShowTimeObject)
@@ -81,7 +89,7 @@ function PurchaseTickets ({purchaseTicketInfo, address, handleClosePopup}) {
             <div className='purchaseTickets'>
                 <div className='purchaseTicketsHeader'>
                     <i className='closePopup fa fa-times' onClick={handleClosePopup}></i>
-                    <p className='purchaseTicketsTitle'>{purchaseTicketInfo.movieName}</p>
+                    <p className='purchaseTicketsTitle'><b>{purchaseTicketInfo.movieName}</b> - {time12}</p>
                 </div>
 
                 {seatsSelected ? "": 
