@@ -44,6 +44,30 @@ router.route('/add').post( async (req, res) => {
     }
 })
 
+router.route('/delete').post( async (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    console.log(email, password)
+    User.findOne({ 'email': email })
+    .then(async user => {
+        if(user == null) {
+            return res.status(404).send('cannot find user')
+        } else {
+            try {
+                if(await bcrypt.compare(password, user.hashedPassword)) {
+                    User.deleteOne({ 'email': email }).then(res.send('user deleted'))
+                } else {
+                    res.send('Not Allowed')
+                }
+            } catch {
+                res.status(500).send()
+            }
+        }
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+})
+
 router.route('/addFavorite').post( async (req, res) => {
     const email = req.body.email
     const password = req.body.password
