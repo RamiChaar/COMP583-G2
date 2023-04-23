@@ -48,7 +48,6 @@ router.route('/delete').post( async (req, res) => {
     const email = req.body.email
     const password = req.body.password
 
-    console.log(email, password)
     User.findOne({ 'email': email })
     .then(async user => {
         if(user == null) {

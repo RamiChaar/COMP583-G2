@@ -21,9 +21,13 @@ connection.once('open', () => {
 
 const usersRouter = require('./routes/users')
 const showTimeAvailabilityRouter = require('./routes/showTimeAvailability')
+const userAnalyticsRouter = require('./routes/userAnalytics')
+
 
 app.use('/users', usersRouter)
 app.use('/showTimeAvailability', showTimeAvailabilityRouter)
+app.use('/userAnalytics', userAnalyticsRouter)
+
 
 
 app.listen(port, () => {
