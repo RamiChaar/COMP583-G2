@@ -18,6 +18,10 @@ const userAnalyticsModel = new Schema ({
         type: Array,
         required: true
     },
+    tomatoLevelCounts: {
+        type: Array,
+        required: true
+    },
 })
 
 const userAnalytics = mongoose.model('userAnalytics', userAnalyticsModel)
