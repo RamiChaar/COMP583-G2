@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
-import SearchBar from './HomePageComponents/SearchBar';
 import Footer from './FooterComponents/Footer';
 import MoviePreviewList from './HomePageComponents/MoviePreviewList';
 import useGeolocation from '../Hooks/useGeolocation.js';
@@ -24,7 +23,6 @@ const fetchOptions = {
 const HomePage = () => {
     const navigate = useNavigate();
     const location = useGeolocation();
-    const [searchKeyword, setSearchKeyword] = useState('');
     const [theaters, setTheaters] = useState([]);
     const [advTheaters, setAdvTheaters] = useState([]);
     const [movies, setMovies] = useState([]);
@@ -309,7 +307,6 @@ const HomePage = () => {
       setAdvTheaters([]);
       setMovies([]);
       setMoviePreviews([]);
-      setSearchKeyword('')
     }
 
     function logAllStates() {
@@ -402,16 +399,11 @@ const HomePage = () => {
       });
     }
 
-    const updateSearchKeyword = (searchKeyword) => {
-      setSearchKeyword(searchKeyword);
-    }
-
     return (
       <div className='homePage'>
         {!isDisabled ? "" : <div className="overlay"/>}
         <div className='header'>
           <Logo className='homeLogo logo'/>
-          <SearchBar class='searchBar' searchKeyword={searchKeyword} onChange={updateSearchKeyword}/>
           <svg className="accountIcon" viewBox="0 0 20 20"  onClick={handleAccountClick}>
             <path fill="hsl(0, 0%, 45%)" d="M14.023,12.154c1.514-1.192,2.488-3.038,2.488-5.114c0-3.597-2.914-6.512-6.512-6.512
                 c-3.597,0-6.512,2.916-6.512,6.512c0,2.076,0.975,3.922,2.489,5.114c-2.714,1.385-4.625,4.117-4.836,7.318h1.186

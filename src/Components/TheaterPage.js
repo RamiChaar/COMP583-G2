@@ -175,11 +175,17 @@ const TheaterPage = () => {
     setPopUp(false)
   }
 
+  function goHome() {
+    window.scrollTo(0, 0);
+    console.log('here')
+    navigate('/', {state: {}});
+  }
+
   return (
     <div className='theaterPage'>
       <div className='header'>
         <i className='backHome fa fa-angle-left fa-lg' onClick={handleBack}></i>
-        <Logo className='logo'/>
+        <Logo className='logo' onClick={goHome}/>
         <svg className="accountIcon" viewBox="0 0 20 20"  onClick={handleAccountClick}>
           <path fill="hsl(0, 0%, 45%)" d="M14.023,12.154c1.514-1.192,2.488-3.038,2.488-5.114c0-3.597-2.914-6.512-6.512-6.512
               c-3.597,0-6.512,2.916-6.512,6.512c0,2.076,0.975,3.922,2.489,5.114c-2.714,1.385-4.625,4.117-4.836,7.318h1.186

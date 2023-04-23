@@ -277,13 +277,19 @@ const UserPage = () => {
     }
   }
 
+  function goHome() {
+    window.scrollTo(0, 0);
+    console.log('here')
+    navigate('/', {state: {}});
+  }
+
   return (
     <div className='userPage'>
       {!isDisabled ? "" : <div className="overlay"/>}
 
       <div className='header'>
         <i className='backHome fa fa-angle-left fa-lg' onClick={handleBack}></i>
-        <Logo className='logo'/>
+        <Logo className='logo' onClick={goHome}/>
       </div>
 
       {displayTicket && ticket ? <TicketDisplay ticket={ticket} handleCloseTicket={handleCloseTicket}/> : ""}

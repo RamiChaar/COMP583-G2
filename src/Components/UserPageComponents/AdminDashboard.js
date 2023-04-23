@@ -103,7 +103,7 @@ function AdminDashboard ({analytics}) {
             newRatingDataSet.push({
                 label: sortedAnalytics[0].ratingSelectionCounts.sort((a, b) => a.rating.localeCompare(b.rating))[i].rating,
                 data,
-                borderColor: pastelColors[i],
+                borderColor: pastelColors[i+5],
                 borderWidth: 2
             })
         })
