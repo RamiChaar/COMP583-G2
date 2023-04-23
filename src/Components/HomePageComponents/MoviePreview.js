@@ -1,4 +1,4 @@
-function MoviePreview ({moviePreview, handleMovieClicked}) {
+function MoviePreview ({moviePreview, handleMovieClicked, list}) {
     let movieTitle = "";
     let posterImgUrl = null;
     let tomatoRating = "";
@@ -49,7 +49,7 @@ function MoviePreview ({moviePreview, handleMovieClicked}) {
     }
 
     function movieClicked() {
-        handleMovieClicked(moviePreview.id);
+        handleMovieClicked(moviePreview.id, list);
     }
 
     return (

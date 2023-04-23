@@ -8,6 +8,7 @@ import PurchaseTickets from './MoviePageComponents/PurchaseTickets';
 import Footer from './FooterComponents/Footer'
 import { ReactComponent as Logo } from '../Resources/logo.svg';
 import {useJsApiLoader} from '@react-google-maps/api';
+import axios from 'axios';
 
 const LOCAL_STORAGE_KEY_MOVIES = 'cinema-scouter.movies';
 const LOCAL_STORAGE_KEY_ADVTHEATERS = 'cinema-scouter.advTheaters';
@@ -87,6 +88,40 @@ const MoviePage = () => {
     localStorage.setItem(LOCAL_STORAGE_KEY_MOVIES, JSON.stringify([...storedMovies, newMovie]))
   }
 
+  async function reportAnalytics(genres, rating, list, tomatoLevel) {
+
+    let selections = {
+      genreSelections: genres,
+      ratingSelection: rating,
+      listSelection: list,
+      tomatoLevel: tomatoLevel
+    }
+
+    await axios.post(`${process.env.REACT_APP_HOST}/userAnalytics/addAnalytics`, selections)
+    .catch(err => console.log(err))
+      
+  }
+
+
+  useEffect(() => {
+    if(movie.length === 0){
+      return
+    }
+
+    let tomatoLevel = undefined
+    if(movie?.tomatoRatingObj?.tomatoRating >= 75) {
+      tomatoLevel = 'Certified Fresh'
+    } else if(movie?.tomatoRatingObj?.tomatoRating >= 60) {
+      tomatoLevel = 'Fresh'
+    } else {
+      tomatoLevel = 'Rotten'
+    }
+
+
+    reportAnalytics(movie.genres, movie.rating, movie.listOrigin, tomatoLevel)
+
+  }, [movie])
+
   useEffect(() => {
     let newMovie = {
       id: movieState.id,
@@ -95,6 +130,7 @@ const MoviePage = () => {
       title: movieData.name,
       rating: movieData.motionPictureRating?.code,
       duration: movieData.durationMinutes,
+      listOrigin: movieState.list,
 
       tomatoRatingObj: {
         tomatoRating: movieData.tomatoRating?.tomatometer,
@@ -138,7 +174,6 @@ const MoviePage = () => {
     if(!isStored(storedMovies, movieState.id)) {
       storeMovie(newMovie);
     }
-
     setMovie(newMovie);
   }, [movieData])
 

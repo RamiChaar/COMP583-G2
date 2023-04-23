@@ -346,11 +346,11 @@ const HomePage = () => {
       return showTimesList;
     }
   
-    function handleMovieClicked(movieId) {
+    function handleMovieClicked(movieId, list) {
       logAllStates()
       let showTimesList = getShowTimes(movieId);
       let date = advTheaters.length > 0? advTheaters[0].displayDate : undefined
-      navigate("/movie", {state: {id: movieId, showTimes: showTimesList, advTheaters: advTheaters, date: date, isNested: false, prevRouter: "/", prevState: {}}});
+      navigate("/movie", {state: {id: movieId, showTimes: showTimesList, advTheaters: advTheaters, list: list, date: date, isNested: false, prevRouter: "/", prevState: {}}});
     }
 
     async function getAdvTheater(theaterId) {
@@ -428,7 +428,7 @@ const HomePage = () => {
             <i className="scrollBack fa fa-angle-left" onClick={() => scrollLeft('.newlyReleasedPreview')}></i>
             <i className="scrollForward fa fa-angle-right" onClick={() => scrollRight('.newlyReleasedPreview')}></i>
             <div className='previewsDiv newlyReleasedPreview'>
-              <MoviePreviewList class='newlyReleasedList' moviePreviews={newlyReleasedMoviePreviews} handleMovieClicked={handleMovieClicked}/>
+              <MoviePreviewList class='newlyReleasedList' list={'Newly Released List'} moviePreviews={newlyReleasedMoviePreviews} handleMovieClicked={handleMovieClicked}/>
             </div>
           </div>
 
@@ -437,7 +437,7 @@ const HomePage = () => {
             <i className="scrollBack fa fa-angle-left" onClick={() => scrollLeft('.highlyRatedPreview')}></i>
             <i className="scrollForward fa fa-angle-right" onClick={() => scrollRight('.highlyRatedPreview')}></i>
             <div className='previewsDiv highlyRatedPreview'>
-              <MoviePreviewList class='popularList' moviePreviews={highlyRatedMoviePreviews} handleMovieClicked={handleMovieClicked}/>
+              <MoviePreviewList class='popularList' list={'Popular List'} moviePreviews={highlyRatedMoviePreviews} handleMovieClicked={handleMovieClicked}/>
             </div>
           </div>
 
@@ -446,7 +446,7 @@ const HomePage = () => {
             <i className="scrollBack fa fa-angle-left" onClick={() => scrollLeft('.lessKnownPreview')}></i>
             <i className="scrollForward fa fa-angle-right" onClick={() => scrollRight('.lessKnownPreview')}></i>
             <div className='previewsDiv lessKnownPreview'>
-              <MoviePreviewList class='lessKnownList' moviePreviews={lessKnownMoviePreviews} handleMovieClicked={handleMovieClicked}/>
+              <MoviePreviewList class='lessKnownList' list={'Less Known List'} moviePreviews={lessKnownMoviePreviews} handleMovieClicked={handleMovieClicked}/>
             </div>
           </div>
 
@@ -455,7 +455,7 @@ const HomePage = () => {
             <i className="scrollBack fa fa-angle-left" onClick={() => scrollLeft('.moviesNearYouPreview')}></i>
             <i className="scrollForward fa fa-angle-right" onClick={() => scrollRight('.moviesNearYouPreview')}></i>
             <div className='previewsDiv moviesNearYouPreview'>
-              <MoviePreviewList class='moviesNearYouList' moviePreviews={moviePreviews} handleMovieClicked={handleMovieClicked}/>
+              <MoviePreviewList class='moviesNearYouList' list={'Movies Near You List'} moviePreviews={moviePreviews} handleMovieClicked={handleMovieClicked}/>
             </div>
           </div>
 

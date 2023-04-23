@@ -166,6 +166,67 @@
     font-style: italic;
 }
 
+.adminSummary {
+    width: 16rem;
+    margin-left: 2rem;
+    padding: 2rem;
+    padding-bottom: 1.25rem;
+    background-color: hsl(223, 12%, 20%);
+    border-radius: .2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.adminTitle {
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.toggleAdminDiv {
+    text-align: center;
+    margin-top: .75rem;
+}
+
+.adminSwitch {
+    width: 12rem;
+    background-color: hsl(223, 12%, 12%);
+    border-radius: 3rem;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 9998;
+
+}
+
+.switchAdminLeft {
+    font-size: small;
+    width: 6rem;
+    padding: .5rem;
+    cursor: pointer;
+    border-radius: 3rem;
+    background-color: hsl(223, 12%, 28%);
+    text-align: center;
+    z-index: 9998;
+
+}
+
+.switchAdminRight {
+    font-size: small;
+    width: 6rem;
+    padding: .5rem;
+    cursor: pointer;
+    border-radius: 3rem;
+    text-align: center;
+    z-index: 9998;
+}
+
+
 .logOut {
     margin-left: auto;
     font-size: 1rem;
@@ -708,7 +769,6 @@
 
 .seatRowSmall {
     text-align: center;
-    text-align: center;
 }  
 
 .seatSmall {
@@ -717,4 +777,113 @@
     border-radius: .1rem;
     cursor: pointer;
     background-color: hsl(0, 0%, 40%);
+}
+
+
+.adminDashboard {
+
+}
+
+.chartsDiv {
+    width: calc(100% - 4rem);
+    height: auto;
+    padding: 2rem;
+    padding-top: 1rem;
+    margin:0;
+    margin-bottom:1rem;
+    background-color: hsl(223, 12%, 20%);
+    border-radius: .2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    border-top: 1px solid hsl(223, 12%, 12%);
+}
+
+.adminHeaderDiv {
+    width: auto;
+    height: auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+
+.switchChart {
+    width: 24rem;
+    background-color: hsl(223, 12%, 12%);
+    border-radius: 3rem;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 9998;
+}
+
+.weekSwitch {
+    font-size: medium;
+    width: 8rem;
+    padding: .65rem;
+    cursor: pointer;
+    border-radius: 3rem;
+    background-color: hsl(223, 12%, 28%);
+    text-align: center;
+    z-index: 9998;
+}
+
+.monthSwitch {
+    font-size: medium;
+    width: 8rem;
+    padding: .65rem;
+    cursor: pointer;
+    border-radius: 3rem;
+    text-align: center;
+    z-index: 9998;
+}
+
+.allSwitch {
+    font-size: medium;
+    width: 8rem;
+    padding: .65rem;
+    cursor: pointer;
+    border-radius: 3rem;
+    text-align: center;
+    z-index: 9998;
+}
+
+.charts {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.chartOuterDiv {
+    width: calc(calc(50% - 1rem) - 0px);
+    padding: .5rem;
+}
+
+@media screen and (max-width: 900px) {
+    .chartOuterDiv {
+        width: 100%;
+        margin: 0rem;
+    }
+}
+
+.chartTitle {
+    width: 100%;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+    padding-top: 1rem;
+}
+
+.chartDiv {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.chart {
+    width: 100%;
+}
+
+.canvas {
 }

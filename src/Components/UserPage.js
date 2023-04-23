@@ -7,10 +7,10 @@ import Login from './UserPageComponents/Login';
 import SignUp from './UserPageComponents/SignUp';
 import TicketPreview from './UserPageComponents/TicketPreview'
 import TicketDisplay from './UserPageComponents/TicketDisplay'
+import AdminDashboard from './UserPageComponents/AdminDashboard'
 import axios from 'axios';
 
 const LOCAL_STORAGE_KEY_USER_CREDENTIALS = 'cinema-scouter.userCredentials';
-
 
 const fetchOptions = {
   method: 'GET',
@@ -33,6 +33,9 @@ const UserPage = () => {
   const [ticket, setTicket] = useState({})
   const [displayTicket, setDisplayTicket] = useState(false)
   const [deleteWindow, setDeleteWindow] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [adminView, setAdminView] = useState(false)
+  const [analytics, setAnalytics] = useState([])
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -55,10 +58,31 @@ const UserPage = () => {
       const hoursDiff = timeDiff / (1000 * 60 * 60);
       return hoursDiff >= -(item?.duration / 60);
     });
-
     setFilteredTickets(newFilteredTickets)
 
+    if(userData?.isAdmin) {
+      setIsAdmin(true)
+      getAnalytics()
+    }
   }, [userData])
+
+  async function getAnalytics() {
+    let storedUserCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
+    let email = storedUserCredentials.email
+    let password = storedUserCredentials.password
+
+    let user = {
+      email: email,
+      password: password
+    }
+
+    await axios.post(`${process.env.REACT_APP_HOST}/userAnalytics/getAnalytics`, user)
+    .then(res => {
+        if(res.status === 200){
+          setAnalytics(res.data)
+        }
+    })
+  }
 
   async function checkCredentials() {
     let storedUserCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
@@ -137,8 +161,19 @@ const UserPage = () => {
     setDeleteWindow(true)    
   }
 
-  function handleDoNotDelete() {
+  async function handleDoNotDelete() {
     setDeleteWindow(false)
+
+    let userCredentials = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS));
+    let email = userCredentials.email
+    let password = userCredentials.password
+    let user = {
+      email: email,
+      password: password
+    }
+    await axios.post(`${process.env.REACT_APP_HOST}/userAnalytics/getAnalytics`, user)
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err))
   }
 
   async function handleDeleteAccount() { 
@@ -225,6 +260,23 @@ const UserPage = () => {
     setTicket({})
     setDisplayTicket(false)
   }
+
+  function handleSwitchToUser () {
+    if(adminView) {
+      document.querySelector('.switchAdminLeft').style.backgroundColor = 'hsl(223, 12%, 28%)'
+      document.querySelector('.switchAdminRight').style.backgroundColor = 'hsl(223, 12%, 12%)'
+      setAdminView(false)
+    }
+  }
+
+  function handleSwitchToAdmin () {
+    if(!adminView) {
+      document.querySelector('.switchAdminLeft').style.backgroundColor = 'hsl(223, 12%, 12%)'
+      document.querySelector('.switchAdminRight').style.backgroundColor = 'hsl(223, 12%, 28%)'      
+      setAdminView(true)
+    }
+  }
+
   return (
     <div className='userPage'>
       {!isDisabled ? "" : <div className="overlay"/>}
@@ -261,58 +313,71 @@ const UserPage = () => {
               <p className="userName">{userData?.email?.split("@")[0]}</p>
               <p className="joinedLabel">Joined {userData?.dateCreated}</p>
             </div>
-              <button className='logOut' onClick={handleLogOut}>Log Out</button>
+            {!isAdmin ? "" :
+              <div className="adminSummary">
+                <p className="adminTitle">Admin Privileges</p>
+                <div className="toggleAdminDiv">
+                    <div className="adminSwitch">
+                      <div className="switchAdminLeft" onClick={handleSwitchToUser}>User Account</div>
+                      <div className="switchAdminRight" onClick={handleSwitchToAdmin}>Admin Dashboard</div>
+                    </div>
+                  </div>
+              </div>
+            }
+
+            <button className='logOut' onClick={handleLogOut}>Log Out</button>
           </div>
 
-          <div className="userDataDiv">
-            <div className="favoriteTheatersArea">
-              <div className="favoriteTheatersHeader">
-                <p className="favoriteTheatersLabel">Your Favorite Theaters</p>
+          {adminView ? <AdminDashboard analytics={analytics}/> :
+            <div className="userDataDiv">
+
+              <div className="favoriteTheatersArea">
+                <div className="favoriteTheatersHeader">
+                  <p className="favoriteTheatersLabel">Your Favorite Theaters</p>
+                </div>
+                <div className="favoriteTheatersDiv">
+                  {userData?.favoriteTheaters?.map(theater => {
+                    return <div className="favoriteTheater" key={theater.theaterId}>
+                            <p className="theaterName" onClick={() => handleTheaterClicked(theater.theaterId, theater.theaterName)}>{theater.theaterName}</p>
+                            <i className="trashButton fa fa-trash" aria-hidden="true" onClick={() => handleDeleteTheater(theater.theaterId)}></i>
+                          </div>
+                  })}
+                </div>
               </div>
-              <div className="favoriteTheatersDiv">
-                {userData?.favoriteTheaters?.map(theater => {
-                  return <div className="favoriteTheater" key={theater.theaterId}>
-                          <p className="theaterName" onClick={() => handleTheaterClicked(theater.theaterId, theater.theaterName)}>{theater.theaterName}</p>
-                          <i className="trashButton fa fa-trash" aria-hidden="true" onClick={() => handleDeleteTheater(theater.theaterId)}></i>
-                        </div>
-                })}
-              </div>
-            </div>
 
-
-            <div className="ticketsDiv">
-
-              <div className="ticketsDivHeader">
-              <div className="toggleDiv">
-                  <div className="switch">
-                    <div className="switchLeft" onClick={handleToggleLeft}>All</div>
-                    <div className="switchRight" onClick={handleToggleRight}>Future</div>
+              <div className="ticketsDiv">
+                <div className="ticketsDivHeader">
+                <div className="toggleDiv">
+                    <div className="switch">
+                      <div className="switchLeft" onClick={handleToggleLeft}>All</div>
+                      <div className="switchRight" onClick={handleToggleRight}>Future</div>
+                    </div>
+                  </div>
+                  <p className="ticketsTitle">Your Tickets</p>
+                </div>
+                <div className="ticketsDivBody">
+                  <div className="ticketPreviewsList">
+                    {toggledLeft ? 
+                      userData?.tickets?.map((ticket, i) => {
+                        return <TicketPreview key={uuidv4()} ticket={ticket} prevDate={i === 0 ? 'noDate' : userData?.tickets[i-1].showingDate} handleClickTicket={handleClickTicket}/>
+                      }) : 
+                      filteredTickets?.map((ticket, i) => {
+                        return <TicketPreview key={uuidv4()} ticket={ticket} prevDate={i === 0 ? 'noDate' : userData?.tickets[i-1].showingDate} handleClickTicket={handleClickTicket}/>
+                      })
+                    }
                   </div>
                 </div>
-                <p className="ticketsTitle">Your Tickets</p>
-              </div>
-
-              <div className="ticketsDivBody">
-                <div className="ticketPreviewsList">
-                  {toggledLeft ? 
-                    userData?.tickets?.map((ticket, i) => {
-                      return <TicketPreview key={uuidv4()} ticket={ticket} prevDate={i === 0 ? 'noDate' : userData?.tickets[i-1].showingDate} handleClickTicket={handleClickTicket}/>
-                    }) : 
-                    filteredTickets?.map((ticket, i) => {
-                      return <TicketPreview key={uuidv4()} ticket={ticket} prevDate={i === 0 ? 'noDate' : userData?.tickets[i-1].showingDate} handleClickTicket={handleClickTicket}/>
-                    })
-                  }
-                </div>
               </div>
 
             </div>
-
-
-          </div>
-          <div className="userPageFooter">
-            <button className='deleteAccount' onClick={handleDeleteAccountClicked}>Delete Account</button>
-          </div>
+          }
+          {adminView ? "" :
+            <div className="userPageFooter">
+              <button className='deleteAccount' onClick={handleDeleteAccountClicked}>Delete Account</button>
+            </div>
+          }
         </div>
+
       }
 
       <Footer/>
