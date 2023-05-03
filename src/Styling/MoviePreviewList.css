@@ -1,5 +1,5 @@
 :root {
-    --scale: .65;
+    --scale: .8;
 
     --container-height: calc(26.25rem * var(--scale));
     --preview-width:calc(11.25rem * var(--scale));

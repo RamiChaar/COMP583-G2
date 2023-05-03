@@ -98,9 +98,9 @@
 
 .amenity {
     display: inline-block;
-    font-size: .8rem;
+    font-size: 1rem;
     cursor: pointer;
-    color: hsl(217, 71%, 53%);
+    color: hsl(112, 100%, 71%);
     text-decoration: none;
 }
 

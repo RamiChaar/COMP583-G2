@@ -154,6 +154,7 @@ const UserPage = () => {
 
   function handleLogOut() {
     setLoggedIn(false)
+    setIsAdmin(false)
     localStorage.removeItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS)
   }
 
@@ -193,6 +194,7 @@ const UserPage = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_USER_CREDENTIALS)
     setDeleteWindow(false)
     setLoggedIn(false)
+    setIsAdmin(false)
   }
 
   async function getAdvTheater(theaterId) {
