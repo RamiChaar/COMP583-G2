@@ -94,3 +94,6 @@ $RECYCLE.BIN/
 .env.production.local
 .iml
 .idea
+
+# Local Netlify folder
+.netlify
