@@ -20,8 +20,11 @@ Feature List
 - View a list of your favorite theaters on the homepage
 - (demo) Selecting a movie time and purchasing the tickets
 - (demo) View your purchased tickets under your account
+- Viewing user analytics through an admin account interface
 
 ## Captures
+![Screenshot 2023-05-12 at 16 30 58](https://github.com/RamiChaar/CinemaScouter/assets/99862145/1db92347-6f12-44d7-97dd-bd3f8b00efba)
+![Screenshot 2023-05-12 at 16 31 04](https://github.com/RamiChaar/CinemaScouter/assets/99862145/ce73054b-76bc-41c4-8b87-d600647a1842)
 
 <img width="1440" alt="Screenshot 2023-04-12 at 15 37 42" src="https://user-images.githubusercontent.com/99862145/231601675-fe35ad5c-2886-4f36-9cda-327d08de4ea7.png">
 <img width="1440" alt="Screenshot 2023-04-12 at 15 37 50" src="https://user-images.githubusercontent.com/99862145/231601685-1bbf7c4b-6cd7-4488-a6d8-6813b517b32c.png">
@@ -30,18 +33,20 @@ Feature List
 <img width="1440" alt="Screenshot 2023-04-12 at 15 38 23" src="https://user-images.githubusercontent.com/99862145/231601727-4d4ba5fa-bf66-49ca-b711-be7798402321.png">
 <img width="1440" alt="Screenshot 2023-04-12 at 15 38 38" src="https://user-images.githubusercontent.com/99862145/231601733-0d2f6df5-06fe-4312-904d-419ffc90e5a6.png">
 
-### Full Video Demo
+## Full Demo
 
-https://drive.google.com/file/d/1l-U0n9rhIDDEk2iKDdiY--O_LWGsfEUd/view?usp=sharing
+https://github.com/RamiChaar/CinemaScouter/assets/99862145/a2588265-424a-44db-8f9e-5f1fc1c96f68
+
 
 ## Tools and framework used
 
 - React.js
 - Node.js (npm)
-- SQL Server
+- Mongo DB
 - Visual Stuido Code
 - Insomnia (enpoint testing)
 
 ## API References / Credit
 
 - Rapid flixter API - https://rapidapi.com/apidojo/api/flixster
+- Google Places API
