@@ -36,7 +36,7 @@ https://github.com/RamiChaar/CinemaScouter/assets/99862145/a2588265-424a-44db-8f
 - React.js
 - Node.js (npm)
 - Mongo DB
-- Visual Stuido Code
+- Visual Studio Code
 - Insomnia (enpoint testing)
 
 ## API References / Credit
